@@ -20,11 +20,16 @@ class Content extends StatelessWidget {
 
 class MainContentLayout extends StatelessWidget {
   final List<String> videoUrls = [
-    'assets/videos/video1.mp4',
-    'assets/videos/video2.mp4',
-    'assets/videos/video_6.mp4',
-    'assets/videos/video_1.mp4',
-    'assets/videos/video_3.mp4',
+    'https://firebasestorage.googleapis.com/v0/b/crispy-b53c4.appspot.com/o/video_2.mp4?alt=media&token=ee3ea1aa-1199-4026-85a3-86e5667bb39e',
+    'https://firebasestorage.googleapis.com/v0/b/crispy-b53c4.appspot.com/o/video_4.mp4?alt=media&token=16217058-36bf-4d75-9f90-f2068e1882ef',
+    'https://firebasestorage.googleapis.com/v0/b/crispy-b53c4.appspot.com/o/video_1.mp4?alt=media&token=94f21bba-db5f-457a-9b2e-e690788ab51a',
+    'https://firebasestorage.googleapis.com/v0/b/crispy-b53c4.appspot.com/o/video_3.mp4?alt=media&token=c24eb5bd-15c2-4e0a-8803-04d65f8aa319',
+    'https://firebasestorage.googleapis.com/v0/b/crispy-b53c4.appspot.com/o/video_6.mp4?alt=media&token=59ba9290-dc8d-43da-965c-b044e224f827',
+    // 'assets/videos/video1.mp4',
+    // 'assets/videos/video2.mp4',
+    // 'assets/videos/video_6.mp4',
+    // 'assets/videos/video_1.mp4',
+    // 'assets/videos/video_3.mp4',
   ];
 
   MainContentLayout({

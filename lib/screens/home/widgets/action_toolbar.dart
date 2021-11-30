@@ -142,7 +142,7 @@ class ActionsToolbar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(profileImageSize / 2)),
             child: CachedNetworkImage(
               imageUrl:
-                  "https://secure.gravatar.com/avatar/ef4a9338dca42372f15427cdb4595ef7",
+                  'https://secure.gravatar.com/avatar/ef4a9338dca42372f15427cdb4595ef7',
               placeholder: (context, url) => const CircularProgressIndicator(),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),

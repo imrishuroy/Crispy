@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:video_player/video_player.dart';
 
 class FullScreenVideo extends StatefulWidget {
@@ -22,7 +23,7 @@ class _FullScreenVideoState extends State<FullScreenVideo> {
 
     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
 
-    _videoController = VideoPlayerController.asset(widget.videoUrl ?? '')
+    _videoController = VideoPlayerController.network(widget.videoUrl ?? '')
       ..initialize().then((_) {
         setState(() {
           _loading = false;
@@ -34,7 +35,9 @@ class _FullScreenVideoState extends State<FullScreenVideo> {
 
   @override
   void dispose() {
+    _videoController.pause();
     _videoController.dispose();
+
     super.dispose();
   }
 
@@ -42,10 +45,20 @@ class _FullScreenVideoState extends State<FullScreenVideo> {
   Widget build(BuildContext context) {
     return _loading
         ? const Center(
-            child: CircularProgressIndicator(
-                strokeWidth: 3.0,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+            child: SizedBox(
+              height: 50.0,
+              width: 50.0,
+              child: SpinKitChasingDots(
+                color: Colors.white,
+              ),
+            ),
           )
+
+        // Center(
+        //     child: CircularProgressIndicator(
+        //         strokeWidth: 3.0,
+        //         valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+        //   )
         : VideoPlayer(_videoController);
   }
 }
