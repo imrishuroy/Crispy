@@ -32,7 +32,9 @@ dependencies:
   cloud_firestore: ^3.1.0
   cloud_functions: ^3.1.1
   cupertino_icons: ^1.0.2
+  custom_info_window: ^1.0.1
   equatable: ^2.0.3
+  expandable_text: ^2.2.0
   firebase_auth: ^3.2.0
   firebase_core: ^1.10.0
   flutter:
@@ -70,6 +72,7 @@ flutter:
     - assets/
     - assets/videos/
     - assets/images/
+    - assets/markers/
 
   fonts:
     - family: TikTokIcons

@@ -30,14 +30,16 @@ class ActionsToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 100.0,
+      // width: 100.0,
+      width: 85.0,
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        _getFollowAction(),
+        //_getFollowAction(),
         _getSocialAction(icon: TikTokIcons.heart, title: '3.2m'),
         _getSocialAction(icon: TikTokIcons.chatBubble, title: '16.4k'),
-        _getSocialAction(
-            icon: TikTokIcons.reply, title: 'Share', isShare: true),
-        _getMusicPlayerAction()
+        const SizedBox(height: 140.0)
+        //  _getSocialAction(
+        //   icon: TikTokIcons.reply, title: 'Share', isShare: true),
+        //_getMusicPlayerAction()
       ]),
     );
   }
@@ -126,29 +128,29 @@ class ActionsToolbar extends StatelessWidget {
         1.0
       ], begin: Alignment.bottomLeft, end: Alignment.topRight);
 
-  Widget _getMusicPlayerAction() {
-    return Container(
-      margin: const EdgeInsets.only(top: 10.0),
-      width: actionWidgetSize,
-      height: actionWidgetSize,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(11.0),
-            height: profileImageSize,
-            width: profileImageSize,
-            decoration: BoxDecoration(
-                gradient: musicGradient,
-                borderRadius: BorderRadius.circular(profileImageSize / 2)),
-            child: CachedNetworkImage(
-              imageUrl:
-                  'https://secure.gravatar.com/avatar/ef4a9338dca42372f15427cdb4595ef7',
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _getMusicPlayerAction() {
+  //   return Container(
+  //     margin: const EdgeInsets.only(top: 10.0),
+  //     width: actionWidgetSize,
+  //     height: actionWidgetSize,
+  //     child: Column(
+  //       children: [
+  //         Container(
+  //           padding: const EdgeInsets.all(11.0),
+  //           height: profileImageSize,
+  //           width: profileImageSize,
+  //           decoration: BoxDecoration(
+  //               gradient: musicGradient,
+  //               borderRadius: BorderRadius.circular(profileImageSize / 2)),
+  //           child: CachedNetworkImage(
+  //             imageUrl:
+  //                 'https://secure.gravatar.com/avatar/ef4a9338dca42372f15427cdb4595ef7',
+  //             placeholder: (context, url) => const CircularProgressIndicator(),
+  //             errorWidget: (context, url, error) => const Icon(Icons.error),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

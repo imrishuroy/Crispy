@@ -1,8 +1,14 @@
+import '/screens/home/bloc/video_bloc.dart';
+import '/screens/liked-videos/liked_videos.dart';
+
+import '/screens/influencer/influencer_profile.dart';
+import '/screens/map/map_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'action_toolbar.dart';
 import 'full_screen_video.dart';
 import 'video_description.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Content extends StatelessWidget {
   const Content({Key? key}) : super(key: key);
@@ -38,21 +44,60 @@ class MainContentLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      scrollDirection: Axis.vertical,
-      // children: List.generate(5, (index) {
-      //   return const ContentView();
-      // }),
-      children:
-          videoUrls.map((String url) => ContentView(videoUrl: url)).toList(),
+    //   final _videoRepo = context.read<VideoRepository>();
+    return BlocConsumer<VideoBloc, VideoState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        switch (state.status) {
+          case VideoStatus.succuss:
+            final videos = state.videos;
+            return PageView.builder(itemBuilder: (context, index) {
+              final video = videos[index];
+              return ContentView(videoUrl: video?.videoUrl);
+            });
+
+          default:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+        }
+
+        // if (state.status == VideoStatus.succuss) {
+        //   final videos = state.videos;
+        //   return PageView.builder(itemBuilder: (context, index) {
+        //     final video = videos[index];
+        //     return ContentView(videoUrl: video?.videoUrl);
+        //   });
+        // }
+      },
     );
+
+    // FutureBuilder<List<Video?>>(
+    //   future: _videoRepo.getVideos(),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return const Center(
+    //         child: CircularProgressIndicator(),
+    //       );
+    //     }
+    //   },
+    // );
+
+    //  PageView(
+    //   scrollDirection: Axis.vertical,
+    //   // children: List.generate(5, (index) {
+    //   //   return const ContentView();
+    //   // }),
+    //   children:
+    //       videoUrls.map((String url) => ContentView(videoUrl: url)).toList(),
+    // );
   }
 }
 
 class ContentView extends StatelessWidget {
-  final String videoUrl;
+  final String? videoUrl;
 
-  const ContentView({Key? key, required this.videoUrl}) : super(key: key);
+  ContentView({Key? key, required this.videoUrl}) : super(key: key);
 
   Widget get middleSection => Expanded(
         child: Row(
@@ -65,36 +110,85 @@ class ContentView extends StatelessWidget {
         ),
       );
 
+  // number is irrelevant
+// final initialPage = (
+//     .161251195141521521142025 // :)
+//     * 1e6).round();
+// final itemCount = getSomeItemCount();
+
+  final PageController _pageController = PageController(initialPage: 1);
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
+    return PageView(
+      reverse: true,
+      controller: _pageController,
       children: [
-        Container(
-          padding: const EdgeInsets.only(bottom: 10.0),
+        // const Scaffold(
+        //   body: Center(child: Text('Maps Screen')),
+        // ),
+        const MapScreen(),
+        Stack(
+          fit: StackFit.expand,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(bottom: 10.0),
 
-          // padding: const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: FullScreenVideo(
-              videoUrl: videoUrl,
+              // padding: const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: FullScreenVideo(
+                  videoUrl: videoUrl,
+                ),
+              ),
             ),
-          ),
+            //middleSection,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: const [
+                  VideoDescription(),
+                  ActionsToolbar(),
+                ],
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                padding: const EdgeInsets.only(right: 20.0, top: 7.0),
+                icon: const Icon(
+                  Icons.featured_play_list,
+                  size: 25.0,
+                ),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(LikedVideos.routeName),
+              ),
+            ),
+          ],
         ),
-        //middleSection,
-        Padding(
-          padding: const EdgeInsets.only(bottom: 12.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: const [
-              VideoDescription(),
-              ActionsToolbar(),
-            ],
-          ),
-        ),
+        const InfluencerProfile(),
       ],
     );
+
+    // Row(
+    //   //reverse: true,
+    //   children: [
+
+    // const Scaffold(
+    //   body: Center(
+    //     child: Text('Left'),
+    //   ),
+    // ),
+    // const Scaffold(
+    //   body: Center(
+    //     child: Text('Right'),
+    //   ),
+    // )
+    //   ],
+    // );
   }
 }
 
