@@ -1,0 +1,28 @@
+1. HomeScreen 
+- This will have videos of different outlets and stores,
+- On the right corner we will have a liked playlist icon, where user can click
+to see his liked videos ( new screen )
+
+- On the right bottom we have two buttons like and comment, where user can add comments
+
+- on the left we have influencer icon , beside that we have influencer name
+bellow of that we have name of the outlet which influencer is promoting
+bellow that there will be short intro about the video
+
+- On right swipe user will be navigated to map screen where they can see the location of the 
+outlet on the map and details about them on the bottom sheet
+
+- On left swipe user will navigated to the outlet profile screen where they can see the outlet profile
+
+- on cliking the influencer icon user will be naigated to the influencer profile screen 
+
+- on clicking on the outlet name , they will be navigated to the outlet profile screen
+
+2. Influencer Profile - here we will have the influencer past video and profile details
+
+3. Outlet Profile - here we will have the outler video that influencers have uploaded and outler details
+
+4. Map screen - Here we will have the point out location of the outlet and in the bottom sheet 
+they can see the outlet details 
+
+5. Liked Video Screen - Here user can see the grid view of their past videos

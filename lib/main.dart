@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/auth/auth_bloc.dart';
 import 'blocs/simple_bloc_observer.dart';
+import 'config/auth_wrapper.dart';
+import 'config/custom_router.dart';
 import 'repository/auth/auth_repository.dart';
-import 'screens/profile/profile_screen.dart';
 
 // import 'ui/home/home_view.dart';
 
@@ -56,9 +57,10 @@ class MyApp extends StatelessWidget {
           // ),
           //  home: const SplashScreen(),
           // home: const HomeScreen(),
-          home: const ProfileScreen(),
-          // onGenerateRoute: CustomRouter.onGenerateRoute,
-          // initialRoute: AuthWrapper.routeName,
+          // home: const ProfileScreen(),
+
+          onGenerateRoute: CustomRouter.onGenerateRoute,
+          initialRoute: AuthWrapper.routeName,
         ),
       ),
     );
