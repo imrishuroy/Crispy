@@ -7,30 +7,34 @@ class Influencer extends Equatable {
   final String? name;
   final String? username;
   final String? bio;
-  final String? uid;
+  final String? influencerId;
   final String? profilePic;
+  // final List<Video?> influencerVideos;
 
   const Influencer({
     this.name,
     this.username,
     this.bio,
-    this.uid,
+    this.influencerId,
     this.profilePic,
+    //  required this.influencerVideos,
   });
 
   Influencer copyWith({
     String? name,
     String? username,
     String? bio,
-    String? uid,
+    String? influencerId,
     String? profilePic,
+    // List<Video?>? influencerVideos,
   }) {
     return Influencer(
       name: name ?? this.name,
       username: username ?? this.username,
       bio: bio ?? this.bio,
-      uid: uid ?? this.uid,
+      influencerId: influencerId ?? this.influencerId,
       profilePic: profilePic ?? profilePic,
+      // influencerVideos: influencerVideos ?? this.influencerVideos,
     );
   }
 
@@ -39,7 +43,7 @@ class Influencer extends Equatable {
       'name': name,
       'username': username,
       'bio': bio,
-      'uid': uid,
+      'uid': influencerId,
       'profileImage': profilePic,
     };
   }
@@ -49,8 +53,9 @@ class Influencer extends Equatable {
       name: map['name'],
       username: map['username'],
       bio: map['bio'],
-      uid: map['uid'],
+      influencerId: map['uid'],
       profilePic: map['profilePic'],
+      //    influencerVideos: map['videos'],
     );
   }
 
@@ -59,7 +64,7 @@ class Influencer extends Equatable {
 
     return Influencer(
       name: data?['name'],
-      uid: data?['uid'],
+      influencerId: data?['uid'],
       username: data?['username'],
       bio: data?['bio'],
       profilePic: data?['profilePic'],
@@ -80,7 +85,7 @@ class Influencer extends Equatable {
       name,
       username,
       bio,
-      uid,
+      influencerId,
       profilePic,
     ];
   }

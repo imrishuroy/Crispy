@@ -9,6 +9,12 @@ class Paths {
 
   static String get contact => isProduction ? 'contact' : 'dev-contact';
 
+  static String get influencers => 'influencers';
+
+  /// static String get videos => isProduction ? 'videos' : 'dev-videos';
+
+  static String get videos => 'videos';
+
   static String get activities =>
       isProduction ? 'activities' : 'dev-activities';
 

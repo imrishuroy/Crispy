@@ -7,13 +7,12 @@ class VideoRepository extends BaseVideoRepositroy {
 
   Stream<List<Future<Video?>>> streamVideos() {
     try {
-      final videoSnaps = _videoRef
-          .orderBy('dateTime')
-          .
-          //.withConverter<Future<Video?>>(fromFirestore: (snapshot, _) => Video.fromDocument(snapshot), toFirestore: (videos, _)=> videos.)
-          snapshots();
+      // final videoSnaps = _videoRef.orderBy('dateTime').snapshots();
+      final videoSnaps = _videoRef.snapshots();
 
       return videoSnaps.map((snaps) {
+        print('Video snaps ${snaps.docs.length}');
+
         return snaps.docs.map((doc) => Video.fromDocument(doc)).toList();
       });
     } catch (e) {

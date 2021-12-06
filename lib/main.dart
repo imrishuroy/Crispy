@@ -1,5 +1,6 @@
-import 'package:crispy/repository/video/video_repository.dart';
-import 'package:crispy/screens/home/bloc/video_bloc.dart';
+import '/repository/influencer/influencer_repository.dart';
+import '/repository/video/video_repository.dart';
+import '/screens/home/bloc/video_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -34,7 +35,12 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<AuthRepository>(
           create: (_) => AuthRepository(),
         ),
-        RepositoryProvider<VideoRepository>(create: (_) => VideoRepository())
+        RepositoryProvider<VideoRepository>(
+          create: (_) => VideoRepository(),
+        ),
+        RepositoryProvider<InfluencerRepository>(
+          create: (_) => InfluencerRepository(),
+        )
       ],
       child: MultiBlocProvider(
         providers: [
@@ -69,6 +75,8 @@ class MyApp extends StatelessWidget {
 
           onGenerateRoute: CustomRouter.onGenerateRoute,
           initialRoute: AuthWrapper.routeName,
+
+          // home: DemoHome(),
         ),
       ),
     );

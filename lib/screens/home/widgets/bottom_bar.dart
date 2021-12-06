@@ -1,4 +1,3 @@
-import 'package:crispy/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'tik_tok_icons.dart';
@@ -52,11 +51,12 @@ class BottomToolbar extends StatelessWidget {
         const Icon(TikTokIcons.messages,
             color: Colors.white, size: navigationIconSize),
         InkWell(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => const ProfileScreen(),
-            ),
-          ),
+          onTap: () {},
+          // onTap: () => Navigator.of(context).push(
+          //   MaterialPageRoute(
+          //     builder: (_) => const ProfileScreen(),
+          //   ),
+          // ),
           child: const Icon(TikTokIcons.profile,
               color: Colors.white, size: navigationIconSize),
         )

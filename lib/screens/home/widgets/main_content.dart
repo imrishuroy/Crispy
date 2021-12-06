@@ -1,3 +1,7 @@
+import 'package:crispy/models/video.dart';
+import 'package:crispy/repository/influencer/influencer_repository.dart';
+import 'package:crispy/screens/influencer/bloc/influencer_bloc.dart';
+
 import '/screens/home/bloc/video_bloc.dart';
 import '/screens/liked-videos/liked_videos.dart';
 
@@ -51,10 +55,16 @@ class MainContentLayout extends StatelessWidget {
         switch (state.status) {
           case VideoStatus.succuss:
             final videos = state.videos;
-            return PageView.builder(itemBuilder: (context, index) {
-              final video = videos[index];
-              return ContentView(videoUrl: video?.videoUrl);
-            });
+
+            print('Lenght ${videos.length}');
+            return PageView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: videos.length,
+              itemBuilder: (context, index) {
+                final video = videos[index];
+                return ContentView(video: video);
+              },
+            );
 
           default:
             return const Center(
@@ -95,9 +105,9 @@ class MainContentLayout extends StatelessWidget {
 }
 
 class ContentView extends StatelessWidget {
-  final String? videoUrl;
+  final Video? video;
 
-  ContentView({Key? key, required this.videoUrl}) : super(key: key);
+  ContentView({Key? key, required this.video}) : super(key: key);
 
   Widget get middleSection => Expanded(
         child: Row(
@@ -138,7 +148,7 @@ class ContentView extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: FullScreenVideo(
-                  videoUrl: videoUrl,
+                  videoUrl: video?.videoUrl,
                 ),
               ),
             ),
@@ -169,7 +179,15 @@ class ContentView extends StatelessWidget {
             ),
           ],
         ),
-        const InfluencerProfile(),
+        BlocProvider<InfluencerBloc>(
+          create: (context) => InfluencerBloc(
+            influencerId: video?.influencer?.influencerId,
+            videoRepository: context.read<InfluencerRepository>(),
+          ),
+          child: InfluencerProfile(
+            influencer: video?.influencer,
+          ),
+        ),
       ],
     );
 

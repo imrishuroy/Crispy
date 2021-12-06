@@ -40,6 +40,12 @@ class Video extends Equatable {
   }
 
   static Future<Video?> fromDocument(DocumentSnapshot? doc) async {
+    print('Prince $doc');
+    print('Prince ${doc.runtimeType}');
+    if (doc != null) {
+      print('Prince ${doc.data()}');
+    }
+
     if (doc == null) return null;
     final data = doc.data() as Map?;
     final outletRef = data?['outlet'] as DocumentReference?;
