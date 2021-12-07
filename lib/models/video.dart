@@ -5,11 +5,14 @@ import '/models/influencer.dart';
 import '/models/outlet.dart';
 
 class Video extends Equatable {
+  final String? videoId;
   final String? videoUrl;
   final DateTime? dateTime;
   final Influencer? influencer;
   final Outlet? outlet;
+
   const Video({
+    required this.videoId,
     this.videoUrl,
     this.dateTime,
     this.influencer,
@@ -17,12 +20,14 @@ class Video extends Equatable {
   });
 
   Video copyWith({
+    String? videoId,
     String? videoUrl,
     DateTime? dateTime,
     Influencer? influencer,
     Outlet? outlet,
   }) {
     return Video(
+      videoId: videoId ?? this.videoId,
       videoUrl: videoUrl ?? this.videoUrl,
       dateTime: dateTime ?? this.dateTime,
       influencer: influencer ?? this.influencer,
@@ -32,6 +37,7 @@ class Video extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
+      'videoId': videoId,
       'video': videoUrl,
       'dateTime': dateTime?.millisecondsSinceEpoch,
       'influencer': influencer?.toMap(),
@@ -55,6 +61,7 @@ class Video extends Equatable {
       final influencerDoc = await influencerRef.get();
       if (outletDoc.exists && influencerDoc.exists) {
         return Video(
+          videoId: data?['videoId'],
           videoUrl: data?['video'],
           dateTime: data?['dateTime'] != null
               ? DateTime.fromMillisecondsSinceEpoch(data?['dateTime'])
@@ -68,5 +75,5 @@ class Video extends Equatable {
   }
 
   @override
-  List<Object?> get props => [videoUrl, dateTime, influencer, outlet];
+  List<Object?> get props => [videoId, videoUrl, dateTime, influencer, outlet];
 }

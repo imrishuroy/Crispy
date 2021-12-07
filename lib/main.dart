@@ -1,3 +1,4 @@
+import '/screens/home/widgets/cubit/likevideo_cubit.dart';
 import '/repository/influencer/influencer_repository.dart';
 import '/repository/video/video_repository.dart';
 import '/screens/home/bloc/video_bloc.dart';
@@ -49,11 +50,19 @@ class MyApp extends StatelessWidget {
               authRepository: context.read<AuthRepository>(),
             ),
           ),
-          BlocProvider<VideoBloc>(
-            create: (context) => VideoBloc(
+          BlocProvider<LikeVideoCubit>(
+            create: (context) => LikeVideoCubit(
+              authBloc: context.read<AuthBloc>(),
               videoRepository: context.read<VideoRepository>(),
             ),
-          )
+          ),
+          BlocProvider<VideoBloc>(
+            create: (context) => VideoBloc(
+              authBloc: context.read<AuthBloc>(),
+              likeVideoCubit: context.read<LikeVideoCubit>(),
+              videoRepository: context.read<VideoRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

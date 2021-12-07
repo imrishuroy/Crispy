@@ -26,3 +26,8 @@ outlet on the map and details about them on the bottom sheet
 they can see the outlet details 
 
 5. Liked Video Screen - Here user can see the grid view of their past videos
+
+How to make video thumbnail in flutter?
+https://stackoverflow.com/questions/52838120/how-to-make-video-thumbnail-in-flutter
+https://fluttertutorial.in/video-url-thumbnail-in-flutter/
+https://www.google.com/search?q=get+video+thumnail+flutter&oq=get+video+thumnail+flutter&aqs=chrome..69i57.7990j0j1&sourceid=chrome&ie=UTF-8

@@ -32,11 +32,11 @@ class HomeScreen extends StatelessWidget {
       // ),
       backgroundColor: Colors.black,
       body: Column(
-        children: <Widget>[
+        children: const [
           // Top section
           //   const TopBar(),
 
-          const SizedBox(height: 30.0),
+          SizedBox(height: 30.0),
 
           Expanded(child: MainContentLayout()),
 

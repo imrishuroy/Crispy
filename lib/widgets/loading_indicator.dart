@@ -7,12 +7,13 @@ class LoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: SizedBox(
-        height: size,
-        width: size,
-        child: const SpinKitCircle(
-          color: Colors.green,
+        height: 50.0,
+        width: 50.0,
+        child: SpinKitChasingDots(
+          color: Colors.blue,
+          size: 50.0,
         ),
       ),
     );

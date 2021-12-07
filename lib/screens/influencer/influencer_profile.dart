@@ -1,4 +1,5 @@
-import 'package:crispy/models/influencer.dart';
+import '/models/influencer.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '/screens/influencer/bloc/influencer_bloc.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class InfluencerProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     //final _influencerRepo = context.read<InfluencerRepository>();
     return Scaffold(
+
         // floatingActionButton: FloatingActionButton(
         //   onPressed: () async {
         //     final data = _influencerRepo
@@ -25,88 +27,113 @@ class InfluencerProfile extends StatelessWidget {
         //         .map((event) => event);
         //   },
         // ),
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          title: const Text(
-            'Profile',
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20.0),
-            const Center(
+        //  backgroundColor: Colors.white,
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   backgroundColor: Colors.white,
+        //   elevation: 0.0,
+        // ),
+        //   title: const Text(
+        //     'Profile',
+        //     style: TextStyle(
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
+        body: ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 30.0),
+          const Center(
+            child: CircleAvatar(
+              radius: 60.0,
+              backgroundColor: Colors.deepOrange,
               child: CircleAvatar(
-                radius: 50.0,
+                radius: 57.0,
                 backgroundImage: NetworkImage(
                     'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'),
               ),
             ),
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  influencer?.name ?? 'N/A',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 17.0,
-                  ),
+          ),
+          const SizedBox(height: 10.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                influencer?.name ?? 'N/A',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1.2,
+                  fontSize: 17.0,
                 ),
-                const SizedBox(width: 10.0),
-                Container(
-                  height: 12.0,
-                  width: 1.2,
-                  color: Colors.grey.shade800,
+              ),
+              const SizedBox(width: 10.0),
+              Container(
+                height: 12.0,
+                width: 1.2,
+                color: Colors.grey.shade800,
+              ),
+              const SizedBox(width: 10.0),
+              const Text(
+                '3.5',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.0,
                 ),
-                const SizedBox(width: 10.0),
-                const Text(
-                  '3.5',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 17.0,
-                  ),
+              ),
+              const SizedBox(width: 3.0),
+              const Text(
+                '✮',
+                style: TextStyle(
+                  color: Colors.amber,
+                  fontSize: 17.0,
                 ),
-                const SizedBox(width: 3.0),
-                const Text(
-                  '✮',
-                  style: TextStyle(
-                    color: Colors.amber,
-                    fontSize: 17.0,
-                  ),
+              ),
+              const SizedBox(width: 5.0),
+              Container(
+                height: 12.0,
+                width: 1.2,
+                color: Colors.grey.shade800,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.location_on_sharp,
+                  color: Colors.white,
+                  size: 20.0,
                 ),
-                const SizedBox(width: 5.0),
-                Container(
-                  height: 12.0,
-                  width: 1.2,
-                  color: Colors.grey.shade800,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.location_on_sharp,
-                    color: Colors.grey,
-                    size: 20.0,
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.0),
+            child: Text(
+              'How can I make cents, when I got millions on my mind',
+              style: TextStyle(fontSize: 16.0),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30.0),
-            BlocConsumer<InfluencerBloc, InfluencerState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                switch (state.status) {
-                  case InfluencerStatus.succuss:
-                    final videos = state.influencerVideos;
-                    print('Length ${videos.length}');
+          ),
+          const SizedBox(height: 30.0),
+          BlocConsumer<InfluencerBloc, InfluencerState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              switch (state.status) {
+                case InfluencerStatus.succuss:
+                  final videos = state.influencerVideos;
+                  print('Length ${videos.length}');
 
-                    return Expanded(
+                  return Expanded(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40.0),
+                          topRight: Radius.circular(40.0),
+                        ),
+                      ),
                       child: GridView.builder(
                         itemCount: videos.length,
                         gridDelegate:
@@ -120,14 +147,24 @@ class InfluencerProfile extends StatelessWidget {
                           return VideoPreview(videoUrl: video?.videoUrl);
                         },
                       ),
-                    );
-                  default:
-                    return const Center(child: CircularProgressIndicator());
-                }
-              },
-            )
-          ],
-        )
+                    ),
+                  );
+                default:
+                  return const SizedBox(
+                    height: 50.0,
+                    width: 50.0,
+                    child: SpinKitChasingDots(
+                      color: Colors.blue,
+                      size: 50.0,
+                    ),
+                  );
+                //return const Center(child: CircularProgressIndicator());
+              }
+            },
+          )
+        ],
+      ),
+    )
 
         // FutureBuilder<Influencer?>(
         //   future: _influencerRepo.getInfluencer(influencerId: influencerId),

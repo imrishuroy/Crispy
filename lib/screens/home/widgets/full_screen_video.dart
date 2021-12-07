@@ -1,11 +1,13 @@
+import '/models/video.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:video_player/video_player.dart';
 
 class FullScreenVideo extends StatefulWidget {
-  final String? videoUrl;
+  final Video? video;
 
-  const FullScreenVideo({Key? key, required this.videoUrl}) : super(key: key);
+  const FullScreenVideo({Key? key, required this.video}) : super(key: key);
 
   @override
   State<FullScreenVideo> createState() => _FullScreenVideoState();
@@ -23,14 +25,15 @@ class _FullScreenVideoState extends State<FullScreenVideo> {
 
     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
 
-    _videoController = VideoPlayerController.network(widget.videoUrl ?? '')
-      ..initialize().then((_) {
-        setState(() {
-          _loading = false;
-          _videoController.play();
-          _videoController.setLooping(true);
-        });
-      });
+    _videoController =
+        VideoPlayerController.network(widget.video?.videoUrl ?? '')
+          ..initialize().then((_) {
+            setState(() {
+              _loading = false;
+              _videoController.play();
+              _videoController.setLooping(true);
+            });
+          });
   }
 
   @override
@@ -59,6 +62,18 @@ class _FullScreenVideoState extends State<FullScreenVideo> {
         //         strokeWidth: 3.0,
         //         valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
         //   )
-        : VideoPlayer(_videoController);
+        : InkWell(
+            // onDoubleTap: () async {
+            //   setState(() {
+            //     final userId = context.read<AuthRepository>().userId;
+            //     //await FirebaseAuth.instance.signOut();
+            //     //print('Current User Id ${.userId}');
+            //     print('Video Id ${widget.video?.videoId}');
+            //     context
+            //         .read<VideoRepository>()
+            //         .likeVideo(userId: userId, videoId: widget.video?.videoId);
+            //   });
+            //},
+            child: VideoPlayer(_videoController));
   }
 }
