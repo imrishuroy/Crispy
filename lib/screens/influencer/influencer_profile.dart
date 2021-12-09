@@ -1,11 +1,11 @@
+import '/widgets/video_preview.dart';
+
 import '/models/influencer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '/screens/influencer/bloc/influencer_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'widgets/video_preview.dart';
 
 class InfluencerProfile extends StatelessWidget {
   final Influencer? influencer;

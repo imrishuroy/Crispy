@@ -1,63 +1,63 @@
-import 'dart:convert';
+// import 'dart:convert';
 
-class User {
-  final String? handle;
-  final String? imageUrl;
-  final String? userDetailsKey;
+// class AppUser {
+//   final String? handle;
+//   final String? imageUrl;
+//   final String? userDetailsKey;
 
-  const User({
-    this.handle,
-    this.imageUrl,
-    this.userDetailsKey,
-  });
+//   const AppUser({
+//     this.handle,
+//     this.imageUrl,
+//     this.userDetailsKey,
+//   });
 
-  User copyWith({
-    String? handle,
-    String? imageUrl,
-    String? userDetailsKey,
-  }) {
-    return User(
-      handle: handle ?? this.handle,
-      imageUrl: imageUrl ?? this.imageUrl,
-      userDetailsKey: userDetailsKey ?? this.userDetailsKey,
-    );
-  }
+//   AppUser copyWith({
+//     String? handle,
+//     String? imageUrl,
+//     String? userDetailsKey,
+//   }) {
+//     return AppUser(
+//       handle: handle ?? this.handle,
+//       imageUrl: imageUrl ?? this.imageUrl,
+//       userDetailsKey: userDetailsKey ?? this.userDetailsKey,
+//     );
+//   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'handle': handle,
-      'imageUrl': imageUrl,
-      'userDetailsKey': userDetailsKey,
-    };
-  }
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'handle': handle,
+//       'imageUrl': imageUrl,
+//       'userDetailsKey': userDetailsKey,
+//     };
+//   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-      handle: map['handle'],
-      imageUrl: map['imageUrl'],
-      userDetailsKey: map['userDetailsKey'],
-    );
-  }
+//   factory AppUser.fromMap(Map<String, dynamic> map) {
+//     return AppUser(
+//       handle: map['handle'],
+//       imageUrl: map['imageUrl'],
+//       userDetailsKey: map['userDetailsKey'],
+//     );
+//   }
 
-  String toJson() => json.encode(toMap());
+//   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
+//   factory AppUser.fromJson(String source) => AppUser.fromMap(json.decode(source));
 
-  @override
-  String toString() =>
-      'User(handle: $handle, imageUrl: $imageUrl, userDetailsKey: $userDetailsKey)';
+//   @override
+//   String toString() =>
+//       'User(handle: $handle, imageUrl: $imageUrl, userDetailsKey: $userDetailsKey)';
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+//   @override
+//   bool operator ==(Object other) {
+//     if (identical(this, other)) return true;
 
-    return other is User &&
-        other.handle == handle &&
-        other.imageUrl == imageUrl &&
-        other.userDetailsKey == userDetailsKey;
-  }
+//     return other is AppUser &&
+//         other.handle == handle &&
+//         other.imageUrl == imageUrl &&
+//         other.userDetailsKey == userDetailsKey;
+//   }
 
-  @override
-  int get hashCode =>
-      handle.hashCode ^ imageUrl.hashCode ^ userDetailsKey.hashCode;
-}
+//   @override
+//   int get hashCode =>
+//       handle.hashCode ^ imageUrl.hashCode ^ userDetailsKey.hashCode;
+// }

@@ -35,26 +35,11 @@ class InfluencerRepository extends BaseInfluencerRepository {
           .collection(Paths.videos)
           .snapshots();
 
-      // snaps.forEach((element) {
-      //   element.docs.forEach((element) {
-      //     print('object ${element.data()['video'].runtimeType}');
-      //   });
-      // });
-
-      ///DocumentReference
-      ///
-      ///
-
       return snaps.map((event) => event.docs.map((doc) async {
             final videoRef = doc.data()['video'] as DocumentReference?;
             final videoDoc = await videoRef?.get();
             return Video.fromDocument(videoDoc);
           }).toList());
-      // return snaps.map((snaps) {
-      //   return snaps.docs
-      //       .map((doc) => Video.fromDocument(doc.data()['video']))
-      //       .toList();
-      // });
     } catch (e) {
       print('Error geting influencer video ${e.toString()}');
       rethrow;

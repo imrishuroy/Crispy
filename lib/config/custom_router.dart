@@ -1,7 +1,8 @@
-import 'package:crispy/config/auth_wrapper.dart';
-import 'package:crispy/screens/home/home_screen.dart';
-import 'package:crispy/screens/liked-videos/liked_videos.dart';
-import 'package:crispy/screens/login/login_screen.dart';
+import '/config/auth_wrapper.dart';
+import '/screens/comments/comments_screen.dart';
+import '/screens/home/home_screen.dart';
+import '../screens/liked-videos/liked_videos_screen.dart';
+import '/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class CustomRouter {
@@ -24,6 +25,10 @@ class CustomRouter {
 
       case LikedVideos.routeName:
         return LikedVideos.route();
+
+      case CommentsScreen.routeName:
+        return CommentsScreen.route(
+            args: settings.arguments as CommentsScreenArgs);
 
       default:
         return ErrorRoute.route();

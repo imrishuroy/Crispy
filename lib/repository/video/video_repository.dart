@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crispy/models/comment.dart';
 import 'package:crispy/models/video.dart';
 import 'package:crispy/repository/video/base_video_repo.dart';
 
@@ -6,6 +7,11 @@ class VideoRepository extends BaseVideoRepositroy {
   final _videoRef = FirebaseFirestore.instance.collection('videos');
   final _userRef = FirebaseFirestore.instance.collection('users');
   final _likedRef = FirebaseFirestore.instance.collection('likes');
+
+  final FirebaseFirestore _firebaseFirestore;
+
+  VideoRepository({FirebaseFirestore? firebaseFirestore})
+      : _firebaseFirestore = firebaseFirestore ?? FirebaseFirestore.instance;
 
   Stream<List<Future<Video?>>> streamVideos() {
     try {
@@ -33,6 +39,13 @@ class VideoRepository extends BaseVideoRepositroy {
           .collection('liked-videos')
           .doc(userId)
           .set({});
+
+      await _firebaseFirestore
+          .collection('users')
+          .doc(userId)
+          .collection('liked-videos')
+          .doc(videoId)
+          .set({'video': _firebaseFirestore.collection('videos').doc(videoId)});
     } catch (error) {
       print('Error in creating like ${error.toString()}');
       rethrow;
@@ -66,6 +79,13 @@ class VideoRepository extends BaseVideoRepositroy {
           .doc(videoId)
           .collection('liked-videos')
           .doc(userId)
+          .delete();
+
+      await _firebaseFirestore
+          .collection('users')
+          .doc(userId)
+          .collection('liked-videos')
+          .doc(videoId)
           .delete();
     } catch (error) {
       print('Error in deleting like ${error.toString()}');
@@ -143,6 +163,66 @@ class VideoRepository extends BaseVideoRepositroy {
 
     } catch (e) {
       print('Error getting videos ${e.toString()}');
+      rethrow;
+    }
+  }
+
+  // Comments section
+
+  Future<void> createComment({
+    required Comment comment,
+  }) async {
+    try {
+      _firebaseFirestore
+          .collection('comments')
+          .doc(comment.videoId)
+          .collection('video-comments')
+          .add(comment.toDocument());
+    } catch (error) {
+      print('Error in adding comments ${error.toString()}');
+      rethrow;
+    }
+  }
+
+  Stream<List<Future<Comment?>>> getPostComments({required String? videoId}) {
+    return _firebaseFirestore
+        .collection('comments')
+        .doc(videoId)
+        .collection('video-comments')
+        .orderBy('date', descending: false)
+        .snapshots()
+        .map((snap) =>
+            snap.docs.map((doc) => Comment.fromDocument(doc)).toList());
+  }
+
+  // User liked videos
+
+  Stream<List<Future<Video?>>> streamUserLikedVideos(
+      {required String? userId}) {
+    print('user id -------- $userId');
+    try {
+      final videoSnaps = _firebaseFirestore
+          .collection('users')
+          .doc(userId)
+          .collection('liked-videos')
+          .snapshots();
+
+      return videoSnaps.map((snaps) {
+        return snaps.docs.map((doc) async {
+          print('data ------------- ${doc.data()['video']}');
+          final DocumentReference videoRef = doc.data()['video'];
+          final videoData = await videoRef.get();
+          return Video.fromDocument(videoData);
+        }).toList();
+      });
+
+      // return videoSnaps.map((snaps) {
+      //   print('Video snaps ${snaps.docs.length}');
+
+      //   return snaps.docs.map((doc) => Video.fromDocument(doc)).toList();
+      // });
+    } catch (error) {
+      print('Error in getting user liked vieos ${error.toString()}');
       rethrow;
     }
   }

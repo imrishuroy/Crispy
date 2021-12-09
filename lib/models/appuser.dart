@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -62,6 +63,18 @@ class AppUser extends Equatable {
       imageUrl: map?['imageUrl'] ?? '',
       about: map?['about'] ?? '',
       email: map?['email'] ?? '',
+    );
+  }
+
+  factory AppUser.fromDocument(DocumentSnapshot? doc) {
+    // if (doc == null) return null;
+    final data = doc?.data() as Map?;
+    return AppUser(
+      uid: data?['uid'],
+      name: data?['name'],
+      imageUrl: data?['imageUrl'],
+      about: data?['about'],
+      email: data?['email'],
     );
   }
 

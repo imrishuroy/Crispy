@@ -6,7 +6,7 @@ import '/screens/influencer/bloc/influencer_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '/screens/home/bloc/video_bloc.dart';
-import '/screens/liked-videos/liked_videos.dart';
+import '../../liked-videos/liked_videos_screen.dart';
 
 import '/screens/influencer/influencer_profile.dart';
 import '/screens/map/map_screen.dart';
@@ -125,7 +125,9 @@ class ContentView extends StatelessWidget {
                         },
                       ),
                       //const SizedBox(height: 5.0),
-                      const CommentButton(),
+                      CommentButton(
+                        video: video,
+                      ),
                       // CommentButton(),
                       //  _getSocialAction(icon: TikTokIcons.heart, title: '3.2m'),
                       // _getSocialAction(icon: TikTokIcons.chatBubble, title: '16.4k'),

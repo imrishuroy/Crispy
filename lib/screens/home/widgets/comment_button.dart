@@ -1,8 +1,12 @@
+import 'package:crispy/models/video.dart';
+import 'package:crispy/screens/comments/comments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CommentButton extends StatelessWidget {
-  const CommentButton({Key? key}) : super(key: key);
+  final Video? video;
+
+  const CommentButton({Key? key, required this.video}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,28 +22,35 @@ class CommentButton extends StatelessWidget {
               size: 35.0,
             ),
             onPressed: () {
-              showModalBottomSheet<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  return Container(
-                    height: 200,
-                    color: Colors.amber,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const Text('Modal BottomSheet'),
-                          ElevatedButton(
-                            child: const Text('Close BottomSheet'),
-                            onPressed: () => Navigator.pop(context),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
+              if (video != null) {
+                Navigator.of(context).pushNamed(
+                  CommentsScreen.routeName,
+                  arguments: CommentsScreenArgs(video: video!),
+                );
+              }
+
+              // showModalBottomSheet<void>(
+              //   context: context,
+              //   builder: (BuildContext context) {
+              //     return Container(
+              //       height: 200,
+              //       color: Colors.amber,
+              //       child: Center(
+              //         child: Column(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: <Widget>[
+              //             const Text('Modal BottomSheet'),
+              //             ElevatedButton(
+              //               child: const Text('Close BottomSheet'),
+              //               onPressed: () => Navigator.pop(context),
+              //             )
+              //           ],
+              //         ),
+              //       ),
+              //     );
+              //},
+              //  );
             },
           ),
 

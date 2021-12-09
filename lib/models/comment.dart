@@ -1,54 +1,74 @@
-import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Comment {
-  final String? key;
-  final int? noOfComments;
-  Comment({
-    this.key,
-    this.noOfComments,
+import 'package:equatable/equatable.dart';
+
+import 'appuser.dart';
+
+class Comment extends Equatable {
+  final String? id;
+  final String? videoId;
+  final AppUser? author;
+  final String? content;
+  final DateTime date;
+
+  const Comment({
+    this.id,
+    required this.videoId,
+    required this.author,
+    required this.content,
+    required this.date,
   });
 
+  @override
+  List<Object?> get props => [
+        id,
+        videoId,
+        author,
+        content,
+        date,
+      ];
+
   Comment copyWith({
-    String? key,
-    int? noOfComments,
+    String? id,
+    String? videoId,
+    AppUser? author,
+    String? content,
+    DateTime? date,
   }) {
     return Comment(
-      key: key ?? this.key,
-      noOfComments: noOfComments ?? this.noOfComments,
+      id: id ?? this.id,
+      videoId: videoId ?? this.videoId,
+      author: author ?? this.author,
+      content: content ?? this.content,
+      date: date ?? this.date,
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toDocument() {
     return {
-      'key': key,
-      'noOfComments': noOfComments,
+      'postId': videoId,
+      'author': FirebaseFirestore.instance.collection('users').doc(author?.uid),
+      'content': content,
+      'date': Timestamp.fromDate(date),
     };
   }
 
-  factory Comment.fromMap(Map<String, dynamic> map) {
-    return Comment(
-      key: map['key'],
-      noOfComments: map['noOfComments'],
-    );
+  static Future<Comment?> fromDocument(DocumentSnapshot? doc) async {
+    if (doc == null) return null;
+    final data = doc.data() as Map?;
+    final authorRef = data?['author'] as DocumentReference?;
+    if (authorRef != null) {
+      final authorDoc = await authorRef.get();
+      if (authorDoc.exists) {
+        return Comment(
+          id: doc.id,
+          videoId: data?['postId'] ?? '',
+          author: AppUser.fromDocument(authorDoc),
+          content: data?['content'] ?? '',
+          date: (data?['date'] as Timestamp).toDate(),
+        );
+      }
+    }
+    return null;
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Comment.fromJson(String source) =>
-      Comment.fromMap(json.decode(source));
-
-  @override
-  String toString() => 'Comment(key: $key, noOfComments: $noOfComments)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Comment &&
-        other.key == key &&
-        other.noOfComments == noOfComments;
-  }
-
-  @override
-  int get hashCode => key.hashCode ^ noOfComments.hashCode;
 }
