@@ -15,33 +15,32 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () async {
-      //   final videoRepo = context.read<VideoRepository>();
-      ///  final videos = await videoRepo.getVideos();
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () async {
+        //     final videoRepo = context.read<VideoRepository>();
 
-      // final video = videos[0];
+        //     print(
+        //         'User likes --------- ${await videoRepo.getLikesCount(videoId: 'CnPywpSfDK2CQ9KnMvSc')}');
+        //   },
+        // ),
+        backgroundColor: Colors.black,
+        body: Column(
+          children: const [
+            // Top section
+            //   const TopBar(),
 
-      // print('My location ${video?.outlet?.location?.latitude}');
-      // print('My location ${video?.influencer?.name}');
+            SizedBox(height: 30.0),
 
-      // print('Video List ${await videoRepo.getVideos()}');
-      //  print('DateTime - ${DateTime.now().millisecondsSinceEpoch}');
-      //   },
-      // ),
-      backgroundColor: Colors.black,
-      body: Column(
-        children: const [
-          // Top section
-          //   const TopBar(),
+            Expanded(child: MainContentLayout()),
 
-          SizedBox(height: 30.0),
-
-          Expanded(child: MainContentLayout()),
-
-          // const BottomToolbar(),
-        ],
+            // const BottomToolbar(),
+          ],
+        ),
       ),
     );
   }

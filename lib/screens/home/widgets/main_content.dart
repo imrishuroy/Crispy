@@ -1,14 +1,15 @@
-import 'package:crispy/screens/home/widgets/cubit/likevideo_cubit.dart';
+import '/repository/outlet/outlet_repository.dart';
+import '/screens/home/widgets/cubit/likevideo_cubit.dart';
+import '/screens/liked-videos/liked_videos_screen.dart';
+import '/screens/outlet/bloc/outletprofile_bloc.dart';
+import '/screens/outlet/outlet_profile.dart';
 
 import '/models/video.dart';
-import '/repository/influencer/influencer_repository.dart';
-import '/screens/influencer/bloc/influencer_bloc.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '/screens/home/bloc/video_bloc.dart';
-import '../../liked-videos/liked_videos_screen.dart';
 
-import '/screens/influencer/influencer_profile.dart';
 import '/screens/map/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'comment_button.dart';
@@ -106,12 +107,13 @@ class ContentView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const VideoDescription(),
+                  VideoDescription(video: video),
                   SizedBox(
                     width: 80.0,
                     child: Column(mainAxisSize: MainAxisSize.min, children: [
                       FavButton(
                         isLiked: isLiked,
+                        videoId: video?.videoId,
                         onLike: () {
                           if (isLiked) {
                             context
@@ -122,12 +124,13 @@ class ContentView extends StatelessWidget {
                                 .read<LikeVideoCubit>()
                                 .likePost(videoId: video?.videoId);
                           }
+                          // context
+                          //     .read<LikeVideoCubit>()
+                          //     .getLikesCount(videoId: video?.videoId);
                         },
                       ),
                       //const SizedBox(height: 5.0),
-                      CommentButton(
-                        video: video,
-                      ),
+                      CommentButton(video: video),
                       // CommentButton(),
                       //  _getSocialAction(icon: TikTokIcons.heart, title: '3.2m'),
                       // _getSocialAction(icon: TikTokIcons.chatBubble, title: '16.4k'),
@@ -154,15 +157,25 @@ class ContentView extends StatelessWidget {
             ),
           ],
         ),
-        BlocProvider<InfluencerBloc>(
-          create: (context) => InfluencerBloc(
-            influencerId: video?.influencer?.influencerId,
-            videoRepository: context.read<InfluencerRepository>(),
+        BlocProvider<OutletProfileBloc>(
+          create: (context) => OutletProfileBloc(
+            outletId: video?.outlet?.outletId,
+            outletRepo: context.read<OutletRepository>(),
           ),
-          child: InfluencerProfile(
-            influencer: video?.influencer,
+          child: OutletProfile(
+            outlet: video?.outlet,
           ),
         ),
+
+        // BlocProvider<InfluencerBloc>(
+        //   create: (context) => InfluencerBloc(
+        //     influencerId: video?.influencer?.influencerId,
+        //     influencerRepo: context.read<InfluencerRepository>(),
+        //   ),
+        //   child: InfluencerProfile(
+        //     influencer: video?.influencer,
+        //   ),
+        // ),
       ],
     );
 

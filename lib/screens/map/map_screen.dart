@@ -411,6 +411,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+// Todo: Remove map zoom in and zoom out
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
 

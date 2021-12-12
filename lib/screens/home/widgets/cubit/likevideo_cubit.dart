@@ -25,8 +25,8 @@ class LikeVideoCubit extends Cubit<LikeVideoState> {
     );
   }
 
-  void likePost({required String? videoId}) {
-    _videoRepository.createLike(
+  void likePost({required String? videoId}) async {
+    await _videoRepository.createLike(
       videoId: videoId,
       userId: _authBloc.state.user!.uid,
     );
@@ -38,6 +38,11 @@ class LikeVideoCubit extends Cubit<LikeVideoState> {
           ..add(videoId),
       ),
     );
+  }
+
+  void getLikesCount({required String? videoId}) async {
+    final likes = await _videoRepository.getLikesCount(videoId: videoId);
+    emit(state.copyWith(likesCount: likes));
   }
 
   void unlikePost({required String? videoId}) {

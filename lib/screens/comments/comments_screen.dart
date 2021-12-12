@@ -1,5 +1,3 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '/blocs/auth/auth_bloc.dart';
 import '/models/video.dart';
 import '/repository/video/video_repository.dart';
@@ -61,88 +59,98 @@ class _CommentsScreenState extends State<CommentsScreen> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Colors.grey.shade900,
-          appBar: AppBar(
+        return WillPopScope(
+          onWillPop: () async {
+            Navigator.of(context).pop(true);
+            return true;
+          },
+          child: Scaffold(
             backgroundColor: Colors.grey.shade900,
-            elevation: 0.0,
-            title: const Text('Comments'),
-            actions: const [
-              Icon(FontAwesomeIcons.telegramPlane, size: 20.0),
-              SizedBox(width: 15.0),
-            ],
-          ),
-          //appBar: AppBar(title: const Text('Comments')),
-          body: ListView.builder(
-            padding: const EdgeInsets.only(bottom: 60.0),
-            itemCount: state.comments.length,
-            itemBuilder: (BuildContext context, int index) {
-              final comment = state.comments[index];
-              return ListTile(
-                  leading: UserProfileImage(
-                    radius: 22.0,
-                    profileImageUrl: comment!.author!.imageUrl,
-                  ),
-                  title: Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: comment.author?.name,
-                          style: const TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                        const TextSpan(text: ' '),
-                        TextSpan(text: comment.content),
-                      ],
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+              backgroundColor: Colors.grey.shade900,
+              elevation: 0.0,
+              title: const Text('Comments'),
+              // actions: const [
+              //   Icon(FontAwesomeIcons.telegramPlane, size: 20.0),
+              //   SizedBox(width: 15.0),
+              // ],
+            ),
+            //appBar: AppBar(title: const Text('Comments')),
+            body: ListView.builder(
+              padding: const EdgeInsets.only(bottom: 60.0),
+              itemCount: state.comments.length,
+              itemBuilder: (BuildContext context, int index) {
+                final comment = state.comments[index];
+                return ListTile(
+                    leading: UserProfileImage(
+                      radius: 22.0,
+                      profileImageUrl: comment!.author!.imageUrl,
                     ),
-                  ),
-                  subtitle: Text(
-                    DateFormat.yMd().add_jm().format(comment.date),
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onTap: () {
-                    // Navigator.of(context).pushNamed(
-                    //   ProfileScreen.routeName,
-                    //   arguments: ProfileScreenArgs(userId: comment.author!.id!),
-                    // );
-                  });
-            },
-          ),
-          bottomSheet: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (state.status == CommentsStatus.submitting)
-                  const LinearProgressIndicator(),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _commentController,
-                        textCapitalization: TextCapitalization.sentences,
-                        decoration: const InputDecoration.collapsed(
-                            hintText: 'Write a comment...'),
+                    title: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: comment.author?.name,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          const TextSpan(text: ' '),
+                          TextSpan(text: comment.content),
+                        ],
                       ),
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () {
-                        final content = _commentController.text.trim();
-                        if (content.isNotEmpty) {
-                          context
-                              .read<CommentsBloc>()
-                              .add(CommentsPostComment(content: content));
-                          _commentController.clear();
-                        }
-                      },
+                    subtitle: Text(
+                      DateFormat.yMd().add_jm().format(comment.date),
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ],
-                ),
-              ],
+                    onTap: () {
+                      // Navigator.of(context).pushNamed(
+                      //   ProfileScreen.routeName,
+                      //   arguments: ProfileScreenArgs(userId: comment.author!.id!),
+                      // );
+                    });
+              },
+            ),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (state.status == CommentsStatus.submitting)
+                    const LinearProgressIndicator(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _commentController,
+                          textCapitalization: TextCapitalization.sentences,
+                          decoration: const InputDecoration.collapsed(
+                              hintText: 'Write a comment...'),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.send),
+                        onPressed: () {
+                          final content = _commentController.text.trim();
+                          if (content.isNotEmpty) {
+                            context
+                                .read<CommentsBloc>()
+                                .add(CommentsPostComment(content: content));
+                            _commentController.clear();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );

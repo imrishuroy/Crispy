@@ -1,3 +1,5 @@
+import 'package:crispy/repository/outlet/outlet_repository.dart';
+
 import '/screens/home/widgets/cubit/likevideo_cubit.dart';
 import '/repository/influencer/influencer_repository.dart';
 import '/repository/video/video_repository.dart';
@@ -41,6 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<InfluencerRepository>(
           create: (_) => InfluencerRepository(),
+        ),
+        RepositoryProvider<OutletRepository>(
+          create: (_) => OutletRepository(),
         )
       ],
       child: MultiBlocProvider(

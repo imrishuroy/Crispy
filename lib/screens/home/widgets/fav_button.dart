@@ -1,14 +1,22 @@
+import '/repository/video/video_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavButton extends StatelessWidget {
   final VoidCallback onLike;
   final bool isLiked;
+  final String? videoId;
 
-  const FavButton({Key? key, required this.onLike, required this.isLiked})
-      : super(key: key);
+  const FavButton({
+    Key? key,
+    required this.onLike,
+    required this.isLiked,
+    required this.videoId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _videoRepo = context.read<VideoRepository>();
     return Container(
       margin: const EdgeInsets.only(top: 15.0),
       child: Column(
@@ -20,14 +28,26 @@ class FavButton extends StatelessWidget {
                     color: Colors.redAccent, size: 36.0)
                 : const Icon(Icons.favorite_outline, size: 35.0),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 4.0),
-            child: Text(
-              '3.2m',
-              style: TextStyle(fontSize: 10.0),
-              textAlign: TextAlign.center,
+          SizedBox(
+            height: 22.0,
+            width: 100.0,
+            child: FutureBuilder<int>(
+              future: _videoRepo.getLikesCount(videoId: videoId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // return SpinKitThreeBounce(
+                  //   color: Colors.grey.shade400,
+                  //   size: 20.0,
+                  // );
+                }
+                return Text(
+                  '${snapshot.data}',
+                  style: const TextStyle(fontSize: 10.0),
+                  textAlign: TextAlign.center,
+                );
+              },
             ),
-          )
+          ),
         ],
       ),
     );

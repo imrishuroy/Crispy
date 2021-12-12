@@ -92,6 +92,38 @@ class VideoRepository extends BaseVideoRepositroy {
     }
   }
 
+  Future<int> getLikesCount({
+    required String? videoId,
+  }) async {
+    try {
+      final snaps = await _firebaseFirestore
+          .collection('likes')
+          .doc(videoId)
+          .collection('liked-videos')
+          .get();
+
+      return snaps.docs.length;
+    } catch (error) {
+      print('Error in getting likes count ${error.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<int> getCommentsCount({required String? videoId}) async {
+    try {
+      final snaps = await _firebaseFirestore
+          .collection('comments')
+          .doc(videoId)
+          .collection('video-comments')
+          .get();
+
+      return snaps.docs.length;
+    } catch (e) {
+      print('Error in getting comments likes ${e.toString()}');
+      rethrow;
+    }
+  }
+
   Future<bool?> checkVideoLikeOrNot(
       {required String? userId, required String? videoId}) async {
     try {

@@ -45,6 +45,10 @@ class Video extends Equatable {
     };
   }
 
+  static int diff({required int a, required int b}) {
+    return a - b;
+  }
+
   static Future<Video?> fromDocument(DocumentSnapshot? doc) async {
     print('Prince $doc');
     print('Prince ${doc.runtimeType}');

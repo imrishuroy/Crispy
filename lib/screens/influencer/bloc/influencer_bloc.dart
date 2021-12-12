@@ -11,9 +11,9 @@ class InfluencerBloc extends Bloc<InfluencerEvent, InfluencerState> {
   final InfluencerRepository _influencerRepo;
 
   InfluencerBloc({
-    required InfluencerRepository videoRepository,
+    required InfluencerRepository influencerRepo,
     required String? influencerId,
-  })  : _influencerRepo = videoRepository,
+  })  : _influencerRepo = influencerRepo,
         super(InfluencerState.initial()) {
     _influencerRepo
         .streamInfluencerVideos(influencerId: influencerId)

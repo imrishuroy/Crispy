@@ -1,3 +1,5 @@
+import '/repository/influencer/influencer_repository.dart';
+
 import '/widgets/video_preview.dart';
 
 import '/models/influencer.dart';
@@ -7,6 +9,12 @@ import '/screens/influencer/bloc/influencer_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class InfluencerProfileArgs {
+  final Influencer? influencer;
+
+  const InfluencerProfileArgs({required this.influencer});
+}
+
 class InfluencerProfile extends StatelessWidget {
   final Influencer? influencer;
 
@@ -14,6 +22,22 @@ class InfluencerProfile extends StatelessWidget {
     Key? key,
     required this.influencer,
   }) : super(key: key);
+
+  static const String routeName = '/influencer-profile';
+
+  static Route route({required InfluencerProfileArgs? args}) {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: routeName),
+      builder: (context) {
+        return BlocProvider(
+          create: (context) => InfluencerBloc(
+              influencerRepo: context.read<InfluencerRepository>(),
+              influencerId: args!.influencer?.influencerId),
+          child: InfluencerProfile(influencer: args!.influencer),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,61 +1,88 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:crispy/screens/influencer/influencer_profile.dart';
+
+import '/config/contants.dart';
+import '/models/video.dart';
 import 'package:flutter/material.dart';
 
 class VideoDescription extends StatelessWidget {
-  const VideoDescription({Key? key}) : super(key: key);
+  final Video? video;
   // The size of the profile image in the follow Action
   static const double profileImageSize = 50.0;
+
+  const VideoDescription({Key? key, required this.video}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: 100.0,
+        height: 130.0,
         padding: const EdgeInsets.only(left: 20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(1.0),
+            InkWell(
+              onTap: () => Navigator.of(context).pushNamed(
+                InfluencerProfile.routeName,
+                arguments: InfluencerProfileArgs(influencer: video?.influencer),
+              ),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.deepOrange,
+                    radius: 17.3,
+                    child: CircleAvatar(
+                      radius: 16.5,
+                      backgroundImage: NetworkImage(
+                        video?.influencer?.profilePic ?? errorImage,
+                      ),
+                    ),
+                  ),
 
-                  height: 32.0,
-                  width: 32.0,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(profileImageSize / 2),
+                  // Container(
+                  //   padding: const EdgeInsets.all(1.0),
+
+                  //   height: 32.0,
+                  //   width: 32.0,
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(profileImageSize / 2),
+                  //   ),
+                  //   // import 'package:cached_network_image/cached_network_image.dart'; at the top to use CachedNetworkImage
+                  //   child: CachedNetworkImage(
+                  //     imageUrl: video?.influencer?.profilePic ?? errorImage,
+                  //     // imageUrl:
+                  //     //     '',
+                  //     //  placeholder: (context, url) => const CircularProgressIndicator(),
+                  //     // errorWidget: (context, url, error) => const Icon(Icons.error),
+                  //   ),
+                  //  ),
+                  const SizedBox(width: 5.0),
+                  Text(
+                    '@${video?.influencer?.name ?? ''}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  // import 'package:cached_network_image/cached_network_image.dart'; at the top to use CachedNetworkImage
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        'https://secure.gravatar.com/avatar/ef4a9338dca42372f15427cdb4595ef7',
-                    //  placeholder: (context, url) => const CircularProgressIndicator(),
-                    // errorWidget: (context, url, error) => const Icon(Icons.error),
-                  ),
-                ),
-                const SizedBox(width: 5.0),
-                const Text(
-                  '@firstjonny',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+                ],
+              ),
             ),
 
-            const Text(
-              'Jain\'s Basket',
-              style: TextStyle(
+            Text(
+              video?.outlet?.name ?? 'N/A',
+              style: const TextStyle(
                 fontSize: 17.0,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.1,
               ),
             ),
-            const SizedBox(height: 2.0),
+            //const SizedBox(height: 2.0),
             // we can user expandable_text: ^2.2.0 for exanding text
-            const Text(
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry.')
+            SizedBox(
+              height: 50.0,
+              child: SingleChildScrollView(
+                child: Text(video?.outlet?.about ?? 'N/A'),
+              ),
+            )
 
             // const Text('Video title and some other stuff'),
             // Row(

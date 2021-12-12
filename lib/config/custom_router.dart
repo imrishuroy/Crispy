@@ -1,3 +1,5 @@
+import 'package:crispy/screens/influencer/influencer_profile.dart';
+
 import '/config/auth_wrapper.dart';
 import '/screens/comments/comments_screen.dart';
 import '/screens/home/home_screen.dart';
@@ -29,6 +31,10 @@ class CustomRouter {
       case CommentsScreen.routeName:
         return CommentsScreen.route(
             args: settings.arguments as CommentsScreenArgs);
+
+      case InfluencerProfile.routeName:
+        return InfluencerProfile.route(
+            args: settings.arguments as InfluencerProfileArgs);
 
       default:
         return ErrorRoute.route();

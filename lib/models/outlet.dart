@@ -4,14 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class Outlet extends Equatable {
+  final String? outletPic;
+
   final String? outletId;
 
   final String? name;
   final GeoPoint? location;
 
   final String? about;
+
   const Outlet({
     this.outletId,
+    this.outletPic,
     this.name,
     this.location,
     this.about,
@@ -22,12 +26,14 @@ class Outlet extends Equatable {
     String? name,
     GeoPoint? location,
     String? about,
+    String? outletPic,
   }) {
     return Outlet(
       outletId: outletId ?? this.outletId,
       name: name ?? this.name,
       location: location ?? this.location,
       about: about ?? this.about,
+      outletPic: outletPic ?? this.outletPic,
     );
   }
 
@@ -38,6 +44,7 @@ class Outlet extends Equatable {
       // 'location': location?.toMap(),
       'location': location,
       'about': about,
+      'outletPic': outletPic,
     };
   }
 
@@ -49,6 +56,7 @@ class Outlet extends Equatable {
           // map['location'] != null ? GeoPoint.fromMap(map['location']) : null,
           map['location'],
       about: map['about'],
+      outletPic: map['outletPic'],
     );
   }
 
@@ -66,6 +74,7 @@ class Outlet extends Equatable {
           name: data['name'],
           location: null,
           about: data['about'],
+          outletPic: data['outletPic'],
         );
       }
     }
@@ -85,6 +94,7 @@ class Outlet extends Equatable {
       name: data?['name'],
       location: data?['location'],
       about: data?['about'],
+      outletPic: data?['outletPic'],
     );
   }
 
