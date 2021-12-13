@@ -1,3 +1,342 @@
+import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
+
+import '/models/outlet.dart';
+import 'package:flutter/material.dart';
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+const String _errorImg = 'https://mediawebben.se/assets/img/error/img.png';
+
+// Todo: Remove map zoom in and zoom out
+class MapScreen extends StatefulWidget {
+  final Outlet? outlet;
+
+  const MapScreen({Key? key, required this.outlet}) : super(key: key);
+
+  @override
+  State<MapScreen> createState() => MapScreenState();
+}
+
+class MapScreenState extends State<MapScreen> {
+  void _launchURL({required url}) async {
+    if (!await launch(url)) throw 'Could not launch $url';
+  }
+
+  void _lauchPhoneNo(String? phNo) async {
+    await launch('tel://$phNo');
+  }
+
+  final Completer<GoogleMapController> _controller = Completer();
+
+  // static const CameraPosition _kGooglePlex = CameraPosition(
+  //   target: LatLng(23.2524, 77.5021),
+  //   zoom: 14.4746,
+  // );
+
+  // static const CameraPosition _kGooglePlex = CameraPosition(
+  //   target: LatLng(23.2524, 77.5021),
+  //   zoom: 14.4746,
+  // );
+
+  // static const CameraPosition _kLake = CameraPosition(
+  //     bearing: 192.8334901395799,
+  //     target: LatLng(37.43296265331129, -122.08832357078792),
+  //     tilt: 59.440717697143555,
+  //     zoom: 19.151926040649414);
+
+  Map<MarkerId, Marker> markers =
+      <MarkerId, Marker>{}; // CLASS MEMBER, MAP OF MARKS
+
+  @override
+  void initState() {
+    _add();
+    super.initState();
+  }
+
+  void _add() {
+    print('Map runs ---------_!');
+    var markerIdVal = 'aaarrkmalsala';
+    final MarkerId markerId = MarkerId(markerIdVal);
+    if (widget.outlet?.location?.latitude != null &&
+        widget.outlet?.location?.longitude != null) {
+      print('Map runs ---------_2');
+      // creating a new MARKER
+      final Marker marker = Marker(
+        markerId: markerId,
+        position: LatLng(widget.outlet!.location!.latitude,
+            widget.outlet!.location!.longitude),
+        //  LatLng(
+        //   center.latitude + sin(_markerIdCounter * pi / 6.0) / 20.0,
+        //   center.longitude + cos(_markerIdCounter * pi / 6.0) / 20.0,
+        // ),
+        infoWindow: InfoWindow(title: markerIdVal, snippet: '*'),
+        onTap: () {
+          //_onMarkerTapped(markerId);
+        },
+      );
+
+      setState(() {
+        // adding a new marker to map
+        markers[markerId] = marker;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('Lat  --------- ${widget.outlet?.location?.latitude}');
+
+    print('Long  --------- ${widget.outlet?.location?.longitude}');
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () async {
+//           GeoCode geoCode = GeoCode();
+//           // From coordinates
+//           final address = await geoCode.reverseGeocoding(
+//               latitude: 23.2486367, longitude: 77.50223369999999);
+//           print('Address $address');
+// // first = addresses.first;
+// // print("${first.featureName} : ${first.addressLine}");
+//         },
+//       ),
+      // body: GoogleMap(
+      //     myLocationButtonEnabled: false,
+      //     // tiltGesturesEnabled: false,
+      //     // onCameraMove: (CameraPosition cameraPosition) {
+      //     //   print(cameraPosition.zoom);
+      //     // },
+      //     // zoomGesturesEnabled: true,
+      //     markers: Set<Marker>.of(markers.values),
+      //     mapType: MapType.normal,
+      //     zoomControlsEnabled: true,
+      //     initialCameraPosition: _kGooglePlex,
+      //     onMapCreated: (GoogleMapController controller) {
+      //       _controller.complete(controller);
+      //     },
+      //     onTap: (LatLng latLng) {
+      //       Marker marker = Marker(
+      //         draggable: true,
+      //         markerId: MarkerId(latLng.toString()),
+      //       );
+      //     }
+      //     //_customInfoWindowController.hideInfoWindow!();
+
+      //     ),
+      body: ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 500.0,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12.0),
+                  topRight: Radius.circular(12.0),
+                ),
+                child: GoogleMap(
+                  markers: Set<Marker>.of(markers.values),
+                  mapType: MapType.normal,
+                  //enable zoom gestures
+                  zoomGesturesEnabled: false,
+                  //  initialCameraPosition: ,
+                  // initialCameraPosition: _kGooglePlex,
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(widget.outlet?.location?.latitude ?? 22.0,
+                        widget.outlet?.location?.longitude ?? 30.0),
+                    zoom: 14.4746,
+                  ),
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 20.0,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: 80.0,
+                              width: 110.0,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    widget.outlet?.outletImg ?? _errorImg,
+                                  ),
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              // child: Image.network(
+                              //     'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=Aap_uEDQ8E_TnsEQCXm7jEH7pnNH_tJPi_Fi3quV62k4-AZwO3vikRoxVwI3bnJKtxuWdqf9pTLeARAITVdBv6qIxCS9Nsa4zxYHFSuHxM4z-wraYPN4x6jxevNLXEmueMcLlSa0hMEDFPofYlErzwKxgqUbKYYP_vJQ_eKz22osO_8G-OSz&key=AIzaSyCWjmMNRDr1881C34m8p4iTac6ocqWdlYI'),
+                            ),
+                            const SizedBox(width: 10.0),
+                            Expanded(
+                              child: Text(
+                                widget.outlet?.name ?? 'N/A',
+                                style: const TextStyle(
+                                  fontSize: 17.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  // letterSpacing: 0.9,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15.0),
+                        Text(
+                          widget.outlet?.address ?? 'N/A',
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.black,
+
+                            // letterSpacing: 0.9,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        // const Text(
+                        //   'Contact :',
+                        //   style: TextStyle(
+                        //     fontSize: 17.0,
+                        //     color: Colors.black,
+                        //     fontWeight: FontWeight.w600,
+                        //   ),
+                        // ),
+                        const SizedBox(height: 4.0),
+                        SizedBox(
+                          width: 200.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              for (int i = 0;
+                                  i < (widget.outlet?.rattings ?? 0);
+                                  i++)
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        InkWell(
+                          onTap: () {
+                            _lauchPhoneNo(widget.outlet?.phNo);
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.phone,
+                                color: Colors.grey,
+                                size: 22.0,
+                              ),
+                              const SizedBox(width: 10.0),
+                              Text(
+                                widget.outlet?.phNo ?? '',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.0,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.public,
+                              color: Colors.grey,
+                              size: 22.0,
+                            ),
+                            const SizedBox(width: 10.0),
+                            InkWell(
+                              onTap: () {
+                                print('this rusn --------1');
+                                if (widget.outlet?.website != null &&
+                                    widget.outlet?.website != '') {
+                                  print('this rusn --------2');
+                                  if (widget.outlet!.website!
+                                      .contains('http')) {
+                                    print('this rusn --------');
+                                    _launchURL(url: widget.outlet!.website);
+                                  }
+                                }
+                              },
+                              child: Text(
+                                widget.outlet?.website ?? 'N/A',
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 16.0,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: _goToTheLake,
+      //   label: const Text('To the lake!'),
+      //   icon: const Icon(Icons.directions_boat),
+      // ),
+    );
+  }
+
+  // Future<void> _goToTheLake() async {
+  //   final GoogleMapController controller = await _controller.future;
+  //   controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  // }
+}
+
+
+
+
+
+
+
+
+// import 'package:flutter/material.dart';
+// //AIzaSyBTtR33f5AF8dwtcNmmmj1LXitclssRepM
+// class MapScreen extends StatelessWidget {
+//   const MapScreen({ Key? key }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+
+      
+//     );
+//   }
+// }
+
 // // Copyright 2013 The Flutter Authors. All rights reserved.
 // // Use of this source code is governed by a BSD-style license that can be
 // // found in the LICENSE file.
@@ -402,301 +741,5 @@
 //         ),
 //       ),
 //     ]);
-//   }
-// }
-
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-// Todo: Remove map zoom in and zoom out
-class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
-
-  @override
-  State<MapScreen> createState() => MapScreenState();
-}
-
-class MapScreenState extends State<MapScreen> {
-  final Completer<GoogleMapController> _controller = Completer();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(23.2524, 77.5021),
-    zoom: 14.4746,
-  );
-
-  // static const CameraPosition _kLake = CameraPosition(
-  //     bearing: 192.8334901395799,
-  //     target: LatLng(37.43296265331129, -122.08832357078792),
-  //     tilt: 59.440717697143555,
-  //     zoom: 19.151926040649414);
-
-  Map<MarkerId, Marker> markers =
-      <MarkerId, Marker>{}; // CLASS MEMBER, MAP OF MARKS
-
-  @override
-  void initState() {
-    _add();
-    super.initState();
-  }
-
-  void _add() {
-    var markerIdVal = 'aaarrkmalsala';
-    final MarkerId markerId = MarkerId(markerIdVal);
-
-    // creating a new MARKER
-    final Marker marker = Marker(
-      markerId: markerId,
-      position: const LatLng(23.2486367, 77.50223369999999),
-      //  LatLng(
-      //   center.latitude + sin(_markerIdCounter * pi / 6.0) / 20.0,
-      //   center.longitude + cos(_markerIdCounter * pi / 6.0) / 20.0,
-      // ),
-      infoWindow: InfoWindow(title: markerIdVal, snippet: '*'),
-      onTap: () {
-        //_onMarkerTapped(markerId);
-      },
-    );
-
-    setState(() {
-      // adding a new marker to map
-      markers[markerId] = marker;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () async {
-//           GeoCode geoCode = GeoCode();
-//           // From coordinates
-//           final address = await geoCode.reverseGeocoding(
-//               latitude: 23.2486367, longitude: 77.50223369999999);
-//           print('Address $address');
-// // first = addresses.first;
-// // print("${first.featureName} : ${first.addressLine}");
-//         },
-//       ),
-      // body: GoogleMap(
-      //     myLocationButtonEnabled: false,
-      //     // tiltGesturesEnabled: false,
-      //     // onCameraMove: (CameraPosition cameraPosition) {
-      //     //   print(cameraPosition.zoom);
-      //     // },
-      //     // zoomGesturesEnabled: true,
-      //     markers: Set<Marker>.of(markers.values),
-      //     mapType: MapType.normal,
-      //     zoomControlsEnabled: true,
-      //     initialCameraPosition: _kGooglePlex,
-      //     onMapCreated: (GoogleMapController controller) {
-      //       _controller.complete(controller);
-      //     },
-      //     onTap: (LatLng latLng) {
-      //       Marker marker = Marker(
-      //         draggable: true,
-      //         markerId: MarkerId(latLng.toString()),
-      //       );
-      //     }
-      //     //_customInfoWindowController.hideInfoWindow!();
-
-      //     ),
-      body: ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 500.0,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12.0),
-                  topRight: Radius.circular(12.0),
-                ),
-                child: GoogleMap(
-                  markers: Set<Marker>.of(markers.values),
-                  mapType: MapType.hybrid,
-                  initialCameraPosition: _kGooglePlex,
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  // borderRadius: BorderRadius.only(
-                  //   topLeft: Radius.circular(12.0),
-                  //   topRight: Radius.circular(12.0),
-                  // ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                    vertical: 20.0,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 80.0,
-                              width: 110.0,
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=Aap_uEDQ8E_TnsEQCXm7jEH7pnNH_tJPi_Fi3quV62k4-AZwO3vikRoxVwI3bnJKtxuWdqf9pTLeARAITVdBv6qIxCS9Nsa4zxYHFSuHxM4z-wraYPN4x6jxevNLXEmueMcLlSa0hMEDFPofYlErzwKxgqUbKYYP_vJQ_eKz22osO_8G-OSz&key=AIzaSyCWjmMNRDr1881C34m8p4iTac6ocqWdlYI')),
-                                borderRadius: BorderRadius.circular(12.0),
-                                border: Border.all(color: Colors.grey),
-                              ),
-                              // child: Image.network(
-                              //     'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=Aap_uEDQ8E_TnsEQCXm7jEH7pnNH_tJPi_Fi3quV62k4-AZwO3vikRoxVwI3bnJKtxuWdqf9pTLeARAITVdBv6qIxCS9Nsa4zxYHFSuHxM4z-wraYPN4x6jxevNLXEmueMcLlSa0hMEDFPofYlErzwKxgqUbKYYP_vJQ_eKz22osO_8G-OSz&key=AIzaSyCWjmMNRDr1881C34m8p4iTac6ocqWdlYI'),
-                            ),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            const Expanded(
-                              child: Text(
-                                'Oriental Institute of Science & Technology',
-                                style: TextStyle(
-                                  fontSize: 17.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  // letterSpacing: 0.9,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 15.0),
-                        const Text(
-                          'Raisen Rd, opp. Patel Nagar, Patel Nagar, Bhopal, Madhya Pradesh 462022, India',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.black,
-
-                            // letterSpacing: 0.9,
-                          ),
-                        ),
-                        const SizedBox(height: 10.0),
-                        // const Text(
-                        //   'Contact :',
-                        //   style: TextStyle(
-                        //     fontSize: 17.0,
-                        //     color: Colors.black,
-                        //     fontWeight: FontWeight.w600,
-                        //   ),
-                        // ),
-                        const SizedBox(height: 4.0),
-                        SizedBox(
-                          width: 200.0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 10.0),
-                        Row(
-                          children: const [
-                            Icon(
-                              Icons.phone,
-                              color: Colors.grey,
-                              size: 22.0,
-                            ),
-                            SizedBox(width: 10.0),
-                            Text(
-                              '0755 252 9026',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 10.0),
-                        Row(
-                          children: const [
-                            Icon(
-                              Icons.public,
-                              color: Colors.grey,
-                              size: 22.0,
-                            ),
-                            SizedBox(width: 10.0),
-                            Text(
-                              'http://www.oistbpl.com/',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16.0,
-                                decoration: TextDecoration.underline,
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: _goToTheLake,
-      //   label: const Text('To the lake!'),
-      //   icon: const Icon(Icons.directions_boat),
-      // ),
-    );
-  }
-
-  // Future<void> _goToTheLake() async {
-  //   final GoogleMapController controller = await _controller.future;
-  //   controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  // }
-}
-
-
-
-
-
-
-
-
-// import 'package:flutter/material.dart';
-// //AIzaSyBTtR33f5AF8dwtcNmmmj1LXitclssRepM
-// class MapScreen extends StatelessWidget {
-//   const MapScreen({ Key? key }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-
-      
-//     );
 //   }
 // }

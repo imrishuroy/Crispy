@@ -1,6 +1,6 @@
-import 'package:crispy/models/video.dart';
-import 'package:crispy/repository/video/video_repository.dart';
-import 'package:crispy/screens/comments/comments_screen.dart';
+import '/models/video.dart';
+import '/repository/video/video_repository.dart';
+import '/screens/comments/comments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

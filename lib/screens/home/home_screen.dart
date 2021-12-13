@@ -22,10 +22,10 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         // floatingActionButton: FloatingActionButton(
         //   onPressed: () async {
-        //     final videoRepo = context.read<VideoRepository>();
+        //     final repo = context.read<OutletRepository>();
 
         //     print(
-        //         'User likes --------- ${await videoRepo.getLikesCount(videoId: 'CnPywpSfDK2CQ9KnMvSc')}');
+        //         'Place Datails --------- ${await repo.getOutletFromPlaceId(placeId: 'ChIJh09POeRBfDkR7F3OBkKju7M')}');
         //   },
         // ),
         backgroundColor: Colors.black,

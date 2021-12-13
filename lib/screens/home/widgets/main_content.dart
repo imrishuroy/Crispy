@@ -1,3 +1,5 @@
+import 'package:crispy/widgets/loading_indicator.dart';
+
 import '/repository/outlet/outlet_repository.dart';
 import '/screens/home/widgets/cubit/likevideo_cubit.dart';
 import '/screens/liked-videos/liked_videos_screen.dart';
@@ -5,8 +7,6 @@ import '/screens/outlet/bloc/outletprofile_bloc.dart';
 import '/screens/outlet/outlet_profile.dart';
 
 import '/models/video.dart';
-
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '/screens/home/bloc/video_bloc.dart';
 
@@ -45,16 +45,7 @@ class MainContentLayout extends StatelessWidget {
             );
 
           default:
-            return const Center(
-              child: SizedBox(
-                height: 50.0,
-                width: 50.0,
-                child: SpinKitChasingDots(
-                  color: Colors.blue,
-                  size: 50.0,
-                ),
-              ),
-            );
+            return const LoadingIndicator();
         }
       },
     );
@@ -68,6 +59,8 @@ class ContentView extends StatelessWidget {
 
   final PageController _pageController = PageController(initialPage: 1);
 
+  // var _physics = const ScrollPhysics();
+
   @override
   Widget build(BuildContext context) {
     final likedPostsState = context.watch<LikeVideoCubit>().state;
@@ -75,10 +68,16 @@ class ContentView extends StatelessWidget {
     // final recentlyLiked =
     //     likedPostsState.recentlyLikedVideoIds.contains(video?.videoId);
     return PageView(
+      //  physics: NeverScrollableScrollPhysics(),
+      // onPageChanged: (index) {
+      //   if (index != 1) {
+      //     _physics = const NeverScrollableScrollPhysics();
+      //   }
+      // },
       reverse: true,
       controller: _pageController,
       children: [
-        const MapScreen(),
+        MapScreen(outlet: video?.outlet),
         Stack(
           fit: StackFit.expand,
           children: [

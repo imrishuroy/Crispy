@@ -4,16 +4,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-class VideoPreview extends StatefulWidget {
+class VideoThumbNail extends StatefulWidget {
   final String? videoUrl;
 
-  const VideoPreview({Key? key, required this.videoUrl}) : super(key: key);
+  const VideoThumbNail({Key? key, required this.videoUrl}) : super(key: key);
 
   @override
-  State<VideoPreview> createState() => _VideoPreviewState();
+  State<VideoThumbNail> createState() => _VideoThumbNailState();
 }
 
-class _VideoPreviewState extends State<VideoPreview> {
+class _VideoThumbNailState extends State<VideoThumbNail> {
   // late VideoPlayerController _controller;
 
   @override

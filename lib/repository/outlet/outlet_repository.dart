@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crispy/contants/paths.dart';
-import 'package:crispy/models/outlet.dart';
-import 'package:crispy/models/video.dart';
+import '/contants/paths.dart';
+import '/models/outlet.dart';
+import '/models/video.dart';
+import 'package:dio/dio.dart';
 
 import 'base_outlet_repo.dart';
 
@@ -38,6 +39,19 @@ class OutletRepository extends BaseOutletRepository {
           }).toList());
     } catch (e) {
       print('Error geting influencer video ${e.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<Outlet?> getOutletFromPlaceId({required String? placeId}) async {
+    try {
+      final _dio = Dio();
+      final response = await _dio.get(
+          'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=AIzaSyCWjmMNRDr1881C34m8p4iTac6ocqWdlYI');
+
+      print('Response ----------- $response');
+    } catch (e) {
+      print('Error in getting place details ${e.toString()}');
       rethrow;
     }
   }

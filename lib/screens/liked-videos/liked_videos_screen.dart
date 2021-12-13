@@ -1,7 +1,10 @@
-import 'package:crispy/blocs/auth/auth_bloc.dart';
-import 'package:crispy/repository/video/video_repository.dart';
-import 'package:crispy/screens/liked-videos/bloc/likedvideos_bloc.dart';
-import 'package:crispy/widgets/video_preview.dart';
+import 'package:crispy/screens/video-preview/video_preview.dart';
+
+import '/blocs/auth/auth_bloc.dart';
+import '/repository/video/video_repository.dart';
+import '/screens/liked-videos/bloc/likedvideos_bloc.dart';
+import '/widgets/loading_indicator.dart';
+import '../../widgets/video_thumbnail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,15 +55,24 @@ class _LikedVideosState extends State<LikedVideos> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: VideoPreview(
-                      videoUrl: videos[index]?.videoUrl,
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => VideoPreview(
+                            video: videos[index],
+                          ),
+                        ),
+                      ),
+                      child: VideoThumbNail(
+                        videoUrl: videos[index]?.videoUrl,
+                      ),
                     ),
                   );
                 },
               );
 
             default:
-              return const Center(child: CircularProgressIndicator());
+              return const LoadingIndicator();
           }
         },
       ),

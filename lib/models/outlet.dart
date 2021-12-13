@@ -4,9 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class Outlet extends Equatable {
-  final String? outletPic;
+  final String? outletImg;
 
   final String? outletId;
+
+  final int? rattings;
+
+  final String? phNo;
+  final String? address;
+  final String? website;
 
   final String? name;
   final GeoPoint? location;
@@ -15,10 +21,14 @@ class Outlet extends Equatable {
 
   const Outlet({
     this.outletId,
-    this.outletPic,
+    this.outletImg,
     this.name,
     this.location,
     this.about,
+    this.address,
+    this.phNo,
+    this.rattings,
+    this.website,
   });
 
   Outlet copyWith({
@@ -26,14 +36,18 @@ class Outlet extends Equatable {
     String? name,
     GeoPoint? location,
     String? about,
-    String? outletPic,
+    String? outletImg,
+    String? address,
+    int? rattings,
   }) {
     return Outlet(
       outletId: outletId ?? this.outletId,
+      address: address ?? this.address,
+      rattings: rattings ?? this.rattings,
       name: name ?? this.name,
       location: location ?? this.location,
       about: about ?? this.about,
-      outletPic: outletPic ?? this.outletPic,
+      outletImg: outletImg ?? this.outletImg,
     );
   }
 
@@ -44,7 +58,7 @@ class Outlet extends Equatable {
       // 'location': location?.toMap(),
       'location': location,
       'about': about,
-      'outletPic': outletPic,
+      'outletPic': outletImg,
     };
   }
 
@@ -56,29 +70,34 @@ class Outlet extends Equatable {
           // map['location'] != null ? GeoPoint.fromMap(map['location']) : null,
           map['location'],
       about: map['about'],
-      outletPic: map['outletPic'],
+      outletImg: map['outletImg'],
+      address: map['address'],
+      phNo: map['phNo'],
     );
   }
 
-  static Future<Outlet?> fromDoc(DocumentReference? doc) async {
-    if (doc == null) return null;
-    final data = await doc.get();
-    print('Outler data $data');
-    // data() as Map?;
-    final authorRef = data['author'] as DocumentReference?;
-    if (authorRef != null) {
-      final authorDoc = await authorRef.get();
-      if (authorDoc.exists) {
-        return Outlet(
-          outletId: data['outletId'],
-          name: data['name'],
-          location: null,
-          about: data['about'],
-          outletPic: data['outletPic'],
-        );
-      }
-    }
-  }
+  // static Future<Outlet?> fromDoc(DocumentReference? doc) async {
+  //   if (doc == null) return null;
+  //   final data = await doc.get();
+  //   print('Outler data $data');
+  //   // data() as Map?;
+  //   final authorRef = data['author'] as DocumentReference?;
+  //   if (authorRef != null) {
+  //     final authorDoc = await authorRef.get();
+  //     if (authorDoc.exists) {
+  //       return Outlet(
+  //         rattings: data['rattings'],
+  //         outletId: data['outletId'],
+  //         name: data['name'],
+  //         location: data['location'],
+  //         address: data['address'],
+  //         phNo: data['phNo'],
+  //         about: data['about'],
+  //         outletImg: data['outletImg'],
+  //       );
+  //     }
+  //   }
+  // }
 
   factory Outlet.fromDocument(DocumentSnapshot? doc) {
     print('Data type ${doc.runtimeType}');
@@ -94,7 +113,11 @@ class Outlet extends Equatable {
       name: data?['name'],
       location: data?['location'],
       about: data?['about'],
-      outletPic: data?['outletPic'],
+      outletImg: data?['outletImg'],
+      address: data?['address'],
+      rattings: data?['rattings'],
+      phNo: data?['phNo'],
+      website: data?['website'],
     );
   }
 

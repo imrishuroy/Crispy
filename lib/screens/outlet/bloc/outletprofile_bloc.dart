@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:crispy/models/failure.dart';
-import 'package:crispy/models/video.dart';
-import 'package:crispy/repository/outlet/outlet_repository.dart';
+import '/models/failure.dart';
+import '/models/video.dart';
+import '/repository/outlet/outlet_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'outletprofile_event.dart';

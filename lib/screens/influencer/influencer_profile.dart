@@ -1,6 +1,8 @@
-import '/repository/influencer/influencer_repository.dart';
+import '/config/contants.dart';
+import '/screens/video-preview/video_preview.dart';
+import '/widgets/video_thumbnail.dart';
 
-import '/widgets/video_preview.dart';
+import '/repository/influencer/influencer_repository.dart';
 
 import '/models/influencer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -70,14 +72,14 @@ class InfluencerProfile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 30.0),
-          const Center(
+          Center(
             child: CircleAvatar(
               radius: 60.0,
               backgroundColor: Colors.deepOrange,
               child: CircleAvatar(
                 radius: 57.0,
-                backgroundImage: NetworkImage(
-                    'https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'),
+                backgroundImage:
+                    NetworkImage(influencer?.profilePic ?? errorImage),
               ),
             ),
           ),
@@ -168,7 +170,14 @@ class InfluencerProfile extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final video = videos[index];
 
-                          return VideoPreview(videoUrl: video?.videoUrl);
+                          return InkWell(
+                              onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          VideoPreview(video: video),
+                                    ),
+                                  ),
+                              child: VideoThumbNail(videoUrl: video?.videoUrl));
                         },
                       ),
                     ),
