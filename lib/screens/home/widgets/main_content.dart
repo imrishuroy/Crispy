@@ -1,3 +1,4 @@
+import 'package:crispy/screens/home/cubit/pageview_cubit.dart';
 import 'package:crispy/widgets/loading_indicator.dart';
 
 import '/repository/outlet/outlet_repository.dart';
@@ -34,13 +35,27 @@ class MainContentLayout extends StatelessWidget {
             final videos = state.videos;
 
             print('Lenght ${videos.length}');
-            return PageView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: videos.length,
-              itemBuilder: (context, index) {
-                final video = videos[index];
+            return BlocConsumer<PageViewCubit, PageViewState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                return PageView.builder(
+                  physics: state.pageViewStatus == PageViewStatus.initial
+                      ? const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics())
+                      : const NeverScrollableScrollPhysics(),
+                  // NeverScrollableScrollPhysics(),
+                  // reverse: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: videos.length,
+                  onPageChanged: (index) {
+                    print('Page Index - $index');
+                  },
+                  itemBuilder: (context, index) {
+                    final video = videos[index];
 
-                return ContentView(video: video);
+                    return ContentView(video: video);
+                  },
+                );
               },
             );
 
@@ -69,15 +84,28 @@ class ContentView extends StatelessWidget {
     //     likedPostsState.recentlyLikedVideoIds.contains(video?.videoId);
     return PageView(
       //  physics: NeverScrollableScrollPhysics(),
-      // onPageChanged: (index) {
-      //   if (index != 1) {
-      //     _physics = const NeverScrollableScrollPhysics();
-      //   }
-      // },
-      reverse: true,
+      onPageChanged: (index) {
+        print('Index ---------------- $index');
+        if (index != 1) {
+          context.read<PageViewCubit>().makePageViewScrollable();
+
+          // _physics = const NeverScrollableScrollPhysics();
+        } else {
+          context.read<PageViewCubit>().makePageViewNeverScrollable();
+        }
+      },
+      //reverse: true,
       controller: _pageController,
       children: [
-        MapScreen(outlet: video?.outlet),
+        BlocProvider<OutletProfileBloc>(
+          create: (context) => OutletProfileBloc(
+            outletId: video?.outlet?.outletId,
+            outletRepo: context.read<OutletRepository>(),
+          ),
+          child: OutletProfile(
+            outlet: video?.outlet,
+          ),
+        ),
         Stack(
           fit: StackFit.expand,
           children: [
@@ -156,25 +184,7 @@ class ContentView extends StatelessWidget {
             ),
           ],
         ),
-        BlocProvider<OutletProfileBloc>(
-          create: (context) => OutletProfileBloc(
-            outletId: video?.outlet?.outletId,
-            outletRepo: context.read<OutletRepository>(),
-          ),
-          child: OutletProfile(
-            outlet: video?.outlet,
-          ),
-        ),
-
-        // BlocProvider<InfluencerBloc>(
-        //   create: (context) => InfluencerBloc(
-        //     influencerId: video?.influencer?.influencerId,
-        //     influencerRepo: context.read<InfluencerRepository>(),
-        //   ),
-        //   child: InfluencerProfile(
-        //     influencer: video?.influencer,
-        //   ),
-        // ),
+        MapScreen(outlet: video?.outlet),
       ],
     );
 

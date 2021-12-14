@@ -1,4 +1,6 @@
 import 'package:crispy/repository/outlet/outlet_repository.dart';
+import 'package:crispy/screens/home/cubit/pageview_cubit.dart';
+import 'package:flutter/services.dart';
 
 import '/screens/home/widgets/cubit/likevideo_cubit.dart';
 import '/repository/influencer/influencer_repository.dart';
@@ -25,6 +27,8 @@ void main() async {
   await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
   EquatableConfig.stringify = kDebugMode;
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(const MyApp());
 }
 
@@ -61,6 +65,7 @@ class MyApp extends StatelessWidget {
               videoRepository: context.read<VideoRepository>(),
             ),
           ),
+          BlocProvider<PageViewCubit>(create: (_) => PageViewCubit()),
           BlocProvider<VideoBloc>(
             create: (context) => VideoBloc(
               authBloc: context.read<AuthBloc>(),
