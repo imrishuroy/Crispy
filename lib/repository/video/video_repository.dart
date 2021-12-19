@@ -59,12 +59,14 @@ class VideoRepository extends BaseVideoRepositroy {
     final videosIds = <String>{};
     for (final video in videos!) {
       final likeDoc = await _likedRef
-          .doc(video!.videoId)
+          .doc(video?.videoId)
           .collection('liked-videos')
           .doc(userId)
           .get();
       if (likeDoc.exists) {
-        videosIds.add(video.videoId!);
+        if (video?.videoId != null) {
+          videosIds.add(video!.videoId!);
+        }
       }
     }
     return videosIds;
@@ -259,3 +261,8 @@ class VideoRepository extends BaseVideoRepositroy {
     }
   }
 }
+
+
+//videos ids
+//2yqWa2TgPRVMNaunZ5TR - people
+//W5t667XTxTUBNryzRJuw - db

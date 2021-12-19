@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'tik_tok_icons.dart';
 
 class BottomToolbar extends StatelessWidget {

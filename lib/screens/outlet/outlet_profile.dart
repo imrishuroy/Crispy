@@ -1,5 +1,7 @@
+import '/screens/liked-videos/list_video_preview.dart';
+
 import '/config/contants.dart';
-import '/screens/video-preview/video_preview.dart';
+
 import '/widgets/video_thumbnail.dart';
 
 import '/models/outlet.dart';
@@ -156,9 +158,15 @@ class OutletProfile extends StatelessWidget {
                               onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) =>
-                                          VideoPreview(video: video),
+                                          ListVideoPreview(videos: videos),
                                     ),
                                   ),
+                              // onTap: () => Navigator.of(context).push(
+                              //       MaterialPageRoute(
+                              //         builder: (_) =>
+                              //             VideoPreview(video: video),
+                              //       ),
+                              //     ),
                               child: VideoThumbNail(videoUrl: video?.videoUrl));
                         },
                       ),

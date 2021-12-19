@@ -1,12 +1,13 @@
-import 'package:crispy/screens/video-preview/video_preview.dart';
-
+import '/widgets/video_thumbnail.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/repository/video/video_repository.dart';
 import '/screens/liked-videos/bloc/likedvideos_bloc.dart';
 import '/widgets/loading_indicator.dart';
-import '../../widgets/video_thumbnail.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'list_video_preview.dart';
 
 class LikedVideos extends StatefulWidget {
   static const String routeName = '/liked';
@@ -58,11 +59,19 @@ class _LikedVideosState extends State<LikedVideos> {
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => VideoPreview(
-                            video: videos[index],
-                          ),
+                          builder: (_) => ListVideoPreview(
+                              // VideoPreview(
+                              videos: videos),
                         ),
                       ),
+                      // child: Scaffold(
+                      //   body: PageView.builder(
+                      //     itemCount: videos.length,
+                      //     itemBuilder: (context, index) {
+                      //       return ContentView(video: videos[index]);
+                      //     },
+                      //   ),
+                      // ),
                       child: VideoThumbNail(
                         videoUrl: videos[index]?.videoUrl,
                       ),

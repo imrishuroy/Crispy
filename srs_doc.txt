@@ -1,3 +1,22 @@
+15 Dec -
+
+1. Make outlet/ influencer & liked videos scrollable with 
+added more than one videos
+
+2.Right swipte on HomeScreen -> Outler Profile - click on outlet video
+visit to video -> righ swipe -> then HomeScreen
+
+
+Right swipte on the home screen to view the oulet profile ->
+then clik on the outlet video thumbnail -> see the outlet video ->
+right swipe to see the outlet profile -> left swipe to view the HomeScreen
+
+
+
+
+
+
+
 1. HomeScreen 
 - This will have videos of different outlets and stores,
 - On the right corner we will have a liked playlist icon, where user can click

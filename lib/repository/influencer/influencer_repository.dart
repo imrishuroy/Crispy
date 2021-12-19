@@ -11,7 +11,7 @@ class InfluencerRepository extends BaseInfluencerRepository {
   Future<Influencer?> getInfluencer({required String? influencerId}) async {
     try {
       final snapshot = await _influencerRef
-          .doc('l9AEs8tdIiQGosPg1xZ9')
+          .doc(influencerId)
           .withConverter<Influencer>(
               fromFirestore: (snapshot, _) =>
                   Influencer.fromMap(snapshot.data()!),

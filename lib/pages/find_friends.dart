@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'package:crispy/models/map_style.dart';
+import '/models/map_style.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';

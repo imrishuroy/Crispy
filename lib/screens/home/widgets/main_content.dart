@@ -1,5 +1,10 @@
-import 'package:crispy/screens/home/cubit/pageview_cubit.dart';
-import 'package:crispy/widgets/loading_indicator.dart';
+import 'package:better_player/better_player.dart';
+import '/config/contants.dart';
+
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import '/screens/home/cubit/pageview_cubit.dart';
+import '/widgets/loading_indicator.dart';
 
 import '/repository/outlet/outlet_repository.dart';
 import '/screens/home/widgets/cubit/likevideo_cubit.dart';
@@ -15,7 +20,7 @@ import '/screens/map/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'comment_button.dart';
 import 'fav_button.dart';
-import 'full_screen_video.dart';
+
 import 'video_description.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,6 +32,7 @@ class MainContentLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final _videoRepo = context.read<VideoRepository>();
+    // final _canvas = MediaQuery.of(context);
     return BlocConsumer<VideoBloc, VideoState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -67,43 +73,88 @@ class MainContentLayout extends StatelessWidget {
   }
 }
 
-class ContentView extends StatelessWidget {
+class ContentView extends StatefulWidget {
   final Video? video;
 
-  ContentView({Key? key, required this.video}) : super(key: key);
+  const ContentView({Key? key, required this.video}) : super(key: key);
 
+  @override
+  State<ContentView> createState() => _ContentViewState();
+}
+
+class _ContentViewState extends State<ContentView> {
   final PageController _pageController = PageController(initialPage: 1);
 
-  // var _physics = const ScrollPhysics();
+  BetterPlayerConfiguration? betterPlayerConfiguration;
+  BetterPlayerListVideoPlayerController? controller;
+
+  // late VideoPlayerController _videoController;
+  // bool _loading = true;
+
+  // @override
+  // void initState() {
+  //   // _controller = VideoPlayerController.network(
+  //   //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
+  //   //   ..initialize().then((_) {
+
+  //   // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+
+  //   // _videoController =
+  //   //     VideoPlayerController.network(widget.video?.videoUrl ?? '')
+  //   //       ..initialize().then((_) {
+  //   //         setState(() {
+  //   //           _loading = false;
+  //   //           _videoController.play();
+  //   //           _videoController.setLooping(true);
+  //   //         });
+  //   //       });
+  //   super.initState();
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    controller = BetterPlayerListVideoPlayerController();
+    // betterPlayerConfiguration = const BetterPlayerConfiguration(autoPlay: true);
+    betterPlayerConfiguration =
+        const BetterPlayerConfiguration(autoPlay: false);
+  }
+
+  @override
+  void dispose() {
+    // _videoController.pause();
+    print('Dispose runs ------------');
+
+    //   _videoController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // final _canvas = MediaQuery.of(context).size;
     final likedPostsState = context.watch<LikeVideoCubit>().state;
-    final isLiked = likedPostsState.likedVideoIds.contains(video?.videoId);
-    // final recentlyLiked =
-    //     likedPostsState.recentlyLikedVideoIds.contains(video?.videoId);
-    return PageView(
-      //  physics: NeverScrollableScrollPhysics(),
-      onPageChanged: (index) {
-        print('Index ---------------- $index');
-        if (index != 1) {
-          context.read<PageViewCubit>().makePageViewScrollable();
+    final isLiked =
+        likedPostsState.likedVideoIds.contains(widget.video?.videoId);
+    final _pageViewCubit = context.read<PageViewCubit>();
 
-          // _physics = const NeverScrollableScrollPhysics();
+    return PageView(
+      onPageChanged: (index) {
+        if (index != 1) {
+          _pageViewCubit.makePageViewScrollable();
         } else {
-          context.read<PageViewCubit>().makePageViewNeverScrollable();
+          _pageViewCubit.makePageViewNeverScrollable();
         }
       },
-      //reverse: true,
       controller: _pageController,
       children: [
         BlocProvider<OutletProfileBloc>(
           create: (context) => OutletProfileBloc(
-            outletId: video?.outlet?.outletId,
+            outletId: widget.video?.outlet?.outletId,
             outletRepo: context.read<OutletRepository>(),
           ),
           child: OutletProfile(
-            outlet: video?.outlet,
+            outlet: widget.video?.outlet,
           ),
         ),
         Stack(
@@ -114,18 +165,61 @@ class ContentView extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: InkWell(
-                    onDoubleTap: () {
-                      if (isLiked) {
-                        context
-                            .read<LikeVideoCubit>()
-                            .unlikePost(videoId: video?.videoId);
-                      } else {
-                        context
-                            .read<LikeVideoCubit>()
-                            .likePost(videoId: video?.videoId);
-                      }
-                    },
-                    child: FullScreenVideo(video: video)),
+                  onDoubleTap: () {
+                    if (isLiked) {
+                      context
+                          .read<LikeVideoCubit>()
+                          .unlikePost(videoId: widget.video?.videoId);
+                    } else {
+                      context
+                          .read<LikeVideoCubit>()
+                          .likePost(videoId: widget.video?.videoId);
+                    }
+                  },
+                  child: BetterPlayerListVideoPlayer(
+                    BetterPlayerDataSource(
+                      BetterPlayerDataSourceType.network,
+                      widget.video?.videoUrl ?? errorVideo,
+                      notificationConfiguration:
+                          const BetterPlayerNotificationConfiguration(
+                              showNotification: false, title: '', author: ''),
+                      bufferingConfiguration:
+                          const BetterPlayerBufferingConfiguration(
+                              minBufferMs: 2000,
+                              maxBufferMs: 10000,
+                              bufferForPlaybackMs: 1000,
+                              bufferForPlaybackAfterRebufferMs: 2000),
+                    ),
+                    configuration: BetterPlayerConfiguration(
+                        controlsConfiguration:
+                            const BetterPlayerControlsConfiguration(
+                          enablePlayPause: false,
+                          showControls: false,
+                          enableProgressBarDrag: false,
+                          enableProgressText: false,
+                          enableProgressBar: false,
+                          enableSkips: false,
+                          enableAudioTracks: false,
+                          loadingWidget: Center(
+                            child: SizedBox(
+                              height: 50.0,
+                              width: 50.0,
+                              child: SpinKitChasingDots(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        autoPlay: true,
+                        aspectRatio: 0.5,
+                        looping: true,
+                        handleLifecycle: true,
+                        autoDispose: _pageViewCubit.state.pageViewStatus ==
+                            PageViewStatus.neverScrollable),
+                    playFraction: 0.8,
+                    betterPlayerListVideoPlayerController: controller,
+                  ),
+                ),
               ),
             ),
             Padding(
@@ -134,37 +228,27 @@ class ContentView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  VideoDescription(video: video),
+                  VideoDescription(video: widget.video),
                   SizedBox(
                     width: 80.0,
                     child: Column(mainAxisSize: MainAxisSize.min, children: [
                       FavButton(
                         isLiked: isLiked,
-                        videoId: video?.videoId,
+                        videoId: widget.video?.videoId,
                         onLike: () {
                           if (isLiked) {
                             context
                                 .read<LikeVideoCubit>()
-                                .unlikePost(videoId: video?.videoId);
+                                .unlikePost(videoId: widget.video?.videoId);
                           } else {
                             context
                                 .read<LikeVideoCubit>()
-                                .likePost(videoId: video?.videoId);
+                                .likePost(videoId: widget.video?.videoId);
                           }
-                          // context
-                          //     .read<LikeVideoCubit>()
-                          //     .getLikesCount(videoId: video?.videoId);
                         },
                       ),
-                      //const SizedBox(height: 5.0),
-                      CommentButton(video: video),
-                      // CommentButton(),
-                      //  _getSocialAction(icon: TikTokIcons.heart, title: '3.2m'),
-                      // _getSocialAction(icon: TikTokIcons.chatBubble, title: '16.4k'),
+                      CommentButton(video: widget.video),
                       const SizedBox(height: 140.0)
-                      //  _getSocialAction(
-                      //   icon: TikTokIcons.reply, title: 'Share', isShare: true),
-                      //_getMusicPlayerAction()
                     ]),
                   ),
                 ],
@@ -184,7 +268,8 @@ class ContentView extends StatelessWidget {
             ),
           ],
         ),
-        MapScreen(outlet: video?.outlet),
+        //SampleMapView(),
+        MapScreen(outlet: widget.video?.outlet),
       ],
     );
 

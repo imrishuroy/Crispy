@@ -1,9 +1,10 @@
-import 'package:crispy/screens/influencer/influencer_profile.dart';
+import '/screens/influencer/influencer_profile.dart';
+import '/screens/liked-videos/liked_videos_screen.dart';
 
 import '/config/auth_wrapper.dart';
 import '/screens/comments/comments_screen.dart';
 import '/screens/home/home_screen.dart';
-import '../screens/liked-videos/liked_videos_screen.dart';
+
 import '/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -125,3 +126,6 @@ class ErrorRoute extends StatelessWidget {
     );
   }
 }
+
+
+

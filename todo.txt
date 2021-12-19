@@ -1,0 +1,9 @@
+15 Dec -
+
+1. Fix the map screen and make it more intereactive
+2. Add app icon
+3. Make it ios ready
+4. Add animation in heart icon to make it more intereactive
+
+5.The problem is even when you let go the upper video
+the bottom video remains stuck.
