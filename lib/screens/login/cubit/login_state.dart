@@ -7,12 +7,14 @@ class LoginState extends Equatable {
   final Failure? failure;
   final String? phoneNumber;
   final String? otp;
+  final String? countryCode;
 
   const LoginState({
-    @required this.status,
-    @required this.failure,
-    @required this.phoneNumber,
-    @required this.otp,
+    required this.status,
+    required this.failure,
+    required this.phoneNumber,
+    required this.otp,
+    required this.countryCode,
   });
 
   factory LoginState.initial() {
@@ -21,6 +23,7 @@ class LoginState extends Equatable {
       failure: Failure(),
       phoneNumber: '',
       otp: '',
+      countryCode: '+91',
     );
   }
 
@@ -32,15 +35,17 @@ class LoginState extends Equatable {
     Failure? failure,
     String? phoneNumber,
     String? otp,
+    String? countryCode,
   }) {
     return LoginState(
       status: status ?? this.status,
       failure: failure ?? this.failure,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       otp: otp ?? this.otp,
+      countryCode: countryCode ?? this.countryCode,
     );
   }
 
   @override
-  List<Object?> get props => [status, failure, phoneNumber, otp];
+  List<Object?> get props => [status, failure, phoneNumber, otp, countryCode];
 }

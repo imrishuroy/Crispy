@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '/contants/paths.dart';
 import '/models/appuser.dart';
 import '/models/failure.dart';
-import '/repository/base_auth_repository.dart';
+import 'base_auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
@@ -145,6 +145,66 @@ class AuthRepository extends BaseAuthRepository {
     }
   }
 
+  @override
+  Future<AppUser?> signInWithPhoneNumber({required String phoneNo}) async {
+    // AppUser? _appUser;
+    late UserCredential? userCredential;
+    try {
+      await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phoneNo,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // ANDROID ONLY!
+
+          // Sign the user in (or link) with the auto-generated credential
+
+          userCredential = await _firebaseAuth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          if (e.code == 'invalid-phone-number') {
+            print('The provided phone number is not valid.');
+            throw Failure(code: e.code, message: e.message!);
+          } else {
+            throw Failure(code: e.code, message: e.message!);
+          }
+        },
+        codeSent: (String? verificationId, int? resendToken) {
+          print('VerificationID - $verificationId');
+          print('Resend Token- $resendToken');
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          print('codeAutoRetrievalTimeout VerificationID $verificationId');
+        },
+      );
+      return _appUser(userCredential != null ? userCredential!.user : null);
+    } on PlatformException catch (error) {
+      print(error.toString());
+      throw Failure(code: error.code, message: error.message!);
+    } on FirebaseAuthException catch (error) {
+      print(error.toString());
+      throw Failure(code: error.code, message: error.message!);
+    } catch (error) {
+      print('Error in sign in with phone no ${error.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<bool> verifyOtp(
+      {required String otp, required String verificationId}) async {
+    try {
+      PhoneAuthCredential authCredential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: otp);
+
+      print('Sms Code ------------ ${authCredential.smsCode}');
+      if (authCredential.smsCode != null) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      print('Error in verify otp ${error.toString()}');
+      rethrow;
+    }
+  }
+
   Future<AppUser?> getUser(String? userId) async {
     AppUser? appUser;
     try {
@@ -164,27 +224,5 @@ class AuthRepository extends BaseAuthRepository {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
     await GoogleSignIn().signOut();
-  }
-
-  @override
-  Future<AppUser?> signInWithPhone(String phoneNumber) async {
-    late UserCredential? userCredential;
-    await _firebaseAuth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        userCredential = await _firebaseAuth.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        print('AuthException- $e');
-      },
-      codeSent: (String? verificationId, int? resendToken) {
-        print('VerificationID - $verificationId');
-        print('Resend Token- $resendToken');
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        print('codeAutoRetrievalTimeout VerificationID $verificationId');
-      },
-    );
-    return _appUser(userCredential != null ? userCredential!.user : null);
   }
 }

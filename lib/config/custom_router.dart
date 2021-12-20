@@ -1,3 +1,5 @@
+import 'package:crispy/screens/login/ph_login_screen.dart';
+
 import '/screens/influencer/influencer_profile.dart';
 import '/screens/liked-videos/liked_videos_screen.dart';
 
@@ -36,6 +38,9 @@ class CustomRouter {
       case InfluencerProfile.routeName:
         return InfluencerProfile.route(
             args: settings.arguments as InfluencerProfileArgs);
+
+      // case PhLoginScreen.routeName:
+      //   return PhLoginScreen.route();
 
       default:
         return ErrorRoute.route();
@@ -126,6 +131,3 @@ class ErrorRoute extends StatelessWidget {
     );
   }
 }
-
-
-

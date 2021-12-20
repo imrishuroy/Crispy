@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '/contants/paths.dart';
 import '/models/influencer.dart';
 import '/models/video.dart';
 import '/repository/influencer/base_influencer_repo.dart';
 
 class InfluencerRepository extends BaseInfluencerRepository {
-  final _influencerRef = FirebaseFirestore.instance.collection('influencers');
+  final _influencerRef =
+      FirebaseFirestore.instance.collection(Paths.influencers);
 
   @override
   Future<Influencer?> getInfluencer({required String? influencerId}) async {
@@ -30,10 +32,8 @@ class InfluencerRepository extends BaseInfluencerRepository {
       {required String? influencerId}) {
     print('Id $influencerId');
     try {
-      final snaps = _influencerRef
-          .doc('l9AEs8tdIiQGosPg1xZ9')
-          .collection(Paths.videos)
-          .snapshots();
+      final snaps =
+          _influencerRef.doc(influencerId).collection(Paths.videos).snapshots();
 
       return snaps.map((event) => event.docs.map((doc) async {
             final videoRef = doc.data()['video'] as DocumentReference?;

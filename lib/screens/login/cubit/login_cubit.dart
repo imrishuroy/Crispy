@@ -21,8 +21,14 @@ class LoginCubit extends Cubit<LoginState> {
     if (state.status == LoginStatus.submitting) return;
     emit(state.copyWith(status: LoginStatus.submitting));
     try {
-      await _authRepository!.signInWithPhone(state.phoneNumber!);
-      emit(state.copyWith(status: LoginStatus.succuss));
+      print('Phone number ------------- ${state.phoneNumber}');
+      if (state.phoneNumber != null && state.countryCode != null) {
+        await _authRepository?.signInWithPhoneNumber(
+            phoneNo: '${state.countryCode}${state.phoneNumber!}');
+        emit(state.copyWith(status: LoginStatus.succuss));
+      } else {
+        emit(state.copyWith(status: LoginStatus.error));
+      }
     } catch (error) {
       print('Error in sign with phone $error');
     }

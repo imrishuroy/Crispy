@@ -1,3 +1,5 @@
+import 'package:crispy/repository/auth/auth_repository.dart';
+
 import '/screens/liked-videos/list_video_preview.dart';
 
 import '/config/contants.dart';
@@ -45,12 +47,21 @@ class OutletProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     print('Outlet Id ${outlet?.outletId}');
     //final _influencerRepo = context.read<InfluencerRepository>();
+    final _authRepo = context.read<AuthRepository>();
     return Scaffold(
         body: ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+                onPressed: () async {
+                  await _authRepo.signOut();
+                },
+                icon: const Icon(Icons.logout)),
+          ),
           const SizedBox(height: 30.0),
           Center(
             child: CircleAvatar(

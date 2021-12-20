@@ -22,6 +22,7 @@ class AuthWrapper extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.unauthenticated) {
+          // Navigator.of(context).pushNamed(LoginScreen.routeName);
           Navigator.of(context).pushNamed(LoginScreen.routeName);
         } else if (state.status == AuthStatus.authenticated) {
           print(
