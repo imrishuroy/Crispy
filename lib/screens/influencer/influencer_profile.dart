@@ -45,7 +45,11 @@ class InfluencerProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final _influencerRepo = context.read<InfluencerRepository>();
+    print(
+        'Influencer id  ${influencer?.influencerId}'); //final _influencerRepo = context.read<InfluencerRepository>();
+    print('Influencer id  ${influencer?.name}');
+
+    print('Influencer id  ${influencer?.bio}');
     return Scaffold(
 
         // floatingActionButton: FloatingActionButton(
@@ -136,11 +140,11 @@ class InfluencerProfile extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Text(
-              'How can I make cents, when I got millions on my mind',
-              style: TextStyle(fontSize: 16.0),
+              influencer?.bio ?? 'N/A',
+              style: const TextStyle(fontSize: 16.0),
               textAlign: TextAlign.center,
             ),
           ),

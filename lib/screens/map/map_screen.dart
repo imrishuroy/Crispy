@@ -269,25 +269,27 @@ class MapScreenState extends State<MapScreen> {
                               size: 22.0,
                             ),
                             const SizedBox(width: 10.0),
-                            InkWell(
-                              onTap: () {
-                                print('this rusn --------1');
-                                if (widget.outlet?.website != null &&
-                                    widget.outlet?.website != '') {
-                                  print('this rusn --------2');
-                                  if (widget.outlet!.website!
-                                      .contains('http')) {
-                                    print('this rusn --------');
-                                    _launchURL(url: widget.outlet!.website);
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  print('this rusn --------1');
+                                  if (widget.outlet?.website != null &&
+                                      widget.outlet?.website != '') {
+                                    print('this rusn --------2');
+                                    if (widget.outlet!.website!
+                                        .contains('http')) {
+                                      print('this rusn --------');
+                                      _launchURL(url: widget.outlet!.website);
+                                    }
                                   }
-                                }
-                              },
-                              child: Text(
-                                widget.outlet?.website ?? 'N/A',
-                                style: const TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 16.0,
-                                  decoration: TextDecoration.underline,
+                                },
+                                child: Text(
+                                  widget.outlet?.website ?? 'N/A',
+                                  style: const TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 16.0,
+                                      decoration: TextDecoration.underline,
+                                      overflow: TextOverflow.fade),
                                 ),
                               ),
                             )

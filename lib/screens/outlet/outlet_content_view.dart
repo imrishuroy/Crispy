@@ -1,115 +1,32 @@
 import 'package:better_player/better_player.dart';
 import '/config/contants.dart';
-
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import '/screens/home/cubit/pageview_cubit.dart';
-import '/widgets/loading_indicator.dart';
-
-import '/repository/outlet/outlet_repository.dart';
-import '/screens/home/widgets/cubit/likevideo_cubit.dart';
-import '/screens/liked-videos/liked_videos_screen.dart';
-import '/screens/outlet/bloc/outletprofile_bloc.dart';
-import '/screens/outlet/outlet_profile.dart';
-
 import '/models/video.dart';
 
-import '/screens/home/bloc/video_bloc.dart';
+import '/screens/home/widgets/comment_button.dart';
+import '/screens/home/widgets/cubit/likevideo_cubit.dart';
+import '/screens/home/widgets/fav_button.dart';
 
 import '/screens/map/map_screen.dart';
 import 'package:flutter/material.dart';
-import 'comment_button.dart';
-import 'fav_button.dart';
-
-import 'video_description.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class MainContentLayout extends StatelessWidget {
-  const MainContentLayout({
-    Key? key,
-  }) : super(key: key);
+import 'widgets/outlet_video_description.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    // final _videoRepo = context.read<VideoRepository>();
-    // final _canvas = MediaQuery.of(context);
-    return BlocConsumer<VideoBloc, VideoState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        switch (state.status) {
-          case VideoStatus.succuss:
-            final videos = state.videos;
-
-            print('Lenght ${videos.length}');
-            return BlocConsumer<PageViewCubit, PageViewState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                return PageView.builder(
-                  physics: state.pageViewStatus == PageViewStatus.initial
-                      ? const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics())
-                      : const NeverScrollableScrollPhysics(),
-                  // NeverScrollableScrollPhysics(),
-                  // reverse: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: videos.length,
-                  onPageChanged: (index) {
-                    print('Page Index - $index');
-                  },
-                  itemBuilder: (context, index) {
-                    final video = videos[index];
-
-                    return ContentView(video: video);
-                  },
-                );
-              },
-            );
-
-          default:
-            return const LoadingIndicator();
-        }
-      },
-    );
-  }
-}
-
-class ContentView extends StatefulWidget {
+class OutletContentView extends StatefulWidget {
   final Video? video;
 
-  const ContentView({Key? key, required this.video}) : super(key: key);
+  const OutletContentView({Key? key, required this.video}) : super(key: key);
 
   @override
-  State<ContentView> createState() => _ContentViewState();
+  State<OutletContentView> createState() => _OutletContentViewState();
 }
 
-class _ContentViewState extends State<ContentView> {
-  final PageController _pageController = PageController(initialPage: 1);
+class _OutletContentViewState extends State<OutletContentView> {
+  final PageController _pageController = PageController(initialPage: 0);
 
   BetterPlayerConfiguration? betterPlayerConfiguration;
   BetterPlayerListVideoPlayerController? controller;
-
-  // late VideoPlayerController _videoController;
-  // bool _loading = true;
-
-  // @override
-  // void initState() {
-  //   // _controller = VideoPlayerController.network(
-  //   //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
-  //   //   ..initialize().then((_) {
-
-  //   // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-
-  //   // _videoController =
-  //   //     VideoPlayerController.network(widget.video?.videoUrl ?? '')
-  //   //       ..initialize().then((_) {
-  //   //         setState(() {
-  //   //           _loading = false;
-  //   //           _videoController.play();
-  //   //           _videoController.setLooping(true);
-  //   //         });
-  //   //       });
-  //   super.initState();
-  // }
 
   @override
   void initState() {
@@ -136,29 +53,27 @@ class _ContentViewState extends State<ContentView> {
     final likedPostsState = context.watch<LikeVideoCubit>().state;
     final isLiked =
         likedPostsState.likedVideoIds.contains(widget.video?.videoId);
-    final _pageViewCubit = context.read<PageViewCubit>();
+    //  final _pageViewCubit = context.read<PageViewCubit>();
 
     return PageView(
       onPageChanged: (index) {
         if (index != 1) {
-          _pageViewCubit.makePageViewScrollable();
-          controller?.pause();
+          //_pageViewCubit.makePageViewScrollable();
         } else {
-          _pageViewCubit.makePageViewNeverScrollable();
-          // controller?.pause();
+          // _pageViewCubit.makePageViewNeverScrollable();
         }
       },
       controller: _pageController,
       children: [
-        BlocProvider<OutletProfileBloc>(
-          create: (context) => OutletProfileBloc(
-            outletId: widget.video?.outlet?.outletId,
-            outletRepo: context.read<OutletRepository>(),
-          ),
-          child: OutletProfile(
-            outlet: widget.video?.outlet,
-          ),
-        ),
+        // BlocProvider<OutletProfileBloc>(
+        //   create: (context) => OutletProfileBloc(
+        //     outletId: widget.video?.outlet?.outletId,
+        //     outletRepo: context.read<OutletRepository>(),
+        //   ),
+        //   child: OutletProfile(
+        //     outlet: widget.video?.outlet,
+        //   ),
+        // ),
         Stack(
           fit: StackFit.expand,
           children: [
@@ -192,9 +107,9 @@ class _ContentViewState extends State<ContentView> {
                               bufferForPlaybackMs: 1000,
                               bufferForPlaybackAfterRebufferMs: 2000),
                     ),
-                    configuration: BetterPlayerConfiguration(
+                    configuration: const BetterPlayerConfiguration(
                         controlsConfiguration:
-                            const BetterPlayerControlsConfiguration(
+                            BetterPlayerControlsConfiguration(
                           enablePlayPause: false,
                           showControls: false,
                           enableProgressBarDrag: false,
@@ -216,8 +131,9 @@ class _ContentViewState extends State<ContentView> {
                         aspectRatio: 0.5,
                         looping: true,
                         handleLifecycle: true,
-                        autoDispose: _pageViewCubit.state.pageViewStatus ==
-                            PageViewStatus.neverScrollable),
+                        // autoDispose: _pageViewCubit.state.pageViewStatus ==
+                        //     PageViewStatus.neverScrollable,
+                        autoDispose: true),
                     playFraction: 0.8,
                     betterPlayerListVideoPlayerController: controller,
                   ),
@@ -230,7 +146,7 @@ class _ContentViewState extends State<ContentView> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  VideoDescription(video: widget.video),
+                  OutletVideoDescription(video: widget.video),
                   SizedBox(
                     width: 80.0,
                     child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -256,18 +172,18 @@ class _ContentViewState extends State<ContentView> {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                padding: const EdgeInsets.only(right: 20.0, top: 7.0),
-                icon: const Icon(
-                  Icons.featured_play_list,
-                  size: 25.0,
-                ),
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(LikedVideos.routeName),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.topRight,
+            //   child: IconButton(
+            //     padding: const EdgeInsets.only(right: 20.0, top: 7.0),
+            //     icon: const Icon(
+            //       Icons.featured_play_list,
+            //       size: 25.0,
+            //     ),
+            //     onPressed: () =>
+            //         Navigator.of(context).pushNamed(LikedVideos.routeName),
+            //   ),
+            // ),
           ],
         ),
         //SampleMapView(),

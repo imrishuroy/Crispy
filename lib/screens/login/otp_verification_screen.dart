@@ -53,14 +53,14 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
     super.initState();
   }
 
-  void _setOtp() {
-    // if (widget.otp != null) {
-    //   _otpController.text = widget.otp!;
-    //   setState(() {
-    //     _currentText = widget.otp!;
-    //   });
-    // }
-  }
+  // void _setOtp() {
+  //   // if (widget.otp != null) {
+  //   //   _otpController.text = widget.otp!;
+  //   //   setState(() {
+  //   //     _currentText = widget.otp!;
+  //   //   });
+  //   // }
+  // }
 
   @override
   void dispose() {

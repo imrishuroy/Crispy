@@ -1,3 +1,16 @@
+20 Dec - 
+
+Rishu, when the user views 
+1. Outlet profile video: block the option to swipe right. 
+Only swipe left to view the location and do not show influencer name 
+or profile picture here. Just outlet name and description on the video.
+ If the user wants to jump back to outlet profile, let them press back button.   Once on the outlet profile by pressing back, the users should be able to swipe left to reach main screen. Also no option to view liked videos from here
+
+2. Influencer profile video: block the option to swipe right to view outlet profile and block the option to tap on influencer image to view his profile. Just swipe left to view map. No liked video option here. If the user wants to jump back to the influencer profile let them tap back button. If they want to jump back to the main screen from influencer profile then let them again press the back button.
+
+3. Like videos: No access to influencer profile or outlet profile. Just swipe left to view location. Back buttons to back
+
+
 15 Dec -
 
 1. Make outlet/ influencer & liked videos scrollable with 

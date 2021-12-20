@@ -1,7 +1,5 @@
-import 'package:crispy/repository/auth/auth_repository.dart';
-
-import '/screens/liked-videos/list_video_preview.dart';
-
+import '/repository/auth/auth_repository.dart';
+import '/screens/outlet/view_outlet_videos.dart';
 import '/config/contants.dart';
 
 import '/widgets/video_thumbnail.dart';
@@ -29,24 +27,9 @@ class OutletProfile extends StatelessWidget {
     required this.outlet,
   }) : super(key: key);
 
-  // static Route route({required OutletProfileArgs? args}) {
-  //   return MaterialPageRoute(
-  //     settings: const RouteSettings(name: routeName),
-  //     builder: (context) {
-  //       return BlocProvider<OutletProfileBloc>(
-  //         create: (context) => OutletProfileBloc(
-  //             outletRepo: context.read<OutletRepository>(),
-  //             outletId: args?.outlet?.outletId),
-  //         child: OutletProfile(outlet: args!.outlet),
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     print('Outlet Id ${outlet?.outletId}');
-    //final _influencerRepo = context.read<InfluencerRepository>();
     final _authRepo = context.read<AuthRepository>();
     return Scaffold(
         body: ClipRRect(
@@ -169,7 +152,7 @@ class OutletProfile extends StatelessWidget {
                               onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) =>
-                                          ListVideoPreview(videos: videos),
+                                          ViewOutletVideos(videos: videos),
                                     ),
                                   ),
                               // onTap: () => Navigator.of(context).push(
