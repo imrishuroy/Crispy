@@ -1,4 +1,4 @@
-import '/screens/liked-videos/list_video_preview.dart';
+import '/screens/influencer/widgets/view_influencer_videos.dart';
 
 import '/config/contants.dart';
 
@@ -180,7 +180,7 @@ class InfluencerProfile extends StatelessWidget {
                               onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) =>
-                                          ListVideoPreview(videos: videos),
+                                          ViewInfluencerVideos(videos: videos),
                                     ),
                                   ),
                               // onTap: () => Navigator.of(context).push(

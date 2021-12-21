@@ -162,10 +162,6 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-
-
-
-
 // import 'package:country_code_picker/country_code_picker.dart';
 // import 'package:crispy/screens/login/otp_verification_screen.dart';
 
@@ -351,8 +347,7 @@ class LoginScreen extends StatelessWidget {
 //                                       },
 //                                       controller: _phoneNoController,
 //                                       decoration: InputDecoration(
-//                                         hintText:
-//                                             'Enter phone number eg 8540928389',
+//                                         hintText: 'Enter Ph No.',
 //                                         filled: true,
 //                                         prefixIcon: Icon(
 //                                           Icons.phone,

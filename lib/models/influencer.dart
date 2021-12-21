@@ -64,7 +64,7 @@ class Influencer extends Equatable {
 
     return Influencer(
       name: data?['name'],
-      influencerId: data?['uid'],
+      influencerId: data?['influencerId'],
       username: data?['username'],
       bio: data?['bio'],
       profilePic: data?['profilePic'],

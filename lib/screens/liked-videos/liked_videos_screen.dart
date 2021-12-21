@@ -1,3 +1,5 @@
+import '/screens/influencer/widgets/view_influencer_videos.dart';
+
 import '/widgets/video_thumbnail.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/repository/video/video_repository.dart';
@@ -6,8 +8,6 @@ import '/widgets/loading_indicator.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'list_video_preview.dart';
 
 class LikedVideos extends StatefulWidget {
   static const String routeName = '/liked';
@@ -59,7 +59,7 @@ class _LikedVideosState extends State<LikedVideos> {
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => ListVideoPreview(
+                          builder: (_) => ViewInfluencerVideos(
                               // VideoPreview(
                               videos: videos),
                         ),
