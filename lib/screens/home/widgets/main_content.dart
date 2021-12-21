@@ -115,6 +115,9 @@ class _ContentViewState extends State<ContentView> {
         likedPostsState.likedVideoIds.contains(widget.video?.videoId);
     final _pageViewCubit = context.read<PageViewCubit>();
 
+    print(
+        'Check false --------------------------- ${_pageViewCubit.state.pageViewStatus == PageViewStatus.neverScrollable}');
+
     return PageView(
       onPageChanged: (index) {
         if (index != 1) {

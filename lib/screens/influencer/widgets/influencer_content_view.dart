@@ -1,4 +1,5 @@
 import 'package:better_player/better_player.dart';
+import 'package:crispy/screens/influencer/cubit/influencer_pageview_cubit.dart';
 import '/config/contants.dart';
 import '/models/video.dart';
 
@@ -36,7 +37,10 @@ class _InfluencerContentViewState extends State<InfluencerContentView> {
     // betterPlayerConfiguration = const BetterPlayerConfiguration(autoPlay: true);
     betterPlayerConfiguration =
         const BetterPlayerConfiguration(autoPlay: false);
+    //  controller?.setBetterPlayerController(_betterPlayerController);
   }
+
+  // BetterPlayerController? _betterPlayerController;
 
   @override
   void dispose() {
@@ -45,23 +49,36 @@ class _InfluencerContentViewState extends State<InfluencerContentView> {
 
     //   _videoController.dispose();
 
+    // controller?.setBetterPlayerController(_betterPlayerController);
+    // _betterPlayerController?.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     // final _canvas = MediaQuery.of(context).size;
+    final _pageViewCubit = context.read<InfluencerPageviewCubit>();
     final likedPostsState = context.watch<LikeVideoCubit>().state;
     final isLiked =
         likedPostsState.likedVideoIds.contains(widget.video?.videoId);
     //  final _pageViewCubit = context.read<PageViewCubit>();
 
+    print(
+        'Check falaseeee - ${_pageViewCubit.state.pageViewStatus == PageViewStatus.neverScrollable}');
+
     return PageView(
       onPageChanged: (index) {
-        if (index != 1) {
+        if (index == 0) {
           //_pageViewCubit.makePageViewScrollable();
+          _pageViewCubit.makePageViewScrollable();
+
+          controller?.pause();
         } else {
-          // _pageViewCubit.makePageViewNeverScrollable();
+          //_pageViewCubit.makePageViewNeverScrollable();
+          // controller?.pause();
+
+          _pageViewCubit.makePageViewNeverScrollable();
         }
       },
       controller: _pageController,
@@ -108,33 +125,41 @@ class _InfluencerContentViewState extends State<InfluencerContentView> {
                               bufferForPlaybackMs: 1000,
                               bufferForPlaybackAfterRebufferMs: 2000),
                     ),
-                    configuration: const BetterPlayerConfiguration(
-                        controlsConfiguration:
-                            BetterPlayerControlsConfiguration(
-                          enablePlayPause: false,
-                          showControls: false,
-                          enableProgressBarDrag: false,
-                          enableProgressText: false,
-                          enableProgressBar: false,
-                          enableSkips: false,
-                          enableAudioTracks: false,
-                          loadingWidget: Center(
-                            child: SizedBox(
-                              height: 50.0,
-                              width: 50.0,
-                              child: SpinKitChasingDots(
-                                color: Colors.white,
-                              ),
+                    configuration: BetterPlayerConfiguration(
+                      controlsConfiguration:
+                          const BetterPlayerControlsConfiguration(
+                        enablePlayPause: false,
+                        showControls: false,
+                        enableProgressBarDrag: false,
+                        enableProgressText: false,
+                        enableProgressBar: false,
+                        enableSkips: false,
+                        enableAudioTracks: false,
+                        loadingWidget: Center(
+                          child: SizedBox(
+                            height: 50.0,
+                            width: 50.0,
+                            child: SpinKitChasingDots(
+                              color: Colors.white,
                             ),
                           ),
                         ),
-                        autoPlay: true,
-                        aspectRatio: 0.5,
-                        looping: true,
-                        handleLifecycle: true,
-                        // autoDispose: _pageViewCubit.state.pageViewStatus ==
-                        //     PageViewStatus.neverScrollable,
-                        autoDispose: true),
+                      ),
+                      autoPlay: true,
+                      aspectRatio: 0.5,
+                      looping: true,
+                      handleLifecycle: true,
+                      // autoDispose: true,
+                      autoDispose: false,
+
+                      // autoDispose: _pageViewCubit.state.pageViewStatus ==
+                      //     PageViewStatus.scrollable,
+                      // autoDispose: _pageViewCubit.state.pageViewStatus ==
+                      //     PageViewStatus.neverScrollable,
+                      // autoDispose: true,
+                    ),
+                    // autoDispose: _pageViewCubit.state.pageViewStatus ==
+                    //     PageViewStatus.neverScrollable),
                     playFraction: 0.8,
                     betterPlayerListVideoPlayerController: controller,
                   ),

@@ -1,3 +1,5 @@
+import 'package:crispy/screens/influencer/cubit/influencer_pageview_cubit.dart';
+
 import '/screens/influencer/widgets/view_influencer_videos.dart';
 
 import '/config/contants.dart';
@@ -178,9 +180,14 @@ class InfluencerProfile extends StatelessWidget {
                           return InkWell(
                               onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) => ViewInfluencerVideos(
-                                        videos: videos,
-                                        openIndex: index,
+                                      builder: (_) =>
+                                          BlocProvider<InfluencerPageviewCubit>(
+                                        create: (context) =>
+                                            InfluencerPageviewCubit(),
+                                        child: ViewInfluencerVideos(
+                                          videos: videos,
+                                          openIndex: index,
+                                        ),
                                       ),
                                     ),
                                   ),
