@@ -1,3 +1,5 @@
+import 'package:crispy/repository/auth/auth_repository.dart';
+
 import '/screens/outlet/view_outlet_videos.dart';
 import '/config/contants.dart';
 
@@ -29,21 +31,21 @@ class OutletProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Outlet Id ${outlet?.outletId}');
-    //final _authRepo = context.read<AuthRepository>();
+    final _authRepo = context.read<AuthRepository>();
     return Scaffold(
         body: ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Align(
-          //   alignment: Alignment.topRight,
-          //   child: IconButton(
-          //       onPressed: () async {
-          //         await _authRepo.signOut();
-          //       },
-          //       icon: const Icon(Icons.logout)),
-          // ),
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+                onPressed: () async {
+                  await _authRepo.signOut();
+                },
+                icon: const Icon(Icons.logout)),
+          ),
           const SizedBox(height: 30.0),
           Center(
             child: CircleAvatar(
@@ -150,8 +152,10 @@ class OutletProfile extends StatelessWidget {
                           return InkWell(
                               onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) =>
-                                          ViewOutletVideos(videos: videos),
+                                      builder: (_) => ViewOutletVideos(
+                                        videos: videos,
+                                        openIndex: index,
+                                      ),
                                     ),
                                   ),
                               // onTap: () => Navigator.of(context).push(

@@ -175,20 +175,15 @@ class InfluencerProfile extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) {
                           final video = videos[index];
-
                           return InkWell(
                               onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) =>
-                                          ViewInfluencerVideos(videos: videos),
+                                      builder: (_) => ViewInfluencerVideos(
+                                        videos: videos,
+                                        openIndex: index,
+                                      ),
                                     ),
                                   ),
-                              // onTap: () => Navigator.of(context).push(
-                              //       MaterialPageRoute(
-                              //         builder: (_) =>
-                              //             VideoPreview(video: video),
-                              //       ),
-                              //     ),
                               child: VideoThumbNail(videoUrl: video?.videoUrl));
                         },
                       ),

@@ -86,35 +86,41 @@ class _CommentsScreenState extends State<CommentsScreen> {
               itemBuilder: (BuildContext context, int index) {
                 final comment = state.comments[index];
                 return ListTile(
-                    leading: UserProfileImage(
-                      radius: 22.0,
-                      profileImageUrl: comment!.author!.imageUrl,
-                    ),
-                    title: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: comment.author?.name,
-                            style: const TextStyle(fontWeight: FontWeight.w600),
+                  leading: UserProfileImage(
+                    radius: 22.0,
+                    profileImageUrl: comment?.author?.imageUrl,
+                  ),
+                  title: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: comment?.author?.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.0,
                           ),
-                          const TextSpan(text: ' '),
-                          TextSpan(text: comment.content),
-                        ],
-                      ),
+                        ),
+                        const TextSpan(text: ' '),
+                        TextSpan(text: comment?.content),
+                      ],
                     ),
-                    subtitle: Text(
-                      DateFormat.yMd().add_jm().format(comment.date),
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.w500,
-                      ),
+                  ),
+                  subtitle: Text(
+                    (comment?.date != null)
+                        ? DateFormat.yMd().add_jm().format(comment!.date)
+                        : 'N/A',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w500,
                     ),
-                    onTap: () {
-                      // Navigator.of(context).pushNamed(
-                      //   ProfileScreen.routeName,
-                      //   arguments: ProfileScreenArgs(userId: comment.author!.id!),
-                      // );
-                    });
+                  ),
+                  onTap: () {
+                    // Navigator.of(context).pushNamed(
+                    //   ProfileScreen.routeName,
+                    //   arguments: ProfileScreenArgs(userId: comment.author!.id!),
+                    // );
+                  },
+                );
               },
             ),
             bottomSheet: Padding(

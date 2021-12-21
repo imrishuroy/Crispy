@@ -1,3 +1,34 @@
+20 Dec - 
+
+1.
+    OTP is unreliable. Let’s not authenticate user with that. 
+    Let’s authentic with Google account and let’s then show otp 
+    verification page afterwards. 
+    On the bottom of the page we can have a small skip button.
+
+2.  
+    But even with that, there needs to be an option to manually enter OTP
+
+3. - Done
+    Influencer name and pic should be present on video, from influencer profile 
+    and liked videos. Though they should be inaccessible.  
+
+Bugs:
+
+1. No matter which video is clicked on the influencer’s profile, 
+it always starts from the 1st video. - Done
+
+2. Liking/ unliking any video from influencer profile is causing the 
+influencer profile videos to break. They first get still and then they go blank.
+
+3. The video is not adjusting to bigger screen size. 
+There’s a black bar at the bottom    
+
+
+
+
+
+
 19 Dec -
  Firebase Otp - https://www.youtube.com/watch?v=W19IfZ-nqB8
 

@@ -1,5 +1,4 @@
-import '/screens/influencer/widgets/view_influencer_videos.dart';
-
+import '/screens/liked-videos/widgets/view_liked_videos.dart';
 import '/widgets/video_thumbnail.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/repository/video/video_repository.dart';
@@ -59,9 +58,10 @@ class _LikedVideosState extends State<LikedVideos> {
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => ViewInfluencerVideos(
-                              // VideoPreview(
-                              videos: videos),
+                          builder: (_) => ViewLikedVideos(
+                            // VideoPreview(
+                            videos: videos, openIndex: index,
+                          ),
                         ),
                       ),
                       // child: Scaffold(
