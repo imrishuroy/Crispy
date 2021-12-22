@@ -15,11 +15,13 @@
 
 Bugs:
 
-1. No matter which video is clicked on the influencer’s profile, 
-it always starts from the 1st video. - Done
+1. Done
+    No matter which video is clicked on the influencer’s profile, 
+    it always starts from the 1st video. 
 
-2. Liking/ unliking any video from influencer profile is causing the 
-influencer profile videos to break. They first get still and then they go blank.
+2. Done
+    Liking/ unliking any video from influencer profile is causing the 
+    influencer profile videos to break. They first get still and then they go blank.
 
 3. The video is not adjusting to bigger screen size. 
 There’s a black bar at the bottom    
