@@ -1,4 +1,4 @@
-import 'package:crispy/screens/influencer/cubit/influencer_pageview_cubit.dart';
+import '/screens/influencer/cubit/influencer_pageview_cubit.dart';
 
 import '/screens/influencer/widgets/view_influencer_videos.dart';
 

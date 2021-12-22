@@ -1,4 +1,5 @@
-import 'package:crispy/repository/auth/auth_repository.dart';
+import '/repository/auth/auth_repository.dart';
+import '/screens/outlet/cubit/outlet_pageview_cubit.dart';
 
 import '/screens/outlet/view_outlet_videos.dart';
 import '/config/contants.dart';
@@ -152,9 +153,14 @@ class OutletProfile extends StatelessWidget {
                           return InkWell(
                               onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) => ViewOutletVideos(
-                                        videos: videos,
-                                        openIndex: index,
+                                      builder: (_) =>
+                                          BlocProvider<OutletPageviewCubit>(
+                                        create: (context) =>
+                                            OutletPageviewCubit(),
+                                        child: ViewOutletVideos(
+                                          videos: videos,
+                                          openIndex: index,
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -1,10 +1,10 @@
 import 'package:better_player/better_player.dart';
-import 'package:crispy/config/contants.dart';
-import 'package:crispy/screens/home/widgets/comment_button.dart';
-import 'package:crispy/screens/home/widgets/cubit/likevideo_cubit.dart';
-import 'package:crispy/screens/home/widgets/fav_button.dart';
-import 'package:crispy/screens/home/widgets/main_content.dart';
-import 'package:crispy/screens/map/map_screen.dart';
+import '/config/contants.dart';
+import '/screens/home/widgets/comment_button.dart';
+import '/screens/home/widgets/cubit/likevideo_cubit.dart';
+import '/screens/home/widgets/fav_button.dart';
+
+import '/screens/map/map_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '/screens/influencer/cubit/influencer_pageview_cubit.dart';
@@ -12,7 +12,6 @@ import '/screens/influencer/cubit/influencer_pageview_cubit.dart';
 import '/models/video.dart';
 import 'package:flutter/material.dart';
 
-import 'influencer_content_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'influencer_video_description.dart';
@@ -183,10 +182,11 @@ class _ViewInfluencerVideosState extends State<ViewInfluencerVideos> {
                                     looping: true,
                                     handleLifecycle: true,
                                     // autoDispose: true,
-                                    autoDispose: false,
+                                    // autoDispose: false,
 
-                                    // autoDispose: _pageViewCubit.state.pageViewStatus ==
-                                    //     PageViewStatus.scrollable,
+                                    autoDispose:
+                                        _pageViewCubit.state.pageViewStatus ==
+                                            PageViewStatus.neverScrollable,
                                     // autoDispose: _pageViewCubit.state.pageViewStatus ==
                                     //     PageViewStatus.neverScrollable,
                                     // autoDispose: true,
@@ -243,28 +243,12 @@ class _ViewInfluencerVideosState extends State<ViewInfluencerVideos> {
                               ],
                             ),
                           ),
-                          // Align(
-                          //   alignment: Alignment.topRight,
-                          //   child: IconButton(
-                          //     padding: const EdgeInsets.only(right: 20.0, top: 7.0),
-                          //     icon: const Icon(
-                          //       Icons.featured_play_list,
-                          //       size: 25.0,
-                          //     ),
-                          //     onPressed: () =>
-                          //         Navigator.of(context).pushNamed(LikedVideos.routeName),
-                          //   ),
-                          // ),
                         ],
                       ),
-                      //SampleMapView(),
+
                       MapScreen(outlet: widget.videos[index]?.outlet),
                     ],
                   ),
-                  // ContentView(
-                  //     InfluencerContentView(
-                  //   video: widget.videos[index],
-                  // ),
                 );
               },
             );

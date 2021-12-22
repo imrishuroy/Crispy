@@ -1,5 +1,5 @@
 import 'package:better_player/better_player.dart';
-import 'package:crispy/screens/influencer/cubit/influencer_pageview_cubit.dart';
+import '/screens/influencer/cubit/influencer_pageview_cubit.dart';
 import '/config/contants.dart';
 import '/models/video.dart';
 
@@ -125,9 +125,8 @@ class _InfluencerContentViewState extends State<InfluencerContentView> {
                               bufferForPlaybackMs: 1000,
                               bufferForPlaybackAfterRebufferMs: 2000),
                     ),
-                    configuration: BetterPlayerConfiguration(
-                      controlsConfiguration:
-                          const BetterPlayerControlsConfiguration(
+                    configuration: const BetterPlayerConfiguration(
+                      controlsConfiguration: BetterPlayerControlsConfiguration(
                         enablePlayPause: false,
                         showControls: false,
                         enableProgressBarDrag: false,
