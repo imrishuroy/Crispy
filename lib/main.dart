@@ -14,6 +14,7 @@ import 'blocs/auth/auth_bloc.dart';
 import 'blocs/simple_bloc_observer.dart';
 import 'config/auth_wrapper.dart';
 import 'config/custom_router.dart';
+import 'config/shared_prefs.dart';
 import 'repository/auth/auth_repository.dart';
 
 void main() async {
@@ -23,6 +24,8 @@ void main() async {
   EquatableConfig.stringify = kDebugMode;
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  await SharedPrefs().init();
+
   runApp(const MyApp());
 }
 

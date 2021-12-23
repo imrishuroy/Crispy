@@ -1,5 +1,8 @@
-import '/blocs/auth/auth_bloc.dart';
+import 'package:crispy/config/shared_prefs.dart';
+import 'package:crispy/screens/give-access/give_access_screen.dart';
+
 import '/screens/home/home_screen.dart';
+import '/blocs/auth/auth_bloc.dart';
 import '/screens/login/login_screen.dart';
 import '/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +33,18 @@ class AuthWrapper extends StatelessWidget {
           //   Navigator.of(context).pushNamed(FilteredTodos.routeName);
           // Navigator.of(context)
           //     .pushNamed(ProfileScreen.routeName, arguments: state.user?.uid);
-          Navigator.of(context)
-              .pushNamed(HomeScreen.routeName, arguments: state.user?.uid);
+
+          // Navigator.of(context).push(
+          //     MaterialPageRoute(builder: (_) => const ReusableVideoListPage()));
+
+          // Navigator.of(context)
+          //     .pushNamed(HomeScreen.routeName, arguments: state.user?.uid);
+          print('Is First Time ${SharedPrefs().isFirstTime}');
+          if (SharedPrefs().isFirstTime) {
+            Navigator.of(context).pushNamed(HomeScreen.routeName);
+          } else {
+            Navigator.of(context).pushNamed(GiveAccessScreen.routeName);
+          }
         }
       },
       child: const Scaffold(

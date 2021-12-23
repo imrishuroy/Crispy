@@ -1,3 +1,7 @@
+import 'package:crispy/config/shared_prefs.dart';
+
+import '/repository/auth/auth_repository.dart';
+
 import '/screens/liked-videos/cubit/liked_videos_pageview_cubit.dart';
 
 import '/screens/liked-videos/widgets/view_liked_videos.dart';
@@ -31,10 +35,58 @@ class LikedVideos extends StatefulWidget {
 }
 
 class _LikedVideosState extends State<LikedVideos> {
+  Future<void> _signOutUser() async {
+    try {
+      var result = await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('SignOut'),
+            content: const Text('Do you want to sign out ?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text(
+                  'Yes',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text(
+                  'No',
+                  style: TextStyle(color: Colors.green),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+
+      final bool logout = await result ?? false;
+      if (logout) {
+        await SharedPrefs().deleteEverything();
+        final _authRepo = context.read<AuthRepository>();
+        await _authRepo.signOut();
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              onPressed: _signOutUser,
+              icon: const Icon(Icons.logout),
+            ),
+          ),
+        ],
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: const Text('Liked Videos'),

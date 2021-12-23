@@ -1,4 +1,3 @@
-import '/repository/auth/auth_repository.dart';
 import '/screens/outlet/cubit/outlet_pageview_cubit.dart';
 
 import '/screens/outlet/view_outlet_videos.dart';
@@ -32,21 +31,13 @@ class OutletProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Outlet Id ${outlet?.outletId}');
-    final _authRepo = context.read<AuthRepository>();
+
     return Scaffold(
         body: ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: IconButton(
-                onPressed: () async {
-                  await _authRepo.signOut();
-                },
-                icon: const Icon(Icons.logout)),
-          ),
           const SizedBox(height: 30.0),
           Center(
             child: CircleAvatar(

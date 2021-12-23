@@ -1,3 +1,5 @@
+import '/screens/give-access/give_access_screen.dart';
+
 import '/screens/influencer/influencer_profile.dart';
 import '/screens/liked-videos/liked_videos_screen.dart';
 
@@ -36,6 +38,9 @@ class CustomRouter {
       case InfluencerProfile.routeName:
         return InfluencerProfile.route(
             args: settings.arguments as InfluencerProfileArgs);
+
+      case GiveAccessScreen.routeName:
+        return GiveAccessScreen.route();
 
       // case PhLoginScreen.routeName:
       //   return PhLoginScreen.route();

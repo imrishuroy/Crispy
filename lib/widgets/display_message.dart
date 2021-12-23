@@ -8,6 +8,7 @@ class DisplayMessage {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        duration: const Duration(seconds: 2),
         backgroundColor: Colors.green,
         content: Text(
           '$title',

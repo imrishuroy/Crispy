@@ -1,3 +1,4 @@
+import 'package:crispy/config/contants.dart';
 import 'package:crispy/models/video.dart';
 import 'package:flutter/material.dart';
 
@@ -22,16 +23,29 @@ class LikedVideoDescription extends StatelessWidget {
           children: [
             // Row(
             //   children: [
-            //     // CircleAvatar(
-            //     //   backgroundColor: Colors.deepOrange,
-            //     //   radius: 17.3,
-            //     //   child: CircleAvatar(
-            //     //     radius: 16.5,
-            //     //     backgroundImage: NetworkImage(
-            //     //       video?.influencer?.profilePic ?? errorImage,
-            //     //     ),
-            //     //   ),
-            //     // ),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.deepOrange,
+                  radius: 17.3,
+                  child: CircleAvatar(
+                    radius: 16.5,
+                    backgroundImage: NetworkImage(
+                      video?.influencer?.profilePic ?? errorImage,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 5.0),
+                Text(
+                  video?.influencer?.name ?? 'N/A',
+                  style: const TextStyle(
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+              ],
+            ),
 
             //     // Container(
             //     //   padding: const EdgeInsets.all(1.0),
@@ -59,14 +73,6 @@ class LikedVideoDescription extends StatelessWidget {
             //   ],
             // ),
 
-            Text(
-              video?.outlet?.name ?? 'N/A',
-              style: const TextStyle(
-                fontSize: 17.0,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 1.1,
-              ),
-            ),
             //const SizedBox(height: 2.0),
             // we can user expandable_text: ^2.2.0 for exanding text
             SizedBox(

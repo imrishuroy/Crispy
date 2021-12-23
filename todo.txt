@@ -1,3 +1,40 @@
+
+
+
+22 Dec - 
+
+   // Mobile number input screen
+
+   Code authentication screen, when user have the code they 
+   can access the app  - Done
+
+   1. When you go to influencer profile, and interact 
+   with videos a little longer eg. Like, then dislike, 
+   then write a comment and the repeat and then when 
+   you go back to the influencer profile by clicking back, 
+   the video continues to play and doesn't stop. 
+   - This doesn't seems to happen in my device
+
+   2.If I switch from a video X and then come back to 
+   it then the video X should play from the begining. 
+   Now it plays from were I left it.
+
+   3. need influencer profile pic and name on liked videos. - Done
+
+   4.log out option is a very thoughtful addition 
+   from your end. But let us keep it at the top of 
+   liked video play list. - Done
+
+   5. Sometimes, all videos go blank. 
+   I am not sure what is triggering it. 
+   It happens very rarely. I will test the app more.
+
+   6. Add more influencers, outlets and videos.
+
+   7. Black bar at the bottom
+
+
+
 20 Dec - 
 
 1.
@@ -24,7 +61,9 @@ Bugs:
     influencer profile videos to break. They first get still and then they go blank.
 
 3. The video is not adjusting to bigger screen size. 
-There’s a black bar at the bottom    
+There’s a black bar at the bottom  
+
+
 
 
 

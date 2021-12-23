@@ -6,7 +6,6 @@ import '/widgets/error_dialog.dart';
 import '/widgets/user_profle_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:intl/intl.dart';
 
 class CommentsScreenArgs {
