@@ -173,31 +173,32 @@ class _ContentViewState extends State<ContentView> {
                               bufferForPlaybackAfterRebufferMs: 2000),
                     ),
                     configuration: BetterPlayerConfiguration(
-                        controlsConfiguration:
-                            const BetterPlayerControlsConfiguration(
-                          enablePlayPause: false,
-                          showControls: false,
-                          enableProgressBarDrag: false,
-                          enableProgressText: false,
-                          enableProgressBar: false,
-                          enableSkips: false,
-                          enableAudioTracks: false,
-                          loadingWidget: Center(
-                            child: SizedBox(
-                              height: 50.0,
-                              width: 50.0,
-                              child: SpinKitChasingDots(
-                                color: Colors.white,
-                              ),
+                      controlsConfiguration:
+                          const BetterPlayerControlsConfiguration(
+                        enablePlayPause: false,
+                        showControls: false,
+                        enableProgressBarDrag: false,
+                        enableProgressText: false,
+                        enableProgressBar: false,
+                        enableSkips: false,
+                        enableAudioTracks: false,
+                        loadingWidget: Center(
+                          child: SizedBox(
+                            height: 50.0,
+                            width: 50.0,
+                            child: SpinKitChasingDots(
+                              color: Colors.white,
                             ),
                           ),
                         ),
-                        autoPlay: true,
-                        aspectRatio: 0.5,
-                        looping: true,
-                        handleLifecycle: true,
-                        autoDispose: _pageViewCubit.state.pageViewStatus ==
-                            PageViewStatus.neverScrollable),
+                      ),
+                      autoPlay: true,
+                      aspectRatio: 0.5,
+                      looping: true,
+                      handleLifecycle: true,
+                      autoDispose: _pageViewCubit.state.pageViewStatus ==
+                          PageViewStatus.neverScrollable,
+                    ),
                     playFraction: 0.8,
                     betterPlayerListVideoPlayerController: controller,
                   ),
@@ -250,26 +251,8 @@ class _ContentViewState extends State<ContentView> {
             ),
           ],
         ),
-        //SampleMapView(),
         MapScreen(outlet: widget.video?.outlet),
       ],
     );
-
-    // Row(
-    //   //reverse: true,
-    //   children: [
-
-    // const Scaffold(
-    //   body: Center(
-    //     child: Text('Left'),
-    //   ),
-    // ),
-    // const Scaffold(
-    //   body: Center(
-    //     child: Text('Right'),
-    //   ),
-    // )
-    //   ],
-    // );
   }
 }

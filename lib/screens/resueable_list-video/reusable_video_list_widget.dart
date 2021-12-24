@@ -95,99 +95,140 @@ class _ReusableVideoListWidgetState extends State<ReusableVideoListWidget> {
   ///when fast scrolling through the list
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              videoListData!.videoTitle,
-              style: const TextStyle(fontSize: 50),
-            ),
-          ),
-          VisibilityDetector(
-            key: Key(hashCode.toString() + DateTime.now().toString()),
-            onVisibilityChanged: (info) {
-              if (!widget.canBuildVideo!()) {
-                _timer?.cancel();
-                _timer = null;
-                _timer = Timer(const Duration(milliseconds: 500), () {
-                  if (info.visibleFraction >= 0.6) {
-                    _setupController();
-                  } else {
-                    _freeController();
-                  }
-                });
-                return;
-              }
-              if (info.visibleFraction >= 0.6) {
-                _setupController();
-              } else {
-                _freeController();
-              }
-            },
-            child: StreamBuilder<BetterPlayerController?>(
-              stream: betterPlayerControllerStreamController.stream,
-              builder: (context, snapshot) {
-                return AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: controller != null
-                      ? BetterPlayer(
-                          controller: controller!,
-                        )
-                      : Container(
-                          color: Colors.black,
-                          child: const Center(
-                            child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            ),
-                          ),
-                        ),
-                );
-              },
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(8),
-            child: Text(
-              "Horror: In Steven Spielberg's Jaws, a shark terrorizes a beach "
-              'town. Plainspoken sheriff Roy Scheider, hippie shark '
-              'researcher Richard Dreyfuss, and a squirrely boat captain '
-              'set out to find the beast, but will they escape with their '
-              "lives? 70's special effects, legendary score, and trademark "
-              'humor set this classic apart.',
-            ),
-          ),
-          Center(
-            child: Wrap(children: [
-              ElevatedButton(
-                child: const Text('Play'),
-                onPressed: () {
-                  controller!.play();
-                },
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                child: const Text('Pause'),
-                onPressed: () {
-                  controller!.pause();
-                },
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                child: const Text('Set max volume'),
-                onPressed: () {
-                  controller!.setVolume(1.0);
-                },
-              ),
-            ]),
-          ),
-        ],
+    final _canvas = MediaQuery.of(context).size;
+    return VisibilityDetector(
+      key: Key(hashCode.toString() + DateTime.now().toString()),
+      onVisibilityChanged: (info) {
+        if (!widget.canBuildVideo!()) {
+          _timer?.cancel();
+          _timer = null;
+          _timer = Timer(const Duration(milliseconds: 500), () {
+            if (info.visibleFraction >= 0.6) {
+              _setupController();
+            } else {
+              _freeController();
+            }
+          });
+          return;
+        }
+        if (info.visibleFraction >= 0.6) {
+          _setupController();
+        } else {
+          _freeController();
+        }
+      },
+      child: StreamBuilder<BetterPlayerController?>(
+        stream: betterPlayerControllerStreamController.stream,
+        builder: (context, snapshot) {
+          return SizedBox(
+            height: _canvas.height * 0.7,
+            child: controller != null
+                ? BetterPlayer(
+                    controller: controller!,
+                  )
+                : Container(
+                    color: Colors.black,
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    ),
+                  ),
+          );
+        },
       ),
     );
+
+    // Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     // Padding(
+    //     //   padding: const EdgeInsets.all(8),
+    //     //   child: Text(
+    //     //     videoListData!.videoTitle,
+    //     //     style: const TextStyle(fontSize: 50),
+    //     //   ),
+    //     // ),
+    //     VisibilityDetector(
+    //       key: Key(hashCode.toString() + DateTime.now().toString()),
+    //       onVisibilityChanged: (info) {
+    //         if (!widget.canBuildVideo!()) {
+    //           _timer?.cancel();
+    //           _timer = null;
+    //           _timer = Timer(const Duration(milliseconds: 500), () {
+    //             if (info.visibleFraction >= 0.6) {
+    //               _setupController();
+    //             } else {
+    //               _freeController();
+    //             }
+    //           });
+    //           return;
+    //         }
+    //         if (info.visibleFraction >= 0.6) {
+    //           _setupController();
+    //         } else {
+    //           _freeController();
+    //         }
+    //       },
+    //       child: StreamBuilder<BetterPlayerController?>(
+    //         stream: betterPlayerControllerStreamController.stream,
+    //         builder: (context, snapshot) {
+    //           return SizedBox(
+    //             height: _canvas.height * 0.7,
+    //             child: controller != null
+    //                 ? BetterPlayer(
+    //                     controller: controller!,
+    //                   )
+    //                 : Container(
+    //                     color: Colors.black,
+    //                     child: const Center(
+    //                       child: CircularProgressIndicator(
+    //                         valueColor:
+    //                             AlwaysStoppedAnimation<Color>(Colors.white),
+    //                       ),
+    //                     ),
+    //                   ),
+    //           );
+    //         },
+    //       ),
+    //     ),
+    //     // const Padding(
+    //     //   padding: EdgeInsets.all(8),
+    //     //   child: Text(
+    //     //     "Horror: In Steven Spielberg's Jaws, a shark terrorizes a beach "
+    //     //     'town. Plainspoken sheriff Roy Scheider, hippie shark '
+    //     //     'researcher Richard Dreyfuss, and a squirrely boat captain '
+    //     //     'set out to find the beast, but will they escape with their '
+    //     //     "lives? 70's special effects, legendary score, and trademark "
+    //     //     'humor set this classic apart.',
+    //     //   ),
+    //     // ),
+    //     // Center(
+    //     //   child: Wrap(children: [
+    //     //     ElevatedButton(
+    //     //       child: const Text('Play'),
+    //     //       onPressed: () {
+    //     //         controller!.play();
+    //     //       },
+    //     //     ),
+    //     //     const SizedBox(width: 8),
+    //     //     ElevatedButton(
+    //     //       child: const Text('Pause'),
+    //     //       onPressed: () {
+    //     //         controller!.pause();
+    //     //       },
+    //     //     ),
+    //     //     const SizedBox(width: 8),
+    //     //     ElevatedButton(
+    //     //       child: const Text('Set max volume'),
+    //     //       onPressed: () {
+    //     //         controller!.setVolume(1.0);
+    //     //       },
+    //     //     ),
+    //     //   ]),
+    //     // ),
+    //   ],
+    // );
   }
 
   @override

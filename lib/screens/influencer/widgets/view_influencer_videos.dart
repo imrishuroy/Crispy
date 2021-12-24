@@ -54,6 +54,7 @@ class _ViewInfluencerVideosState extends State<ViewInfluencerVideos> {
   @override
   void dispose() {
     _pageController.dispose();
+    _contentpageController.dispose();
 
     super.dispose();
   }

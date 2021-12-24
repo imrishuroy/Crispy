@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crispy/models/comment.dart';
-import 'package:crispy/models/video.dart';
-import 'package:crispy/repository/video/base_video_repo.dart';
+import '/contants/paths.dart';
+import '/models/comment.dart';
+import '/models/video.dart';
+import '/repository/video/base_video_repo.dart';
 
 class VideoRepository extends BaseVideoRepositroy {
-  final _videoRef = FirebaseFirestore.instance.collection('videos');
-  final _userRef = FirebaseFirestore.instance.collection('users');
-  final _likedRef = FirebaseFirestore.instance.collection('likes');
+  final _videoRef = FirebaseFirestore.instance.collection(Paths.videos);
+  final _userRef = FirebaseFirestore.instance.collection(Paths.users);
+  final _likedRef = FirebaseFirestore.instance.collection(Paths.likes);
 
   final FirebaseFirestore _firebaseFirestore;
 
@@ -36,16 +37,18 @@ class VideoRepository extends BaseVideoRepositroy {
     try {
       await _likedRef
           .doc(videoId)
-          .collection('liked-videos')
+          .collection(Paths.likedVideos)
           .doc(userId)
           .set({});
 
       await _firebaseFirestore
-          .collection('users')
+          .collection(Paths.users)
           .doc(userId)
-          .collection('liked-videos')
+          .collection(Paths.likedVideos)
           .doc(videoId)
-          .set({'video': _firebaseFirestore.collection('videos').doc(videoId)});
+          .set({
+        'video': _firebaseFirestore.collection(Paths.videos).doc(videoId)
+      });
     } catch (error) {
       print('Error in creating like ${error.toString()}');
       rethrow;
@@ -60,7 +63,7 @@ class VideoRepository extends BaseVideoRepositroy {
     for (final video in videos!) {
       final likeDoc = await _likedRef
           .doc(video?.videoId)
-          .collection('liked-videos')
+          .collection(Paths.likedVideos)
           .doc(userId)
           .get();
       if (likeDoc.exists) {
@@ -79,14 +82,14 @@ class VideoRepository extends BaseVideoRepositroy {
     try {
       await _likedRef
           .doc(videoId)
-          .collection('liked-videos')
+          .collection(Paths.likedVideos)
           .doc(userId)
           .delete();
 
       await _firebaseFirestore
-          .collection('users')
+          .collection(Paths.users)
           .doc(userId)
-          .collection('liked-videos')
+          .collection(Paths.likedVideos)
           .doc(videoId)
           .delete();
     } catch (error) {
@@ -99,9 +102,9 @@ class VideoRepository extends BaseVideoRepositroy {
   }) async {
     try {
       final snaps = await _firebaseFirestore
-          .collection('likes')
+          .collection(Paths.likes)
           .doc(videoId)
-          .collection('liked-videos')
+          .collection(Paths.likedVideos)
           .get();
 
       return snaps.docs.length;
@@ -114,9 +117,9 @@ class VideoRepository extends BaseVideoRepositroy {
   Future<int> getCommentsCount({required String? videoId}) async {
     try {
       final snaps = await _firebaseFirestore
-          .collection('comments')
+          .collection(Paths.comments)
           .doc(videoId)
-          .collection('video-comments')
+          .collection(Paths.videoComments)
           .get();
 
       return snaps.docs.length;
@@ -132,7 +135,7 @@ class VideoRepository extends BaseVideoRepositroy {
       print('User Id ------------ $userId');
       final videoDoc = await _userRef
           .doc(userId)
-          .collection('liked-videos')
+          .collection(Paths.likedVideos)
           .doc(videoId)
           .get();
 
@@ -152,21 +155,26 @@ class VideoRepository extends BaseVideoRepositroy {
       if (videoId != null && userId != null) {
         final videoDoc = await _userRef
             .doc(userId)
-            .collection('liked-videos')
+            .collection(Paths.likedVideos)
             .doc(videoId)
             .get();
         print('Exits ------------ ${videoDoc.exists}');
 
         if (videoDoc.exists) {
-          _userRef.doc(userId).collection('liked-videos').doc(videoId).delete();
+          _userRef
+              .doc(userId)
+              .collection(Paths.likedVideos)
+              .doc(videoId)
+              .delete();
         } else {
           await _userRef
               .doc(userId)
-              .collection('liked-videos')
+              .collection(Paths.likedVideos)
               .doc(videoId)
               .set({
-            'video':
-                FirebaseFirestore.instance.collection('videos').doc(videoId),
+            'video': FirebaseFirestore.instance
+                .collection(Paths.videos)
+                .doc(videoId),
           });
         }
 
@@ -208,9 +216,9 @@ class VideoRepository extends BaseVideoRepositroy {
   }) async {
     try {
       _firebaseFirestore
-          .collection('comments')
+          .collection(Paths.comments)
           .doc(comment.videoId)
-          .collection('video-comments')
+          .collection(Paths.videoComments)
           .add(comment.toDocument());
     } catch (error) {
       print('Error in adding comments ${error.toString()}');
@@ -220,9 +228,9 @@ class VideoRepository extends BaseVideoRepositroy {
 
   Stream<List<Future<Comment?>>> getPostComments({required String? videoId}) {
     return _firebaseFirestore
-        .collection('comments')
+        .collection(Paths.comments)
         .doc(videoId)
-        .collection('video-comments')
+        .collection(Paths.videoComments)
         .orderBy('date', descending: false)
         .snapshots()
         .map((snap) =>
@@ -236,9 +244,9 @@ class VideoRepository extends BaseVideoRepositroy {
     print('user id -------- $userId');
     try {
       final videoSnaps = _firebaseFirestore
-          .collection('users')
+          .collection(Paths.users)
           .doc(userId)
-          .collection('liked-videos')
+          .collection(Paths.likedVideos)
           .snapshots();
 
       return videoSnaps.map((snaps) {

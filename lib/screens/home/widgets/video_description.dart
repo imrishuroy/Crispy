@@ -1,4 +1,4 @@
-import 'package:crispy/screens/influencer/influencer_profile.dart';
+import '/screens/influencer/influencer_profile.dart';
 
 import '/config/contants.dart';
 import '/models/video.dart';
@@ -9,7 +9,10 @@ class VideoDescription extends StatelessWidget {
   // The size of the profile image in the follow Action
   static const double profileImageSize = 50.0;
 
-  const VideoDescription({Key? key, required this.video}) : super(key: key);
+  const VideoDescription({
+    Key? key,
+    required this.video,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

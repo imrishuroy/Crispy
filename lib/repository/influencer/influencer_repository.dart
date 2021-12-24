@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/contants/paths.dart';
-import '/models/influencer.dart';
+
 import '/models/video.dart';
 import '/repository/influencer/base_influencer_repo.dart';
 
@@ -9,28 +9,28 @@ class InfluencerRepository extends BaseInfluencerRepository {
   final _influencerRef =
       FirebaseFirestore.instance.collection(Paths.influencers);
 
-  @override
-  Future<Influencer?> getInfluencer({required String? influencerId}) async {
-    try {
-      final snapshot = await _influencerRef
-          .doc(influencerId)
-          .withConverter<Influencer>(
-              fromFirestore: (snapshot, _) =>
-                  Influencer.fromMap(snapshot.data()!),
-              toFirestore: (influencer, _) => influencer.toMap())
-          .get();
+  // @override
+  // Future<Influencer?> getInfluencer({required String? influencerId}) async {
+  //   try {
+  //     final snapshot = await _influencerRef
+  //         .doc(influencerId)
+  //         .withConverter<Influencer>(
+  //             fromFirestore: (snapshot, _) =>
+  //                 Influencer.fromMap(snapshot.data()),
+  //             toFirestore: (influencer, _) => influencer.toMap())
+  //         .get();
 
-      return snapshot.data();
-    } catch (e) {
-      print('Error getting influencer ${e.toString()}');
-      rethrow;
-    }
-  }
+  //     return snapshot.data();
+  //   } catch (e) {
+  //     print('Error getting influencer ${e.toString()}');
+  //     rethrow;
+  //   }
+  // }
 
   @override
   Stream<List<Future<Video?>>> streamInfluencerVideos(
       {required String? influencerId}) {
-    print('Id $influencerId');
+    print('Id info --------- $influencerId');
     try {
       final snaps =
           _influencerRef.doc(influencerId).collection(Paths.videos).snapshots();

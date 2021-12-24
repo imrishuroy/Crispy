@@ -50,6 +50,7 @@ class _ViewOutletVideosState extends State<ViewOutletVideos> {
   @override
   void dispose() {
     _pageController.dispose();
+    _contentpageController.dispose();
 
     super.dispose();
   }
@@ -63,6 +64,7 @@ class _ViewOutletVideosState extends State<ViewOutletVideos> {
       onWillPop: () async {
         print('Pop happend ----------- ');
         controller?.pause();
+
         // context.read<InfluencerPageviewCubit>().makePageViewScrollable();
 
         return true;

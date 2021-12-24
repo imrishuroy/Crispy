@@ -48,6 +48,7 @@ class _ViewLikedVideosState extends State<ViewLikedVideos> {
   @override
   void dispose() {
     _pageController.dispose();
+    _contentpageController.dispose();
 
     super.dispose();
   }

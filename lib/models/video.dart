@@ -63,6 +63,7 @@ class Video extends Equatable {
     if (outletRef != null && influencerRef != null) {
       final outletDoc = await outletRef.get();
       final influencerDoc = await influencerRef.get();
+      print('Influencer Doc -------- $influencerDoc');
       if (outletDoc.exists && influencerDoc.exists) {
         return Video(
           videoId: data?['videoId'],

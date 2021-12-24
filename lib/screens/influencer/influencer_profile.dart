@@ -79,7 +79,7 @@ class InfluencerProfile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 30.0),
+          const SizedBox(height: 50.0),
           Center(
             child: CircleAvatar(
               radius: 60.0,

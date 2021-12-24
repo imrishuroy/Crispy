@@ -48,20 +48,22 @@ class Influencer extends Equatable {
     };
   }
 
-  factory Influencer.fromMap(Map<String, dynamic> map) {
-    return Influencer(
-      name: map['name'],
-      username: map['username'],
-      bio: map['bio'],
-      influencerId: map['uid'],
-      profilePic: map['profilePic'],
-      //    influencerVideos: map['videos'],
-    );
-  }
+  // factory Influencer.fromMap(Map<String, dynamic> map) {
+  //   print('Influcencer map  ----------- $map');
+  //   return Influencer(
+  //     name: map['name'],
+  //     username: map['username'],
+  //     bio: map['bio'],
+  //     influencerId: map['influencerId'],
+  //     profilePic: map['profilePic'],
+  //     //    influencerVideos: map['videos'],
+  //   );
+  // }
 
   factory Influencer.fromDocument(DocumentSnapshot? doc) {
     final data = doc?.data() as Map?;
-
+    print('Influencer Data ------------ ${data?['name']}');
+    print('Influencer Data ------------ $data');
     return Influencer(
       name: data?['name'],
       influencerId: data?['influencerId'],
@@ -73,8 +75,8 @@ class Influencer extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory Influencer.fromJson(String source) =>
-      Influencer.fromMap(json.decode(source));
+  // factory Influencer.fromJson(String source) =>
+  //     Influencer.fromMap(json.decode(source));
 
   @override
   bool get stringify => true;

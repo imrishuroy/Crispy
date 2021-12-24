@@ -1,6 +1,4 @@
 
-
-
 22 Dec - 
 
    // Mobile number input screen

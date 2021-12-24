@@ -13,4 +13,10 @@ class Paths {
   static String get likes => 'likes';
 
   static String get outlets => 'outlets';
+
+  // sub-collections
+
+  static String get likedVideos => 'liked-videos';
+
+  static String get videoComments => 'video-comments';
 }

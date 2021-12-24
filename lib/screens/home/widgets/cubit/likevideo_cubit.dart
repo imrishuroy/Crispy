@@ -30,14 +30,15 @@ class LikeVideoCubit extends Cubit<LikeVideoState> {
       videoId: videoId,
       userId: _authBloc.state.user!.uid,
     );
-
-    emit(
-      state.copyWith(
-        likedVideoIds: Set<String>.from(state.likedVideoIds)..add(videoId!),
-        recentlyLikedVideoIds: Set<String>.from(state.recentlyLikedVideoIds)
-          ..add(videoId),
-      ),
-    );
+    if (videoId != null) {
+      emit(
+        state.copyWith(
+          likedVideoIds: Set<String>.from(state.likedVideoIds)..add(videoId),
+          recentlyLikedVideoIds: Set<String>.from(state.recentlyLikedVideoIds)
+            ..add(videoId),
+        ),
+      );
+    }
   }
 
   void getLikesCount({required String? videoId}) async {
@@ -46,18 +47,20 @@ class LikeVideoCubit extends Cubit<LikeVideoState> {
   }
 
   void unlikePost({required String? videoId}) {
-    _videoRepository.deleteLike(
-      videoId: videoId,
-      userId: _authBloc.state.user!.uid,
-    );
+    if (videoId != null && _authBloc.state.user?.uid != null) {
+      _videoRepository.deleteLike(
+        videoId: videoId,
+        userId: _authBloc.state.user!.uid,
+      );
 
-    emit(
-      state.copyWith(
-        likedVideoIds: Set<String>.from(state.likedVideoIds)..remove(videoId!),
-        recentlyLikedVideoIds: Set<String>.from(state.recentlyLikedVideoIds)
-          ..remove(videoId),
-      ),
-    );
+      emit(
+        state.copyWith(
+          likedVideoIds: Set<String>.from(state.likedVideoIds)..remove(videoId),
+          recentlyLikedVideoIds: Set<String>.from(state.recentlyLikedVideoIds)
+            ..remove(videoId),
+        ),
+      );
+    }
   }
 
   void clearAllLikedPosts() {

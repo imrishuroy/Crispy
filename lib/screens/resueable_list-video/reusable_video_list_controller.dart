@@ -10,7 +10,12 @@ class ReusableVideoListController {
       _betterPlayerControllerRegistry.add(
         BetterPlayerController(
           const BetterPlayerConfiguration(
-              handleLifecycle: false, autoDispose: false),
+            aspectRatio: 0.5,
+            autoPlay: true,
+            looping: true,
+            handleLifecycle: false,
+            autoDispose: false,
+          ),
         ),
       );
     }
