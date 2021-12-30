@@ -35,11 +35,12 @@ class InfluencerProfile extends StatelessWidget {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) {
-        return BlocProvider(
+        return BlocProvider<InfluencerBloc>(
           create: (context) => InfluencerBloc(
-              influencerRepo: context.read<InfluencerRepository>(),
-              influencerId: args!.influencer?.influencerId),
-          child: InfluencerProfile(influencer: args!.influencer),
+            influencerRepo: context.read<InfluencerRepository>(),
+            influencerId: args?.influencer?.influencerId,
+          ),
+          child: InfluencerProfile(influencer: args?.influencer),
         );
       },
     );
@@ -181,9 +182,9 @@ class InfluencerProfile extends StatelessWidget {
                               onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) =>
-                                          BlocProvider<InfluencerPageviewCubit>(
+                                          BlocProvider<InfluencerPageViewCubit>(
                                         create: (context) =>
-                                            InfluencerPageviewCubit(),
+                                            InfluencerPageViewCubit(),
                                         child: ViewInfluencerVideos(
                                           videos: videos,
                                           openIndex: index,

@@ -21,8 +21,6 @@ class LikedVideoDescription extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Row(
-            //   children: [
             Row(
               children: [
                 CircleAvatar(
@@ -45,6 +43,14 @@ class LikedVideoDescription extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            Text(
+              video?.outlet?.name ?? 'N/A',
+              style: const TextStyle(
+                fontSize: 17.0,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.1,
+              ),
             ),
 
             //     // Container(

@@ -1,5 +1,5 @@
 import '/repository/outlet/outlet_repository.dart';
-import '/screens/home/cubit/pageview_cubit.dart';
+import 'screens/home/cubit/feed_pageview_cubit.dart';
 import 'package:flutter/services.dart';
 import '/screens/home/widgets/cubit/likevideo_cubit.dart';
 import '/repository/influencer/influencer_repository.dart';
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
               videoRepository: context.read<VideoRepository>(),
             ),
           ),
-          BlocProvider<PageViewCubit>(create: (_) => PageViewCubit()),
+          BlocProvider<FeedPageViewCubit>(create: (_) => FeedPageViewCubit()),
           BlocProvider<VideoBloc>(
             create: (context) => VideoBloc(
               authBloc: context.read<AuthBloc>(),

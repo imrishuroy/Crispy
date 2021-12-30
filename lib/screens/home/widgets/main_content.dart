@@ -1,21 +1,15 @@
 import 'package:better_player/better_player.dart';
 import '/config/contants.dart';
-
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import '/screens/home/cubit/pageview_cubit.dart';
+import '../cubit/feed_pageview_cubit.dart';
 import '/widgets/loading_indicator.dart';
-
 import '/repository/outlet/outlet_repository.dart';
 import '/screens/home/widgets/cubit/likevideo_cubit.dart';
 import '/screens/liked-videos/liked_videos_screen.dart';
 import '/screens/outlet/bloc/outletprofile_bloc.dart';
 import '/screens/outlet/outlet_profile.dart';
-
 import '/models/video.dart';
-
 import '/screens/home/bloc/video_bloc.dart';
-
 import '/screens/map/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'comment_button.dart';
@@ -41,11 +35,11 @@ class MainContentLayout extends StatelessWidget {
             final videos = state.videos;
 
             print('Lenght ${videos.length}');
-            return BlocConsumer<PageViewCubit, PageViewState>(
+            return BlocConsumer<FeedPageViewCubit, FeedPageViewState>(
               listener: (context, state) {},
               builder: (context, state) {
                 return PageView.builder(
-                  physics: state.pageViewStatus == PageViewStatus.initial
+                  physics: state.pageViewStatus == FeedPageViewStatus.initial
                       ? const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics())
                       : const NeverScrollableScrollPhysics(),
@@ -86,12 +80,12 @@ class _ContentViewState extends State<ContentView> {
   final PageController _pageController = PageController(initialPage: 1);
 
   BetterPlayerConfiguration? betterPlayerConfiguration;
-  BetterPlayerListVideoPlayerController? controller;
+  BetterPlayerListVideoPlayerController? _videoController;
 
   @override
   void initState() {
     super.initState();
-    controller = BetterPlayerListVideoPlayerController();
+    _videoController = BetterPlayerListVideoPlayerController();
     // betterPlayerConfiguration = const BetterPlayerConfiguration(autoPlay: true);
     betterPlayerConfiguration =
         const BetterPlayerConfiguration(autoPlay: false);
@@ -101,6 +95,7 @@ class _ContentViewState extends State<ContentView> {
   void dispose() {
     // _videoController.pause();
     print('Dispose runs ------------');
+    _pageController.dispose();
 
     //   _videoController.dispose();
 
@@ -113,16 +108,16 @@ class _ContentViewState extends State<ContentView> {
     final likedPostsState = context.watch<LikeVideoCubit>().state;
     final isLiked =
         likedPostsState.likedVideoIds.contains(widget.video?.videoId);
-    final _pageViewCubit = context.read<PageViewCubit>();
+    final _pageViewCubit = context.read<FeedPageViewCubit>();
 
     print(
-        'Check false --------------------------- ${_pageViewCubit.state.pageViewStatus == PageViewStatus.neverScrollable}');
+        'Check false --------------------------- ${_pageViewCubit.state.pageViewStatus == FeedPageViewStatus.neverScrollable}');
 
     return PageView(
       onPageChanged: (index) {
         if (index != 1) {
           _pageViewCubit.makePageViewScrollable();
-          controller?.pause();
+          _videoController?.pause();
         } else {
           _pageViewCubit.makePageViewNeverScrollable();
           // controller?.pause();
@@ -197,10 +192,10 @@ class _ContentViewState extends State<ContentView> {
                       looping: true,
                       handleLifecycle: true,
                       autoDispose: _pageViewCubit.state.pageViewStatus ==
-                          PageViewStatus.neverScrollable,
+                          FeedPageViewStatus.neverScrollable,
                     ),
                     playFraction: 0.8,
-                    betterPlayerListVideoPlayerController: controller,
+                    betterPlayerListVideoPlayerController: _videoController,
                   ),
                 ),
               ),

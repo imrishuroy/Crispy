@@ -58,14 +58,14 @@ class _InfluencerContentViewState extends State<InfluencerContentView> {
   @override
   Widget build(BuildContext context) {
     // final _canvas = MediaQuery.of(context).size;
-    final _pageViewCubit = context.read<InfluencerPageviewCubit>();
+    final _pageViewCubit = context.read<InfluencerPageViewCubit>();
     final likedPostsState = context.watch<LikeVideoCubit>().state;
     final isLiked =
         likedPostsState.likedVideoIds.contains(widget.video?.videoId);
     //  final _pageViewCubit = context.read<PageViewCubit>();
 
     print(
-        'Check falaseeee - ${_pageViewCubit.state.pageViewStatus == PageViewStatus.neverScrollable}');
+        'Check falaseeee - ${_pageViewCubit.state.pageViewStatus == InfluencerPageViewStatus.neverScrollable}');
 
     return PageView(
       onPageChanged: (index) {

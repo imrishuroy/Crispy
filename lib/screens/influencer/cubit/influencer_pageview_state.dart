@@ -1,27 +1,29 @@
 part of 'influencer_pageview_cubit.dart';
 
-enum PageViewStatus { scrollable, neverScrollable, error }
+enum InfluencerPageViewStatus { initial, neverScrollable, error }
 
-class InfluencerPageviewState extends Equatable {
+class InfluencerPageViewState extends Equatable {
   final Failure failure;
-  final PageViewStatus pageViewStatus;
+  final InfluencerPageViewStatus pageViewStatus;
 
-  const InfluencerPageviewState(
-      {required this.failure, required this.pageViewStatus});
+  const InfluencerPageViewState({
+    required this.failure,
+    required this.pageViewStatus,
+  });
 
-  factory InfluencerPageviewState.initial() => const InfluencerPageviewState(
+  factory InfluencerPageViewState.initial() => const InfluencerPageViewState(
         failure: Failure(),
-        pageViewStatus: PageViewStatus.scrollable,
+        pageViewStatus: InfluencerPageViewStatus.initial,
       );
 
   @override
   bool? get stringify => true;
 
-  InfluencerPageviewState copyWith({
+  InfluencerPageViewState copyWith({
     Failure? failure,
-    PageViewStatus? pageViewStatus,
+    InfluencerPageViewStatus? pageViewStatus,
   }) {
-    return InfluencerPageviewState(
+    return InfluencerPageViewState(
       failure: failure ?? this.failure,
       pageViewStatus: pageViewStatus ?? this.pageViewStatus,
     );

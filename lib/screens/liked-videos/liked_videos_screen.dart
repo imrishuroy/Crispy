@@ -1,16 +1,12 @@
-import 'package:crispy/config/shared_prefs.dart';
-
+import '/config/shared_prefs.dart';
 import '/repository/auth/auth_repository.dart';
-
 import '/screens/liked-videos/cubit/liked_videos_pageview_cubit.dart';
-
 import '/screens/liked-videos/widgets/view_liked_videos.dart';
 import '/widgets/video_thumbnail.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/repository/video/video_repository.dart';
 import '/screens/liked-videos/bloc/likedvideos_bloc.dart';
 import '/widgets/loading_indicator.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
