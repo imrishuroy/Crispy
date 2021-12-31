@@ -1,5 +1,3 @@
-import '/screens/influencer/cubit/influencer_pageview_cubit.dart';
-
 import '/screens/influencer/widgets/view_influencer_videos.dart';
 
 import '/config/contants.dart';
@@ -21,7 +19,7 @@ class InfluencerProfileArgs {
   const InfluencerProfileArgs({required this.influencer});
 }
 
-class InfluencerProfile extends StatelessWidget {
+class InfluencerProfile extends StatefulWidget {
   final Influencer? influencer;
 
   const InfluencerProfile({
@@ -47,12 +45,30 @@ class InfluencerProfile extends StatelessWidget {
   }
 
   @override
+  State<InfluencerProfile> createState() => _InfluencerProfileState();
+}
+
+class _InfluencerProfileState extends State<InfluencerProfile> {
+  // late BetterPlayerConfiguration? betterPlayerConfiguration;
+  // late BetterPlayerListVideoPlayerController? _videoController;
+
+  // @override
+  // void initState() {
+  //   _videoController = BetterPlayerListVideoPlayerController();
+  //   // betterPlayerConfiguration = const BetterPlayerConfiguration(autoPlay: true);
+  //   betterPlayerConfiguration =
+  //       const BetterPlayerConfiguration(autoPlay: false);
+
+  //   super.initState();
+  // }
+
+  @override
   Widget build(BuildContext context) {
     print(
-        'Influencer id  ${influencer?.influencerId}'); //final _influencerRepo = context.read<InfluencerRepository>();
-    print('Influencer id  ${influencer?.name}');
+        'Influencer id  ${widget.influencer?.influencerId}'); //final _influencerRepo = context.read<InfluencerRepository>();
+    print('Influencer id  ${widget.influencer?.name}');
 
-    print('Influencer id  ${influencer?.bio}');
+    print('Influencer id  ${widget.influencer?.bio}');
     return Scaffold(
 
         // floatingActionButton: FloatingActionButton(
@@ -88,7 +104,7 @@ class InfluencerProfile extends StatelessWidget {
               child: CircleAvatar(
                 radius: 57.0,
                 backgroundImage:
-                    NetworkImage(influencer?.profilePic ?? errorImage),
+                    NetworkImage(widget.influencer?.profilePic ?? errorImage),
               ),
             ),
           ),
@@ -97,7 +113,7 @@ class InfluencerProfile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                influencer?.name ?? 'N/A',
+                widget.influencer?.name ?? 'N/A',
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
@@ -146,7 +162,7 @@ class InfluencerProfile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Text(
-              influencer?.bio ?? 'N/A',
+              widget.influencer?.bio ?? 'N/A',
               style: const TextStyle(fontSize: 16.0),
               textAlign: TextAlign.center,
             ),
@@ -179,16 +195,22 @@ class InfluencerProfile extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final video = videos[index];
                           return InkWell(
-                              onTap: () => Navigator.of(context).push(
+                              onTap: () =>
+
+                                  //  Navigator.of(context).push(
+                                  //       MaterialPageRoute(
+                                  //         builder: (_) => NewInfluencerVideo(
+                                  //           videos: videos,
+                                  //           openIndex: index,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+
+                                  Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) =>
-                                          BlocProvider<InfluencerPageViewCubit>(
-                                        create: (context) =>
-                                            InfluencerPageViewCubit(),
-                                        child: ViewInfluencerVideos(
-                                          videos: videos,
-                                          openIndex: index,
-                                        ),
+                                      builder: (_) => ViewInfluencerVideos(
+                                        videos: videos,
+                                        openIndex: index,
                                       ),
                                     ),
                                   ),

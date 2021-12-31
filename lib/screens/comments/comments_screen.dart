@@ -145,6 +145,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                         onPressed: () {
                           final content = _commentController.text.trim();
                           if (content.isNotEmpty) {
+                            FocusScope.of(context).unfocus();
                             context
                                 .read<CommentsBloc>()
                                 .add(CommentsPostComment(content: content));
