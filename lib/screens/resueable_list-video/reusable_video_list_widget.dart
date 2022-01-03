@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:better_player/better_player.dart';
+import 'package:crispy/config/contants.dart';
 import '/models/video_list.dart';
 import '/screens/resueable_list-video/reusable_video_list_controller.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class _ReusableVideoListWidgetState extends State<ReusableVideoListWidget> {
       if (controller != null) {
         print('This runs ----------1');
         controller!.setupDataSource(BetterPlayerDataSource.network(
-            videoListData!.videoUrl,
+            videoListData?.videoUrl ?? errorVideo,
             cacheConfiguration:
                 const BetterPlayerCacheConfiguration(useCache: true)));
         if (!betterPlayerControllerStreamController.isClosed) {

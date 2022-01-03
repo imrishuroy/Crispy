@@ -3,17 +3,20 @@ import 'package:crispy/config/contants.dart';
 
 import 'package:crispy/models/video_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class VideoListWidget extends StatefulWidget {
+class InfluencerListVideoWidget extends StatefulWidget {
   final VideoListData? videoListData;
 
-  const VideoListWidget({Key? key, this.videoListData}) : super(key: key);
+  const InfluencerListVideoWidget({Key? key, this.videoListData})
+      : super(key: key);
 
   @override
-  _VideoListWidgetState createState() => _VideoListWidgetState();
+  _InfluencerListVideoWidgetState createState() =>
+      _InfluencerListVideoWidgetState();
 }
 
-class _VideoListWidgetState extends State<VideoListWidget> {
+class _InfluencerListVideoWidgetState extends State<InfluencerListVideoWidget> {
   VideoListData? get videoListData => widget.videoListData;
   BetterPlayerConfiguration? betterPlayerConfiguration;
   BetterPlayerListVideoPlayerController? controller;
@@ -54,7 +57,26 @@ class _VideoListWidgetState extends State<VideoListWidget> {
         handleLifecycle: true,
         showPlaceholderUntilPlay: false,
         autoDispose: false,
+        controlsConfiguration: BetterPlayerControlsConfiguration(
+          enablePlayPause: false,
+          showControls: false,
+          enableProgressBarDrag: false,
+          enableProgressText: false,
+          enableProgressBar: false,
+          enableSkips: false,
+          enableAudioTracks: false,
+          loadingWidget: Center(
+            child: SizedBox(
+              height: 50.0,
+              width: 50.0,
+              child: SpinKitChasingDots(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ),
+
       //key: Key(videoListData.hashCode.toString()),
       playFraction: 0.8,
 

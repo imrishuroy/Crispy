@@ -1,6 +1,6 @@
-import 'dart:math';
-
 import 'package:better_player/better_player.dart';
+import '/models/influencer.dart';
+
 import 'package:crispy/screens/map/map_screen.dart';
 import '/config/contants.dart';
 import '/screens/home/widgets/comment_button.dart';
@@ -14,11 +14,13 @@ import 'influencer_video_description.dart';
 class ViewInfluencerVideos extends StatefulWidget {
   final List<Video?> videos;
   final int openIndex;
+  final Influencer? influencer;
 
   const ViewInfluencerVideos({
     Key? key,
     required this.videos,
     required this.openIndex,
+    required this.influencer,
   }) : super(key: key);
 
   @override
@@ -47,11 +49,11 @@ class _ViewInfluencerVideosState extends State<ViewInfluencerVideos> {
             'Better Player Event ------------- ${event.betterPlayerEventType}');
         // event.betterPlayerEventType == BetterPlayerEventType.initialized;
 
-        if (event.betterPlayerEventType == BetterPlayerEventType.progress &&
-            _dispose) {
-          print('Event listner of trigger ------------');
-          _videoController?.pause();
-        }
+        // if (event.betterPlayerEventType == BetterPlayerEventType) {
+        //   print('Event listner of trigger ------------');
+        //   // _videoController?.setVolume(0.0);
+        //   // _videoController?.pause();
+        // }
       },
       playerVisibilityChangedBehavior: onVisibilityChanged,
 
@@ -132,6 +134,7 @@ class _ViewInfluencerVideosState extends State<ViewInfluencerVideos> {
     print('Dispose runs');
     _pageController?.dispose();
     // _contentpageController.dispose();
+    _videoController?.setVolume(0.0);
     _videoController?.pause();
 
     super.dispose();
@@ -159,7 +162,7 @@ class _ViewInfluencerVideosState extends State<ViewInfluencerVideos> {
     // }
   }
 
-  bool _dispose = false;
+  // bool _dispose = false;
   @override
   Widget build(BuildContext context) {
     //  final _pageViewCubit = context.read<InfluencerPageViewCubit>();
@@ -171,11 +174,18 @@ class _ViewInfluencerVideosState extends State<ViewInfluencerVideos> {
         //print('Pop happend ----------- ');
 
         //_pageViewCubit.makePageViewNeverScrollable();
-        setState(() {
-          _dispose = true;
-        });
-
         _videoController?.pause();
+
+        // Navigator.of(context).pushAndRemoveUntil(
+        //     MaterialPageRoute(
+        //         builder: (_) =>
+        //             InfluencerProfile(influencer: widget.influencer)),
+        //     (_) => false);
+
+        // setState(() {
+        //   _dispose = true;
+        // });
+
         // _videoController?.setVolume(0.0);
         // context.read<InfluencerPageviewCubit>().makePageViewScrollable();
         print('On will occurs -------- ');
@@ -200,7 +210,7 @@ class _ViewInfluencerVideosState extends State<ViewInfluencerVideos> {
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: InkWell(
+                      child: BetterPlayerMultipleGestureDetector(
                         onDoubleTap: () {
                           if (isLiked) {
                             context.read<LikeVideoCubit>().unlikePost(

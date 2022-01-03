@@ -37,7 +37,7 @@ class _ReusableVideoListPageState extends State<ReusableVideoListPage> {
   void _setupData() {
     for (int index = 0; index < 10; index++) {
       var randomVideoUrl = _videos[_random.nextInt(_videos.length)];
-      dataList.add(VideoListData('Video $index', randomVideoUrl));
+      dataList.add(VideoListData(videoUrl: randomVideoUrl));
     }
   }
 

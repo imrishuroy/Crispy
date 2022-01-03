@@ -1,5 +1,3 @@
-import '/screens/influencer/widgets/view_influencer_videos.dart';
-
 import '/config/contants.dart';
 
 import '/widgets/video_thumbnail.dart';
@@ -12,6 +10,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '/screens/influencer/bloc/influencer_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'widgets/videos/influencer_video_list.dart';
 
 class InfluencerProfileArgs {
   final Influencer? influencer;
@@ -195,25 +195,23 @@ class _InfluencerProfileState extends State<InfluencerProfile> {
                         itemBuilder: (context, index) {
                           final video = videos[index];
                           return InkWell(
-                              onTap: () =>
-
-                                  //  Navigator.of(context).push(
-                                  //       MaterialPageRoute(
-                                  //         builder: (_) => NewInfluencerVideo(
-                                  //           videos: videos,
-                                  //           openIndex: index,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-
-                                  Navigator.of(context).push(
+                              onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) => ViewInfluencerVideos(
+                                      builder: (_) => InfluencerListVideos(
                                         videos: videos,
-                                        openIndex: index,
                                       ),
                                     ),
                                   ),
+
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (_) => ViewInfluencerVideos(
+                              //       videos: videos,
+                              //       openIndex: index,
+                              //       influencer: widget.influencer,
+                              //     ),
+                              //   ),
+                              // ),
                               child: VideoThumbNail(videoUrl: video?.videoUrl));
                         },
                       ),

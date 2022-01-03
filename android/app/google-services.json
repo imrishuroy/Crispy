@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "775443030225",
-    "project_id": "crispy-b53c4",
-    "storage_bucket": "crispy-b53c4.appspot.com"
+    "project_number": "204488830595",
+    "project_id": "viskr-44540",
+    "storage_bucket": "viskr-44540.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:775443030225:android:878ae39fd483e871d3a5f0",
+        "mobilesdk_app_id": "1:204488830595:android:938a07589fb189c560f5b6",
         "android_client_info": {
-          "package_name": "com.sixteenbrains.crispy"
+          "package_name": "com.sixteenbrains.viskr"
         }
       },
       "oauth_client": [
         {
-          "client_id": "775443030225-2ehne1k30k0nd79als2alilcs4hh0a9m.apps.googleusercontent.com",
+          "client_id": "204488830595-uoutli1jnnhnn8cv18bptgt5976tmf1u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.sixteenbrains.crispy",
+            "package_name": "com.sixteenbrains.viskr",
             "certificate_hash": "c1e3ed2d56469c9d9820a1c991e84ee2c96966bb"
           }
         },
         {
-          "client_id": "775443030225-dujtknheubr2trvrv0742ddb8oe12vd2.apps.googleusercontent.com",
+          "client_id": "204488830595-3mv68efgmsk0i9d0pq8eoq0fbp34unfe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAKuvS6_AiZptaGyYsyHmxwf-4EoersPKk"
+          "current_key": "AIzaSyC-79wBomdZRGNDkG7dKEKQjb5-_CCbSFQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "775443030225-dujtknheubr2trvrv0742ddb8oe12vd2.apps.googleusercontent.com",
+              "client_id": "204488830595-3mv68efgmsk0i9d0pq8eoq0fbp34unfe.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
