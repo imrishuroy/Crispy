@@ -1,3 +1,16 @@
+3 Jan - 
+
+1. While on influencer profile videos, option to see map 
+should be available. But while seeing the map the option to 
+visit to Outlet profile should not be present. Option to view 
+influencer profile should be present and should bring back the 
+user to influencer profile. 
+
+2. While viewing outlet profile videos, option to see 
+influencer profile should not be present. Option to see 
+map should be present. User should be able to press the 
+view outlet profile button here to go back to the outlet profile
+
 
 22 Dec - 
 

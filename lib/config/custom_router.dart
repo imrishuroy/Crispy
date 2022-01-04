@@ -1,3 +1,5 @@
+import 'package:crispy/screens/outlet/outlet_profile.dart';
+
 import '/screens/give-access/give_access_screen.dart';
 
 import '/screens/influencer/influencer_profile.dart';
@@ -41,6 +43,10 @@ class CustomRouter {
 
       case GiveAccessScreen.routeName:
         return GiveAccessScreen.route();
+
+      case OutletProfile.routeName:
+        return OutletProfile.route(
+            args: settings.arguments as OutletProfileArgs);
 
       // case PhLoginScreen.routeName:
       //   return PhLoginScreen.route();

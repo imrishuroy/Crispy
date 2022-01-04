@@ -1,4 +1,5 @@
 import 'package:better_player/better_player.dart';
+import 'package:crispy/screens/home/home_screen.dart';
 import '/config/contants.dart';
 import '/models/video.dart';
 import '/screens/home/widgets/comment_button.dart';
@@ -70,6 +71,19 @@ class _ViewOutletVideosState extends State<ViewOutletVideos> {
         return true;
       },
       child: Scaffold(
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 10.0, right: 2.0),
+          child: FloatingActionButton(
+            backgroundColor: Colors.white,
+            mini: true,
+            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                HomeScreen.routeName, (route) => false),
+            child: const Icon(
+              Icons.home,
+              color: Colors.black87,
+            ),
+          ),
+        ),
         backgroundColor: Colors.black,
         body: BlocConsumer<OutletPageviewCubit, OutletPageviewState>(
           listener: (context, state) {},
@@ -209,34 +223,51 @@ class _ViewOutletVideosState extends State<ViewOutletVideos> {
                                 SizedBox(
                                   width: 80.0,
                                   child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        FavButton(
-                                          isLiked: isLiked,
-                                          videoId:
-                                              widget.videos[index]?.videoId,
-                                          onLike: () {
-                                            if (isLiked) {
-                                              context
-                                                  .read<LikeVideoCubit>()
-                                                  .unlikePost(
-                                                      videoId: widget
-                                                          .videos[index]
-                                                          ?.videoId);
-                                            } else {
-                                              context
-                                                  .read<LikeVideoCubit>()
-                                                  .likePost(
-                                                      videoId: widget
-                                                          .videos[index]
-                                                          ?.videoId);
-                                            }
-                                          },
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => MapScreen(
+                                              outlet:
+                                                  widget.videos[index]?.outlet,
+                                              showViewOutlet: false,
+                                            ),
+                                          ),
                                         ),
-                                        CommentButton(
-                                            video: widget.videos[index]),
-                                        const SizedBox(height: 140.0)
-                                      ]),
+                                        icon: const Icon(
+                                          Icons.place,
+                                          size: 33.0,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8.0),
+                                      FavButton(
+                                        isLiked: isLiked,
+                                        videoId: widget.videos[index]?.videoId,
+                                        onLike: () {
+                                          if (isLiked) {
+                                            context
+                                                .read<LikeVideoCubit>()
+                                                .unlikePost(
+                                                    videoId: widget
+                                                        .videos[index]
+                                                        ?.videoId);
+                                          } else {
+                                            context
+                                                .read<LikeVideoCubit>()
+                                                .likePost(
+                                                    videoId: widget
+                                                        .videos[index]
+                                                        ?.videoId);
+                                          }
+                                        },
+                                      ),
+                                      CommentButton(
+                                          video: widget.videos[index]),
+                                      const SizedBox(height: 70.0)
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

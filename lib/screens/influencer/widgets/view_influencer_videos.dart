@@ -1,7 +1,7 @@
 import 'package:better_player/better_player.dart';
 import '/models/influencer.dart';
 
-import 'package:crispy/screens/map/map_screen.dart';
+import '/screens/map/map_screen.dart';
 import '/config/contants.dart';
 import '/screens/home/widgets/comment_button.dart';
 import '/screens/home/widgets/cubit/likevideo_cubit.dart';

@@ -67,6 +67,7 @@ class _VideoThumbNailState extends State<VideoThumbNail> {
       padding: const EdgeInsets.only(
         left: 15.0,
         top: 10.0,
+        right: 15.0,
       ),
       child: imageFile != null
           // _controller.value.isInitialized

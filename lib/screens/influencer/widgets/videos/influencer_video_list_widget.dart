@@ -53,6 +53,7 @@ class _InfluencerListVideoWidgetState extends State<InfluencerListVideoWidget> {
       ),
       configuration: const BetterPlayerConfiguration(
         autoPlay: true,
+        looping: true,
         aspectRatio: 0.5,
         handleLifecycle: true,
         showPlaceholderUntilPlay: false,

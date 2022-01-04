@@ -1,7 +1,9 @@
 import 'package:better_player/better_player.dart';
+import '/screens/home/cubit/feed_pageview_cubit.dart';
+import '/screens/map/map_screen.dart';
 import '/config/contants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../cubit/feed_pageview_cubit.dart';
+
 import '/widgets/loading_indicator.dart';
 
 import '/screens/home/widgets/cubit/likevideo_cubit.dart';
@@ -177,7 +179,7 @@ class _ContentViewState extends State<ContentView> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 30.0),
+          padding: const EdgeInsets.only(bottom: 5.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -186,6 +188,18 @@ class _ContentViewState extends State<ContentView> {
               SizedBox(
                 width: 80.0,
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  IconButton(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (_) =>
+                              MapScreen(outlet: widget.video?.outlet)),
+                    ),
+                    icon: const Icon(
+                      Icons.place,
+                      size: 33.0,
+                    ),
+                  ),
+                  const SizedBox(height: 5.0),
                   FavButton(
                     isLiked: isLiked,
                     videoId: widget.video?.videoId,
@@ -202,24 +216,36 @@ class _ContentViewState extends State<ContentView> {
                     },
                   ),
                   CommentButton(video: widget.video),
-                  const SizedBox(height: 140.0)
+                  const SizedBox(height: 25.0),
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      onPressed: () => Navigator.of(context)
+                          .pushNamed(LikedVideos.routeName),
+                      icon: const Icon(
+                        Icons.playlist_play_rounded,
+                        size: 27.0,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30.0)
                 ]),
               ),
             ],
           ),
         ),
-        Align(
-          alignment: Alignment.topRight,
-          child: IconButton(
-            padding: const EdgeInsets.only(right: 20.0, top: 7.0),
-            icon: const Icon(
-              Icons.featured_play_list,
-              size: 25.0,
-            ),
-            onPressed: () =>
-                Navigator.of(context).pushNamed(LikedVideos.routeName),
-          ),
-        ),
+        // Align(
+        //   alignment: Alignment.topRight,
+        //   child: IconButton(
+        //     padding: const EdgeInsets.only(right: 20.0, top: 7.0),
+        //     icon: const Icon(
+        //       Icons.featured_play_list,
+        //       size: 25.0,
+        //     ),
+        //     onPressed: () =>
+        //         Navigator.of(context).pushNamed(LikedVideos.routeName),
+        //   ),
+        // ),
       ],
     );
 

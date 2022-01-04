@@ -1,3 +1,4 @@
+import '/config/contants.dart';
 import 'package:crispy/models/video.dart';
 import 'package:flutter/material.dart';
 
@@ -20,44 +21,25 @@ class OutletVideoDescription extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Row(
-            //   children: [
-            //     // CircleAvatar(
-            //     //   backgroundColor: Colors.deepOrange,
-            //     //   radius: 17.3,
-            //     //   child: CircleAvatar(
-            //     //     radius: 16.5,
-            //     //     backgroundImage: NetworkImage(
-            //     //       video?.influencer?.profilePic ?? errorImage,
-            //     //     ),
-            //     //   ),
-            //     // ),
-
-            //     // Container(
-            //     //   padding: const EdgeInsets.all(1.0),
-
-            //     //   height: 32.0,
-            //     //   width: 32.0,
-            //     //   decoration: BoxDecoration(
-            //     //     color: Colors.white,
-            //     //     borderRadius: BorderRadius.circular(profileImageSize / 2),
-            //     //   ),
-            //     //   // import 'package:cached_network_image/cached_network_image.dart'; at the top to use CachedNetworkImage
-            //     //   child: CachedNetworkImage(
-            //     //     imageUrl: video?.influencer?.profilePic ?? errorImage,
-            //     //     // imageUrl:
-            //     //     //     '',
-            //     //     //  placeholder: (context, url) => const CircularProgressIndicator(),
-            //     //     // errorWidget: (context, url, error) => const Icon(Icons.error),
-            //     //   ),
-            //     //  ),
-            //     const SizedBox(width: 5.0),
-            //     Text(
-            //       '@${video?.influencer?.name ?? ''}',
-            //       style: const TextStyle(fontWeight: FontWeight.bold),
-            //     ),
-            //   ],
-            // ),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.deepOrange,
+                  radius: 17.3,
+                  child: CircleAvatar(
+                    radius: 16.5,
+                    backgroundImage: NetworkImage(
+                      video?.influencer?.profilePic ?? errorImage,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 5.0),
+                Text(
+                  '@${video?.influencer?.name ?? ''}',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
 
             Text(
               video?.outlet?.name ?? 'N/A',

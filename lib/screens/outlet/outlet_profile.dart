@@ -1,3 +1,5 @@
+import '/repository/outlet/outlet_repository.dart';
+
 import '/screens/outlet/cubit/outlet_pageview_cubit.dart';
 
 import '/screens/outlet/view_outlet_videos.dart';
@@ -27,6 +29,25 @@ class OutletProfile extends StatelessWidget {
     Key? key,
     required this.outlet,
   }) : super(key: key);
+
+  static Route route({required OutletProfileArgs args}) {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider<OutletPageviewCubit>(
+            create: (context) => OutletPageviewCubit(),
+          ),
+          BlocProvider(
+            create: (context) => OutletProfileBloc(
+                outletRepo: context.read<OutletRepository>(),
+                outletId: args.outlet?.outletId),
+          )
+        ],
+        child: OutletProfile(outlet: args.outlet),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

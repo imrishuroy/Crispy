@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:crispy/screens/outlet/outlet_profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '/models/outlet.dart';
@@ -11,8 +12,10 @@ const String _errorImg = 'https://mediawebben.se/assets/img/error/img.png';
 // Todo: Remove map zoom in and zoom out
 class MapScreen extends StatefulWidget {
   final Outlet? outlet;
+  final bool? showViewOutlet;
 
-  const MapScreen({Key? key, required this.outlet}) : super(key: key);
+  const MapScreen({Key? key, required this.outlet, this.showViewOutlet = true})
+      : super(key: key);
 
   @override
   State<MapScreen> createState() => MapScreenState();
@@ -168,6 +171,39 @@ class MapScreenState extends State<MapScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        if (widget.showViewOutlet == true)
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: SizedBox(
+                              height: 20.0,
+                              width: 90.0,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.black,
+                                ),
+                                onPressed: () =>
+                                    // Navigator.of(context).push(
+                                    //   MaterialPageRoute(
+                                    //     builder: (_) =>
+                                    //         OutletProfile(outlet: widget.outlet),
+                                    //   ),
+                                    // ),
+
+                                    Navigator.of(context).pushNamed(
+                                  OutletProfile.routeName,
+                                  arguments:
+                                      OutletProfileArgs(outlet: widget.outlet),
+                                ),
+                                child: const Text(
+                                  'Visit Outlet',
+                                  style: TextStyle(
+                                    fontSize: 10.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         Row(
                           children: [
                             Container(

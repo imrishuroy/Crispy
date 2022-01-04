@@ -19,7 +19,7 @@ class _CommentButtonState extends State<CommentButton> {
   Widget build(BuildContext context) {
     final _videoRepo = context.read<VideoRepository>();
     return Container(
-      margin: const EdgeInsets.only(top: 10.0),
+      margin: const EdgeInsets.only(top: 6.5),
       // width: 70.0,
       // height: 70.0,
       child: FutureBuilder<int>(

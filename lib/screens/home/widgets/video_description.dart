@@ -25,50 +25,90 @@ class VideoDescription extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
-              onTap: () => Navigator.of(context).pushNamed(
-                InfluencerProfile.routeName,
-                arguments: InfluencerProfileArgs(influencer: video?.influencer),
-              ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.deepOrange,
-                    radius: 17.3,
-                    child: CircleAvatar(
-                      radius: 16.5,
-                      backgroundImage: NetworkImage(
-                        video?.influencer?.profilePic ?? errorImage,
-                      ),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.deepOrange,
+                  radius: 17.3,
+                  child: CircleAvatar(
+                    radius: 16.5,
+                    backgroundImage: NetworkImage(
+                      video?.influencer?.profilePic ?? errorImage,
                     ),
                   ),
+                ),
 
-                  // Container(
-                  //   padding: const EdgeInsets.all(1.0),
+                // Container(
+                //   padding: const EdgeInsets.all(1.0),
 
-                  //   height: 32.0,
-                  //   width: 32.0,
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.white,
-                  //     borderRadius: BorderRadius.circular(profileImageSize / 2),
-                  //   ),
-                  //   // import 'package:cached_network_image/cached_network_image.dart'; at the top to use CachedNetworkImage
-                  //   child: CachedNetworkImage(
-                  //     imageUrl: video?.influencer?.profilePic ?? errorImage,
-                  //     // imageUrl:
-                  //     //     '',
-                  //     //  placeholder: (context, url) => const CircularProgressIndicator(),
-                  //     // errorWidget: (context, url, error) => const Icon(Icons.error),
-                  //   ),
-                  //  ),
-                  const SizedBox(width: 5.0),
-                  Text(
-                    '@${video?.influencer?.name ?? ''}',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+                //   height: 32.0,
+                //   width: 32.0,
+                //   decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius: BorderRadius.circular(profileImageSize / 2),
+                //   ),
+                //   // import 'package:cached_network_image/cached_network_image.dart'; at the top to use CachedNetworkImage
+                //   child: CachedNetworkImage(
+                //     imageUrl: video?.influencer?.profilePic ?? errorImage,
+                //     // imageUrl:
+                //     //     '',
+                //     //  placeholder: (context, url) => const CircularProgressIndicator(),
+                //     // errorWidget: (context, url, error) => const Icon(Icons.error),
+                //   ),
+                //  ),
+                const SizedBox(width: 5.0),
+                Column(
+                  children: [
+                    Text(
+                      '@${video?.influencer?.name ?? ''}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4.0),
+                    SizedBox(
+                      height: 20.0,
+                      width: 90.0,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Colors.white),
+                        onPressed: () => Navigator.of(context).pushNamed(
+                          InfluencerProfile.routeName,
+                          arguments: InfluencerProfileArgs(
+                              influencer: video?.influencer),
+                        ),
+                        child: const Text(
+                          'Visit Profile',
+                          style: TextStyle(
+                            fontSize: 10.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // InkWell(
+                    //   onTap: () {},
+                    //   child: Container(
+                    //     padding: const EdgeInsets.symmetric(
+                    //       horizontal: 4.5,
+                    //       vertical: 2.0,
+                    //     ),
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(6.0),
+                    //       border: Border.all(color: Colors.black87),
+                    //     ),
+                    //     child: const Text(
+                    //       'Visit Profile',
+                    //       style: TextStyle(
+                    //         fontSize: 12.0,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ],
             ),
+
+            const SizedBox(height: 7.0),
 
             Text(
               video?.outlet?.name ?? 'N/A',
@@ -85,7 +125,8 @@ class VideoDescription extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Text(video?.outlet?.about ?? 'N/A'),
               ),
-            )
+            ),
+            const SizedBox(height: 10.0),
 
             // const Text('Video title and some other stuff'),
             // Row(

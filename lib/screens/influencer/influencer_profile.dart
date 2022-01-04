@@ -199,6 +199,7 @@ class _InfluencerProfileState extends State<InfluencerProfile> {
                                     MaterialPageRoute(
                                       builder: (_) => InfluencerListVideos(
                                         videos: videos,
+                                        openIndex: index,
                                       ),
                                     ),
                                   ),

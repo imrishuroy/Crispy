@@ -1,20 +1,25 @@
-import 'package:crispy/models/video.dart';
-import 'package:crispy/models/video_list.dart';
-import 'package:crispy/screens/home/widgets/comment_button.dart';
-import 'package:crispy/screens/home/widgets/cubit/likevideo_cubit.dart';
-import 'package:crispy/screens/home/widgets/fav_button.dart';
-import 'package:crispy/screens/influencer/widgets/influencer_video_description.dart';
-import 'package:crispy/screens/map/map_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:crispy/screens/home/home_screen.dart';
 
+import '/models/video.dart';
+import '/models/video_list.dart';
+import '/screens/home/widgets/comment_button.dart';
+import '/screens/home/widgets/cubit/likevideo_cubit.dart';
+import '/screens/home/widgets/fav_button.dart';
+import '/screens/influencer/widgets/influencer_video_description.dart';
+import '/screens/map/map_screen.dart';
+import 'package:flutter/material.dart';
 import 'influencer_video_list_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InfluencerListVideos extends StatefulWidget {
   final List<Video?> videos;
+  final int openIndex;
 
-  const InfluencerListVideos({Key? key, required this.videos})
-      : super(key: key);
+  const InfluencerListVideos({
+    Key? key,
+    required this.videos,
+    required this.openIndex,
+  }) : super(key: key);
 
   @override
   _InfluencerListVideosState createState() => _InfluencerListVideosState();
@@ -34,8 +39,15 @@ class _InfluencerListVideosState extends State<InfluencerListVideos> {
 
   @override
   void initState() {
+    _pageController = PageController(initialPage: widget.openIndex);
     _setupData();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   void _setupData() {
@@ -46,13 +58,29 @@ class _InfluencerListVideosState extends State<InfluencerListVideos> {
     }
   }
 
+  late PageController _pageController;
+
   @override
   Widget build(BuildContext context) {
     final likedPostsState = context.watch<LikeVideoCubit>().state;
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 10.0, right: 2.0),
+        child: FloatingActionButton(
+          backgroundColor: Colors.white,
+          mini: true,
+          onPressed: () => Navigator.of(context)
+              .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false),
+          child: const Icon(
+            Icons.home,
+            color: Colors.black87,
+          ),
+        ),
+      ),
       backgroundColor: Colors.black,
       // body: ListView.builder(
       body: PageView.builder(
+        controller: _pageController,
         scrollDirection: Axis.vertical,
         itemCount: videoList.length,
         itemBuilder: (context, index) {
@@ -114,6 +142,21 @@ class _InfluencerListVideosState extends State<InfluencerListVideos> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            IconButton(
+                              onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => MapScreen(
+                                    outlet: widget.videos[index]?.outlet,
+                                    showViewOutlet: false,
+                                  ),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.place,
+                                size: 33.0,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
                             FavButton(
                               isLiked: isLiked,
                               videoId: widget.videos[index]?.videoId,
@@ -128,7 +171,7 @@ class _InfluencerListVideosState extends State<InfluencerListVideos> {
                               },
                             ),
                             CommentButton(video: widget.videos[index]),
-                            const SizedBox(height: 140.0)
+                            const SizedBox(height: 70.0),
                           ],
                         ),
                       ),
