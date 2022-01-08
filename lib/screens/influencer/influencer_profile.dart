@@ -1,3 +1,5 @@
+import 'package:google_fonts/google_fonts.dart';
+
 import '/config/contants.dart';
 
 import '/widgets/video_thumbnail.dart';
@@ -70,6 +72,21 @@ class _InfluencerProfileState extends State<InfluencerProfile> {
 
     print('Influencer id  ${widget.influencer?.bio}');
     return Scaffold(
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 10.0, right: 2.0),
+          child: FloatingActionButton(
+            backgroundColor: Colors.white,
+            mini: true,
+            onPressed: () => Navigator.of(context).pop(),
+
+            // Navigator.of(context).pushNamedAndRemoveUntil(
+            //     HomeScreen.routeName, (route) => false),
+            child: const Icon(
+              Icons.home,
+              color: Colors.black87,
+            ),
+          ),
+        ),
 
         // floatingActionButton: FloatingActionButton(
         //   onPressed: () async {
@@ -92,148 +109,155 @@ class _InfluencerProfileState extends State<InfluencerProfile> {
         //   ),
         // ),
         body: ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 50.0),
-          Center(
-            child: CircleAvatar(
-              radius: 60.0,
-              backgroundColor: Colors.deepOrange,
-              child: CircleAvatar(
-                radius: 57.0,
-                backgroundImage:
-                    NetworkImage(widget.influencer?.profilePic ?? errorImage),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          borderRadius: BorderRadius.circular(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                widget.influencer?.name ?? 'N/A',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 1.2,
-                  fontSize: 17.0,
+              const SizedBox(height: 50.0),
+              Center(
+                child: CircleAvatar(
+                  radius: 60.0,
+                  backgroundColor: Colors.deepOrange,
+                  child: CircleAvatar(
+                    radius: 57.0,
+                    backgroundImage: NetworkImage(
+                        widget.influencer?.profilePic ?? errorImage),
+                  ),
                 ),
               ),
-              const SizedBox(width: 10.0),
-              Container(
-                height: 12.0,
-                width: 1.2,
-                color: Colors.grey.shade800,
+              const SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.influencer?.name ?? 'N/A',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 1.2,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  // const SizedBox(width: 14.0),
+                  // Container(
+                  //   height: 12.0,
+                  //   width: 1.2,
+                  //   color: Colors.grey.shade800,
+                  // ),
+                  // const SizedBox(width: 10.0),
+                  // const Text(
+                  //   '3.5',
+                  //   style: TextStyle(
+                  //     color: Colors.white,
+                  //     fontSize: 17.0,
+                  //   ),
+                  // ),
+                  // const SizedBox(width: 3.0),
+                  // const Text(
+                  //   '✮',
+                  //   style: TextStyle(
+                  //     color: Colors.amber,
+                  //     fontSize: 17.0,
+                  //   ),
+                  // ),
+                  // const SizedBox(width: 5.0),
+                  // Container(
+                  //   height: 12.0,
+                  //   width: 1.2,
+                  //   color: Colors.grey.shade800,
+                  // ),
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: const Icon(
+                  //     Icons.location_on_sharp,
+                  //     color: Colors.white,
+                  //     size: 20.0,
+                  //   ),
+                  // ),
+                ],
               ),
-              const SizedBox(width: 10.0),
-              const Text(
-                '3.5',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17.0,
+              const SizedBox(height: 5.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  widget.influencer?.bio ?? 'N/A',
+                  style: GoogleFonts.bioRhyme(
+                    color: Colors.white,
+                    fontSize: 15.0,
+                  ),
+
+                  //TextStyle(fontSize: 16.0, color: Colors.grey.shade100),
+                  textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(width: 3.0),
-              const Text(
-                '✮',
-                style: TextStyle(
-                  color: Colors.amber,
-                  fontSize: 17.0,
-                ),
-              ),
-              const SizedBox(width: 5.0),
-              Container(
-                height: 12.0,
-                width: 1.2,
-                color: Colors.grey.shade800,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.location_on_sharp,
-                  color: Colors.white,
-                  size: 20.0,
-                ),
-              ),
+              const SizedBox(height: 30.0),
+              BlocConsumer<InfluencerBloc, InfluencerState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  switch (state.status) {
+                    case InfluencerStatus.succuss:
+                      final videos = state.influencerVideos;
+                      print('Length ${videos.length}');
+
+                      return Expanded(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40.0),
+                              topRight: Radius.circular(40.0),
+                            ),
+                          ),
+                          child: GridView.builder(
+                            itemCount: videos.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              childAspectRatio: 0.8,
+                            ),
+                            itemBuilder: (context, index) {
+                              final video = videos[index];
+                              return InkWell(
+                                  onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => InfluencerListVideos(
+                                            videos: videos,
+                                            openIndex: index,
+                                          ),
+                                        ),
+                                      ),
+
+                                  // Navigator.of(context).push(
+                                  //   MaterialPageRoute(
+                                  //     builder: (_) => ViewInfluencerVideos(
+                                  //       videos: videos,
+                                  //       openIndex: index,
+                                  //       influencer: widget.influencer,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  child: VideoThumbNail(
+                                      videoUrl: video?.videoUrl));
+                            },
+                          ),
+                        ),
+                      );
+                    default:
+                      return const SizedBox(
+                        height: 50.0,
+                        width: 50.0,
+                        child: SpinKitChasingDots(
+                          color: Colors.blue,
+                          size: 50.0,
+                        ),
+                      );
+                    //return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(
-              widget.influencer?.bio ?? 'N/A',
-              style: const TextStyle(fontSize: 16.0),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 30.0),
-          BlocConsumer<InfluencerBloc, InfluencerState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              switch (state.status) {
-                case InfluencerStatus.succuss:
-                  final videos = state.influencerVideos;
-                  print('Length ${videos.length}');
-
-                  return Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(40.0),
-                          topRight: Radius.circular(40.0),
-                        ),
-                      ),
-                      child: GridView.builder(
-                        itemCount: videos.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          childAspectRatio: 0.75,
-                        ),
-                        itemBuilder: (context, index) {
-                          final video = videos[index];
-                          return InkWell(
-                              onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => InfluencerListVideos(
-                                        videos: videos,
-                                        openIndex: index,
-                                      ),
-                                    ),
-                                  ),
-
-                              // Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //     builder: (_) => ViewInfluencerVideos(
-                              //       videos: videos,
-                              //       openIndex: index,
-                              //       influencer: widget.influencer,
-                              //     ),
-                              //   ),
-                              // ),
-                              child: VideoThumbNail(videoUrl: video?.videoUrl));
-                        },
-                      ),
-                    ),
-                  );
-                default:
-                  return const SizedBox(
-                    height: 50.0,
-                    width: 50.0,
-                    child: SpinKitChasingDots(
-                      color: Colors.blue,
-                      size: 50.0,
-                    ),
-                  );
-                //return const Center(child: CircularProgressIndicator());
-              }
-            },
-          )
-        ],
-      ),
-    )
+        )
 
         // FutureBuilder<Influencer?>(
         //   future: _influencerRepo.getInfluencer(influencerId: influencerId),

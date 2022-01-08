@@ -4,18 +4,16 @@ import '/models/video_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class InfluencerListVideoWidget extends StatefulWidget {
+class LikedVideoListWidget extends StatefulWidget {
   final VideoListData? videoListData;
 
-  const InfluencerListVideoWidget({Key? key, this.videoListData})
-      : super(key: key);
+  const LikedVideoListWidget({Key? key, this.videoListData}) : super(key: key);
 
   @override
-  _InfluencerListVideoWidgetState createState() =>
-      _InfluencerListVideoWidgetState();
+  _LikedVideoListWidgetState createState() => _LikedVideoListWidgetState();
 }
 
-class _InfluencerListVideoWidgetState extends State<InfluencerListVideoWidget> {
+class _LikedVideoListWidgetState extends State<LikedVideoListWidget> {
   VideoListData? get videoListData => widget.videoListData;
   late BetterPlayerConfiguration betterPlayerConfiguration;
   BetterPlayerListVideoPlayerController? controller;
@@ -44,18 +42,23 @@ class _InfluencerListVideoWidgetState extends State<InfluencerListVideoWidget> {
       controlsConfiguration: const BetterPlayerControlsConfiguration(
         enablePlayPause: false,
         showControlsOnInitialize: false,
+        // controlsHideTime: Duration(seconds: 0),
+        // showControls: true,
         enableProgressBarDrag: false,
         enableProgressText: false,
         enableProgressBar: false,
         enableSkips: false,
         enableRetry: false,
+
         enableAudioTracks: false,
         enableMute: false,
         enableSubtitles: false,
+        //enableFullscreen: ,
         enableQualities: false,
         enableOverflowMenu: false,
         enablePlaybackSpeed: false,
         enablePip: false,
+
         loadingWidget: Center(
           child: SizedBox(
             height: 50.0,
@@ -82,10 +85,9 @@ class _InfluencerListVideoWidgetState extends State<InfluencerListVideoWidget> {
         BetterPlayerDataSourceType.network,
         videoListData?.videoUrl ?? errorVideo,
         notificationConfiguration: BetterPlayerNotificationConfiguration(
-          showNotification: false,
-          title: videoListData?.videoTitle,
-          author: 'Test',
-        ),
+            showNotification: false,
+            title: videoListData?.videoTitle,
+            author: 'Test'),
         bufferingConfiguration: const BetterPlayerBufferingConfiguration(
           minBufferMs: 2000,
           maxBufferMs: 10000,
@@ -94,32 +96,6 @@ class _InfluencerListVideoWidgetState extends State<InfluencerListVideoWidget> {
         ),
       ),
       configuration: betterPlayerConfiguration,
-      // const BetterPlayerConfiguration(
-      // autoPlay: true,
-      // looping: true,
-      // aspectRatio: 0.5,
-      // handleLifecycle: true,
-      // showPlaceholderUntilPlay: false,
-      // autoDispose: false,
-      // controlsConfiguration: BetterPlayerControlsConfiguration(
-      //   enablePlayPause: false,
-      //   showControls: false,
-      //   enableProgressBarDrag: false,
-      //   enableProgressText: false,
-      //   enableProgressBar: false,
-      //   enableSkips: false,
-      //   enableAudioTracks: false,
-      //   loadingWidget: Center(
-      //     child: SizedBox(
-      //       height: 50.0,
-      //       width: 50.0,
-      //       child: SpinKitChasingDots(
-      //         color: Colors.white,
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      //),
 
       //key: Key(videoListData.hashCode.toString()),
       playFraction: 0.8,

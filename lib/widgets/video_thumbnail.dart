@@ -79,7 +79,7 @@ class _VideoThumbNailState extends State<VideoThumbNail> {
               //   borderRadius: BorderRadius.circular(12.0),
               // ),
               width: 100.0,
-              height: 206.0,
+              height: 150.0,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: Image.file(

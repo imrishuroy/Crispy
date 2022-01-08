@@ -7,24 +7,26 @@ import '/screens/home/widgets/fav_button.dart';
 import '/screens/influencer/widgets/influencer_video_description.dart';
 import '/screens/map/map_screen.dart';
 import 'package:flutter/material.dart';
-import 'influencer_video_list_widget.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class InfluencerListVideos extends StatefulWidget {
+import 'liked_video_list_widget.dart';
+
+class LikedVideosList extends StatefulWidget {
   final List<Video?> videos;
   final int openIndex;
 
-  const InfluencerListVideos({
+  const LikedVideosList({
     Key? key,
     required this.videos,
     required this.openIndex,
   }) : super(key: key);
 
   @override
-  _InfluencerListVideosState createState() => _InfluencerListVideosState();
+  _LikedVideosListState createState() => _LikedVideosListState();
 }
 
-class _InfluencerListVideosState extends State<InfluencerListVideos> {
+class _LikedVideosListState extends State<LikedVideosList> {
   // final _random = Random();
   // final List<String> _videos = [
   //   Constants.bugBuckBunnyVideoUrl,
@@ -107,28 +109,28 @@ class _InfluencerListVideosState extends State<InfluencerListVideos> {
                               .likePost(videoId: widget.videos[index]?.videoId);
                         }
                       },
-                      child: InfluencerListVideoWidget(
+                      child: LikedVideoListWidget(
                         videoListData: videoListData,
                       ),
                     ),
                   ),
                 ),
-                // Align(
-                //   alignment: Alignment.topRight,
-                //   child: IconButton(
-                //     padding: const EdgeInsets.symmetric(
-                //       horizontal: 20.0,
-                //       vertical: 20.0,
-                //     ),
-                //     onPressed: () => Navigator.of(context).push(
-                //       MaterialPageRoute(
-                //         builder: (_) =>
-                //             MapScreen(outlet: widget.videos[index]?.outlet),
-                //       ),
-                //     ),
-                //     icon: const Icon(Icons.place),
-                //   ),
-                // ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 20.0,
+                    ),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            MapScreen(outlet: widget.videos[index]?.outlet),
+                      ),
+                    ),
+                    icon: const Icon(Icons.place),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30.0),
                   child: Row(

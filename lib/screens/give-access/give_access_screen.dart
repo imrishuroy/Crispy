@@ -41,8 +41,8 @@ class _GiveAccessScreenState extends State<GiveAccessScreen> {
   final _otpController = TextEditingController();
   // ..text = "123456";
 
-  // ignore: close_sinks
-  StreamController<ErrorAnimationType>? errorController;
+  // ignore:   close_sinks
+  StreamController<ErrorAnimationType>? _errorController;
 
   bool hasError = false;
   String _currentText = '';
@@ -50,7 +50,7 @@ class _GiveAccessScreenState extends State<GiveAccessScreen> {
 
   @override
   void initState() {
-    errorController = StreamController<ErrorAnimationType>();
+    _errorController = StreamController<ErrorAnimationType>();
     // _setOtp();
 
     super.initState();
@@ -67,7 +67,7 @@ class _GiveAccessScreenState extends State<GiveAccessScreen> {
 
   @override
   void dispose() {
-    errorController!.close();
+    _errorController?.close();
 
     super.dispose();
   }
@@ -94,7 +94,7 @@ class _GiveAccessScreenState extends State<GiveAccessScreen> {
       if (_formKey.currentState!.validate()) {
         // if (currentText.length != 6 || currentText != widget.otp) {
         if (_currentText.length != 4) {
-          errorController!.add(
+          _errorController!.add(
             ErrorAnimationType.shake,
           ); // Triggering error shake animation
           setState(() => hasError = true);
@@ -108,6 +108,8 @@ class _GiveAccessScreenState extends State<GiveAccessScreen> {
 
             Navigator.of(context).pushNamedAndRemoveUntil(
                 HomeScreen.routeName, (route) => false);
+          } else {
+            DisplayMessage.erroMessage(context, title: 'Wrong Pin !');
           }
 
           // final authRepo = context.read<AuthRepository>();
@@ -230,7 +232,7 @@ class _GiveAccessScreenState extends State<GiveAccessScreen> {
                     cursorColor: Colors.white,
                     animationDuration: const Duration(milliseconds: 300),
                     // enableActiveFill: true,
-                    errorAnimationController: errorController,
+                    errorAnimationController: _errorController,
                     controller: _otpController,
                     keyboardType: TextInputType.number,
                     boxShadows: const [

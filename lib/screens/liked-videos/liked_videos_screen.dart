@@ -1,7 +1,5 @@
 import '/config/shared_prefs.dart';
 import '/repository/auth/auth_repository.dart';
-import '/screens/liked-videos/cubit/liked_videos_pageview_cubit.dart';
-import '/screens/liked-videos/widgets/view_liked_videos.dart';
 import '/widgets/video_thumbnail.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/repository/video/video_repository.dart';
@@ -9,6 +7,8 @@ import '/screens/liked-videos/bloc/likedvideos_bloc.dart';
 import '/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'widgets/liked_video_list.dart';
 
 class LikedVideos extends StatefulWidget {
   static const String routeName = '/liked';
@@ -100,7 +100,7 @@ class _LikedVideosState extends State<LikedVideos> {
                 itemCount: videos.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  childAspectRatio: 0.75,
+                  childAspectRatio: 0.8,
                 ),
                 itemBuilder: (context, index) {
                   return Padding(
@@ -108,17 +108,25 @@ class _LikedVideosState extends State<LikedVideos> {
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) =>
-                              BlocProvider<LikedVideosPageviewCubit>(
-                            create: (context) => LikedVideosPageviewCubit(),
-                            child: ViewLikedVideos(
-                              // VideoPreview(
-                              videos: videos, openIndex: index,
-                            ),
+                          builder: (_) => LikedVideosList(
+                            videos: videos,
+                            openIndex: index,
                           ),
                         ),
                       ),
-                      // child: Scaffold(
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (_) =>
+                      //         BlocProvider<LikedVideosPageviewCubit>(
+                      //       create: (context) => LikedVideosPageviewCubit(),
+                      //       child: ViewLikedVideos(
+                      //         // VideoPreview(
+                      //         videos: videos, openIndex: index,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // // child: Scaffold(
                       //   body: PageView.builder(
                       //     itemCount: videos.length,
                       //     itemBuilder: (context, index) {

@@ -146,15 +146,37 @@ class _ContentViewState extends State<ContentView> {
                           bufferForPlaybackAfterRebufferMs: 2000),
                 ),
                 configuration: BetterPlayerConfiguration(
+                  errorBuilder: (context, error) {
+                    return Center(
+                      child: Text(
+                        error ?? 'Something went wrong :(',
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  },
                   controlsConfiguration:
                       const BetterPlayerControlsConfiguration(
                     enablePlayPause: false,
-                    showControls: false,
+                    showControlsOnInitialize: false,
+                    // controlsHideTime: Duration(seconds: 0),
+                    // showControls: true,
                     enableProgressBarDrag: false,
                     enableProgressText: false,
                     enableProgressBar: false,
                     enableSkips: false,
+                    enableRetry: false,
+
                     enableAudioTracks: false,
+                    enableMute: false,
+                    enableSubtitles: false,
+                    //enableFullscreen: ,
+                    enableQualities: false,
+                    enableOverflowMenu: false,
+                    enablePlaybackSpeed: false,
+                    enablePip: false,
+
                     loadingWidget: Center(
                       child: SizedBox(
                         height: 50.0,
@@ -187,49 +209,52 @@ class _ContentViewState extends State<ContentView> {
               VideoDescription(video: widget.video),
               SizedBox(
                 width: 80.0,
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (_) =>
-                              MapScreen(outlet: widget.video?.outlet)),
-                    ),
-                    icon: const Icon(
-                      Icons.place,
-                      size: 33.0,
-                    ),
-                  ),
-                  const SizedBox(height: 5.0),
-                  FavButton(
-                    isLiked: isLiked,
-                    videoId: widget.video?.videoId,
-                    onLike: () {
-                      if (isLiked) {
-                        context
-                            .read<LikeVideoCubit>()
-                            .unlikePost(videoId: widget.video?.videoId);
-                      } else {
-                        context
-                            .read<LikeVideoCubit>()
-                            .likePost(videoId: widget.video?.videoId);
-                      }
-                    },
-                  ),
-                  CommentButton(video: widget.video),
-                  const SizedBox(height: 25.0),
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: IconButton(
-                      onPressed: () => Navigator.of(context)
-                          .pushNamed(LikedVideos.routeName),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                MapScreen(outlet: widget.video?.outlet)),
+                      ),
                       icon: const Icon(
-                        Icons.playlist_play_rounded,
-                        size: 27.0,
+                        Icons.place,
+                        size: 33.0,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 30.0)
-                ]),
+                    const SizedBox(height: 5.0),
+                    FavButton(
+                      isLiked: isLiked,
+                      videoId: widget.video?.videoId,
+                      onLike: () {
+                        if (isLiked) {
+                          context
+                              .read<LikeVideoCubit>()
+                              .unlikePost(videoId: widget.video?.videoId);
+                        } else {
+                          context
+                              .read<LikeVideoCubit>()
+                              .likePost(videoId: widget.video?.videoId);
+                        }
+                      },
+                    ),
+                    CommentButton(video: widget.video),
+                    const SizedBox(height: 25.0),
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: IconButton(
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(LikedVideos.routeName),
+                        icon: const Icon(
+                          Icons.playlist_play_rounded,
+                          size: 27.0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30.0)
+                  ],
+                ),
               ),
             ],
           ),

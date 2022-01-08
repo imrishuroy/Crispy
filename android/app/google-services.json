@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "204488830595",
-    "project_id": "viskr-44540",
-    "storage_bucket": "viskr-44540.appspot.com"
+    "project_number": "1023992434550",
+    "project_id": "viskr-41d76",
+    "storage_bucket": "viskr-41d76.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:204488830595:android:938a07589fb189c560f5b6",
+        "mobilesdk_app_id": "1:1023992434550:android:54d53e30dfa270572c7457",
         "android_client_info": {
-          "package_name": "com.sixteenbrains.viskr"
+          "package_name": "com.viskrapp.viskr"
         }
       },
       "oauth_client": [
         {
-          "client_id": "204488830595-uoutli1jnnhnn8cv18bptgt5976tmf1u.apps.googleusercontent.com",
+          "client_id": "1023992434550-5e6jcrqc1n488oa5dsb07os3ortr93j0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.sixteenbrains.viskr",
+            "package_name": "com.viskrapp.viskr",
             "certificate_hash": "c1e3ed2d56469c9d9820a1c991e84ee2c96966bb"
           }
         },
         {
-          "client_id": "204488830595-3mv68efgmsk0i9d0pq8eoq0fbp34unfe.apps.googleusercontent.com",
+          "client_id": "1023992434550-2duojltinid808h3mmkssreqcpokiaki.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC-79wBomdZRGNDkG7dKEKQjb5-_CCbSFQ"
+          "current_key": "AIzaSyAidHeSrbS-90v0A_LsSYdfl1SJ6Bm7ebI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "204488830595-3mv68efgmsk0i9d0pq8eoq0fbp34unfe.apps.googleusercontent.com",
+              "client_id": "1023992434550-2duojltinid808h3mmkssreqcpokiaki.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
